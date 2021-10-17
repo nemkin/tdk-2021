@@ -1,0 +1,142 @@
+\chapter{Quantum informatics, quantum computing}
+
+\section{The postulates of quantum mechanics}
+
+Based on Quantum  computing  and  communications: an  engineering  approach by Balázs Ferenc and Imre Sándor \cite{ImreSandor} and Mika Hirvensalo's Quantum Computing\cite{Hirvensalo}.
+
+\info{Ez azért jó felvezető, mert a mérés posztulátumnál el tudom mondani az unitér tranfó azonosságait, a tenzoros posztulátumnál pedig a tenzorszorzás azonosságait, amikre később hivatkozni fogok.}
+
+\unsure{Vajon szó szerint bemásolni a könyvből nagyon rosszul néz ki, pláne hogy valószínűleg olyan javítja aki olvasta?}
+
+\paragraph{First postulate: State space}
+
+The actual state of any closed physical system can be described by means of a so called \textbf{state vector} $v$ having complex coefficients and unit length in a Hilbert space $V$ i.e. a complex linear vector space (\textbf{state space}) equipped with inner product.
+
+A 2 dimensional Hilbert space is the simplest example of a closed physical system.
+
+\definition{\textbf{Qubit}} A unit vector in the 2 dimensional Hilbert space ($H_2$) is a qubit. The base vectors in this space are $\ket{0} = \begin{pmatrix} 1 \\ 0 \end{pmatrix}$ and $\ket{1} = \begin{pmatrix} 0 \\ 1 \end{pmatrix}$. Any qubit can be written in the form $a\ket{0} + b\ket{1} = \begin{pmatrix} a \\ b \end{pmatrix}$, where $a, b \in{} \mathds{C}$ and $|a|^2 + |b|^2 = 1$. 
+
+\paragraph{Postulate 2. Time evolution}
+
+The evolution of any closed physical system in time can be characterized by means of unitary transforms depending only on the starting and finishing time of the evolution.
+
+
+\definition{\textbf{Unitary matrix}} U is unitary if $U^{\dagger} = U^{-1}$.
+
+\change{TODO: https://en.wikipedia.org/wiki/Unitary\_matrix vagy kvantumos előadás diasora, citation?. Az ortonormált bázist alkotó sorosat használom az élszíncsoportok = érmeoldalak bizonyításnál.}
+
+Equivalent definitions:
+
+\begin{enumerate}
+    \item U's rows form an orthonormal basis of $\mathds{C}^n$.
+    \item U's columns form an orthonormal basis of $\mathds{C}^n$.
+    \item U is an isometry: injective and preserves length.
+    \item U preserves the inner product.
+\end{enumerate}
+
+\paragraph{Postulate 3. Measurement}
+
+Any quantum measurement can be described by means of a set of measurement operators ${M_m}$, where $m$ stands for the
+possible results of the measurement. The probability of measuring $m$ if the system is in state $\ket{v}$ can be calculated as
+
+\begin{align}
+    P(m | \ket{v}) = \bra{v} M_m^{\dagger} M_m \ket{v}
+\end{align}
+
+and the system after measuring $m$ goes to state
+
+\begin{align}
+    \ket{v'} = \frac{M_m\ket{v}}{\sqrt{\bra{v} M_m^{\dagger} M_m \ket{v}}}
+\end{align}
+
+due to classical probability
+
+\begin{align}
+    \sum\limits_{m} P(m | \ket{v}) = \sum\limits_{m} \bra{v} M_m^{\dagger} M_m \ket{v} = 1
+\end{align}
+
+which means the measurement operators have to satisfy the following \textbf{completeness relation}
+
+
+\begin{align}
+    \sum\limits_{m}  M_m^{\dagger} M_m = I
+\end{align}
+
+\subparagraph{Projective measurement}
+
+To distinguish a set of orthonormal states $(\ket{\varphi_m})$, the corresponding measurement operators can be produced by $P_m = \ket{\varphi_m}\bra{\varphi_m}$.
+
+Properties of projective measurement operators ($P_m$):
+
+\theorem{\textbf{$P_m$ is self adjoint}}: $P_m^{\dagger} = P_m$, since $(\ket{\varphi_m}\bra{\varphi_m})^{\dagger} = 
+\bra{\varphi_m}^{\dagger}\ket{\varphi_m}^{\dagger} = \ket{\varphi_m}\bra{\varphi_m} $
+\theorem{\textbf{$P_mP_m = P_m$}}: $\ket{\varphi_m}\bra{\varphi_m}\ket{\varphi_m}\bra{\varphi_m} = 
+\ket{\varphi_m}(\bra{\varphi_m}\ket{\varphi_m})\bra{\varphi_m} = \ket{\varphi_m}1\bra{\varphi_m} = \ket{\varphi_m}\bra{\varphi_m}$
+\theorem{\textbf{$P_m$ and $P_n$ are orthogonal}}: If $n\neq{}m$, then $P_mP_n = 0$, since $P_mP_n =\ket{\varphi_m}\bra{\varphi_m}\ket{\varphi_n}\bra{\varphi_n} =\ket{\varphi_m}(\bra{\varphi_m}\ket{\varphi_n})\bra{\varphi_n} =\ket{\varphi_m}0\bra{\varphi_n} = 0$.
+
+The value of a qubit can be any unit length vector in ($H_2$), however when we measure it, we will receive one
+of the base vectors of ($H_2$). For $a\ket{0} + b\ket{1}$ we measure $\ket{0}$ with probability $|a|^2$ and $\ket{1}$ with probability $|b|^2$.
+
+\paragraph{Postulate 4. Composite system}
+The state space of a composite physical system $W$ can be determined using the tensor product of the individual systems $W = V \otimes Y$. Furthermore having defined $v \in V$ $y \in Y$ then the joint state of the composite system is $w = v \otimes y$.
+
+\definition{\textbf{Tensor product}} The tensor product $A \otimes B$ of matrix $A$ of size $r \times s$ and matrix $B$ of size $t \times u$ is of size $rt \times su$ and is defined as follows:
+
+\begin{center}
+  $A = \begin{pmatrix}
+      a_{11} & a_{12} & \dots  & a_{1s} \\
+      a_{21} & a_{22} & \dots  & a_{2s} \\
+      \vdots & \vdots & \ddots & \vdots \\
+      a_{r1} & a_{r2} & \ddots & a_{rs}
+    \end{pmatrix}
+  $
+  és
+  $B = \begin{pmatrix}
+      b_{11} & b_{12} & \dots  & b_{1u} \\
+      b_{21} & b_{22} & \dots  & b_{2u} \\
+      \vdots & \vdots & \ddots & \vdots \\
+      b_{t1} & b_{t2} & \ddots & b_{tu}
+    \end{pmatrix}
+  $ esetén
+\end{center}
+
+\begin{center}
+  $A \otimes B = \begin{pmatrix}
+      a_{11}B & a_{12}B & \dots  & a_{1s}B \\
+      a_{21}B & a_{22}B & \dots  & a_{2s}B \\
+      \vdots  & \vdots  & \ddots & \vdots  \\
+      a_{r1}B & a_{r2}B & \ddots & a_{rs}B
+    \end{pmatrix}
+  $
+\end{center}
+
+\change{Citation needed for these.}
+
+\subsection{Identities of tensor products}
+
+\theorem[Associativity]
+\begin{align}
+  (A \otimes B) \otimes C = A \otimes (B \otimes C)
+\end{align}
+
+\theorem[Distributivity over matrix product] If A and C; and B and D are compatible (can be multiplied) then:
+\begin{align}
+  (A \otimes B)(C \otimes D) = (AC) \otimes (BD)
+\end{align}
+
+\unsure{Need a better name here}
+
+\theorem["Unitary matrices disappearing"]
+\begin{align}
+  (A_n \otimes I_m)(I_n \otimes B_m) = A_n \otimes B_m
+\end{align}
+
+\definition{\textbf{Quantum register}} The quantum register consisting of n qubits is the tensor product of n qubits (on $H_2$).
+
+\begin{align}
+H_2^{\otimes{}n} = H_2 \otimes H_2 \otimes ... \otimes H_2
+\end{align}
+
+\definition{\textbf{Entangled state}} Any state consisting of multiple qubits, that can not be written in the form of a tensor product of individual qubits is entangled.
+
+For example, the state $$\frac{1}{\sqrt{2}}(\ket{00} + \ket{11})$, is entangled, since it can not be written in the form $(a_0\ket{0} + a_1\ket{1})\otimes(b_0\ket{0}+b_1\ket{1}) = a_0b_0\ket{00}+a_0b_1\ket{01}+a_1b_0\ket{10}+a_1b_1\ket{11}$, since that would require from $a_0b_0 = a_1b_1 = \frac{1}{\sqrt{1}}$, for all coefficients to be non-zero and from $a_0b_1 = a_1b_0 = 0$ for either $a_0$ or $b_1$ and either $a_1$ or $b_0$ to be zero, which is a contradiction.

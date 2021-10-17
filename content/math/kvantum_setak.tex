@@ -1,173 +1,122 @@
-\chapter{Quantum informatics, quantum computing}
-
-\section{The postulates of quantum mechanics}
-
-Based on Quantum  computing  and  communications: an  engineering  approach by Balázs Ferenc and Imre Sándor \cite{ImreSandor} and Mika Hirvensalo's Quantum Computing\cite{Hirvensalo}.
-
-\info{Ez azért jó felvezető, mert a mérés posztulátumnál el tudom mondani az unitér tranfó azonosságait, a tenzoros posztulátumnál pedig a tenzorszorzás azonosságait, amikre később hivatkozni fogok.}
-
-\unsure{Vajon szó szerint bemásolni a könyvből nagyon rosszul néz ki, pláne hogy valószínűleg olyan javítja aki olvasta?}
-
-\paragraph{First postulate: State space}
-
-The actual state of any closed physical system can be described by means of a so called \textbf{state vector} $v$ having complex coefficients and unit length in a Hilbert space $V$ i.e. a complex linear vector space (\textbf{state space}) equipped with inner product.
-
-A 2 dimensional Hilbert space is the simplest example of a closed physical system.
-
-\definition{\textbf{Qubit}} A unit vector in the 2 dimensional Hilbert space ($H_2$) is a qubit. The base vectors in this space are $\ket{0} = \begin{pmatrix} 1 \\ 0 \end{pmatrix}$ and $\ket{1} = \begin{pmatrix} 0 \\ 1 \end{pmatrix}$. Any qubit can be written in the form $a\ket{0} + b\ket{1} = \begin{pmatrix} a \\ b \end{pmatrix}$, where $a, b \in{} \mathds{C}$ and $|a|^2 + |b|^2 = 1$. 
-
-\paragraph{Postulate 2. Time evolution}
-
-The evolution of any closed physical system in time can be characterized by means of unitary transforms depending only on the starting and finishing time of the evolution.
-
-
-\definition{\textbf{Unitary matrix}} U is unitary if $U^{\dagger} = U^{-1}$.
-
-\change{TODO: https://en.wikipedia.org/wiki/Unitary\_matrix vagy kvantumos előadás diasora, citation?. Az ortonormált bázist alkotó sorosat használom az élszíncsoportok = érmeoldalak bizonyításnál.}
-
-Equivalent definitions:
-
-\begin{enumerate}
-    \item U's rows form an orthonormal basis of $\mathds{C}^n$.
-    \item U's columns form an orthonormal basis of $\mathds{C}^n$.
-    \item U is an isometry: injective and preserves length.
-    \item U preserves the inner product.
-\end{enumerate}
-
-\paragraph{Postulate 3. Measurement}
-
-Any quantum measurement can be described by means of a set of measurement operators ${M_m}$, where $m$ stands for the
-possible results of the measurement. The probability of measuring $m$ if the system is in state $\ket{v}$ can be calculated as
-
-\begin{align}
-    P(m | \ket{v}) = \bra{v} M_m^{\dagger} M_m \ket{v}
-\end{align}
-
-and the system after measuring $m$ goes to state
-
-\begin{align}
-    \ket{v'} = \frac{M_m\ket{v}}{\sqrt{\bra{v} M_m^{\dagger} M_m \ket{v}}}
-\end{align}
-
-due to classical probability
-
-\begin{align}
-    \sum\limits_{m} P(m | \ket{v}) = \sum\limits_{m} \bra{v} M_m^{\dagger} M_m \ket{v} = 1
-\end{align}
-
-which means the measurement operators have to satisfy the following \textbf{completeness relation}
-
-
-\begin{align}
-    \sum\limits_{m}  M_m^{\dagger} M_m = I
-\end{align}
-
-The value of a qubit can be any unit length vector in ($H_2$), however when we measure it, we will receive one
-of the base vectors of ($H_2$). For $a\ket{0} + b\ket{1}$ we measure $\ket{0}$ with probability $|a|^2$ and $\ket{1}$ with probability $|b|^2$.
-
-\paragraph{Postulate 4. Composite system}
-The state space of a composite physical system $W$ can be determined using the tensor product of the individual systems $W = V \otimes Y$. Furthermore having defined $v \in V$ $y \in Y$ then the joint state of the composite system is $w = v \otimes y$.
-
-\definition{\textbf{Tensor product}} The tensor product $A \otimes B$ of matrix $A$ of size $r \times s$ and matrix $B$ of size $t \times u$ is of size $rt \times su$ and is defined as follows:
-
-\begin{center}
-  $A = \begin{pmatrix}
-      a_{11} & a_{12} & \dots  & a_{1s} \\
-      a_{21} & a_{22} & \dots  & a_{2s} \\
-      \vdots & \vdots & \ddots & \vdots \\
-      a_{r1} & a_{r2} & \ddots & a_{rs}
-    \end{pmatrix}
-  $
-  és
-  $B = \begin{pmatrix}
-      b_{11} & b_{12} & \dots  & b_{1u} \\
-      b_{21} & b_{22} & \dots  & b_{2u} \\
-      \vdots & \vdots & \ddots & \vdots \\
-      b_{t1} & b_{t2} & \ddots & b_{tu}
-    \end{pmatrix}
-  $ esetén
-\end{center}
-
-\begin{center}
-  $A \otimes B = \begin{pmatrix}
-      a_{11}B & a_{12}B & \dots  & a_{1s}B \\
-      a_{21}B & a_{22}B & \dots  & a_{2s}B \\
-      \vdots  & \vdots  & \ddots & \vdots  \\
-      a_{r1}B & a_{r2}B & \ddots & a_{rs}B
-    \end{pmatrix}
-  $
-\end{center}
-
-\change{Citation needed for these.}
-
-\subsection{Identities of tensor products}
-
-\theorem[Associativity]
-\begin{align}
-  (A \otimes B) \otimes C = A \otimes (B \otimes C)
-\end{align}
-
-\theorem[Distributivity over matrix product] If A and C; and B and D are compatible (can be multiplied) then:
-\begin{align}
-  (A \otimes B)(C \otimes D) = (AC) \otimes (BD)
-\end{align}
-
-\unsure{Need a better name here}
-
-\theorem["Unitary matrices disappearing"]
-\begin{align}
-  (A_n \otimes I_m)(I_n \otimes B_m) = A_n \otimes B_m
-\end{align}
-
-\definition{Quantum register} The quantum register consisting of n qubits is the tensor product of n qubits (on $H_2$).
-
-\begin{align}
-H_2^{\otimes{}n} = H_2 \otimes H_2 \otimes ... \otimes H_2
-\end{align}
-
 \chapter{Quantum walk}
 
-\section{Definition of the coin}
+Classical random graph walks can be seen as using a classical coin flip to decide in the current vertex which neighbouring vertex to step next. To create a quantum version of these walks, we define the quantum coin to randomize the walk, then use entanglement between the coin and the register of the current vertex, to influence stepping.
 
-According to Postulate 2 unitary matrices are the physical operations we can execute on qubits. The following matrices are used in the program.
+A great introduction to quantum walks is in Portugal's Quantum Walks and Search Algorithms book \cite{Portugal}.
 
-\paragraph{Hadamard matrix}
+\section{Definition of the quantum coin}
 
-\begin{center}
-  $H = \frac{1}{\sqrt{2}}\begin{pmatrix}
+The quantum coin has a current state, which according to Postulate 1 and 4 is an n-qubit register and a transition operator, which according to Postulate 2 is a unitary matrix.
+
+The current state decides where to step next. If there are $d$ neighbours to choose from, the coin's current state register must be $d$ dimensional.
+
+The transition operator decides how the coin is flipped. If the coin is $d$ dimensional, the transition operator is a $d\times{}d$ dimensional matrix. Based on what the transition operator is, multiple types of coins can be defined. The following ones are typically used in quantum walks.
+
+\definition{\textbf{Hadamard coin}}
+
+The Hadamard coin uses the Hadamard-matrix as a transition operator, which is the following:
+
+\begin{align}
+  H = \frac{1}{\sqrt{2}}\begin{pmatrix}
       1 & 1  \\
       1 & -1
-    \end{pmatrix}$
-\end{center}
+    \end{pmatrix}
+\end{align}
 
-\section{Hadamard-type quantum coin}
+If the starting coin state is $\ket{0}$, then flipping the coin once results in the following state:
 
-A Hadamard-féle kvantumérme egy olyan qubit, melynek a kiindulási állapota a $c
-  = \ket{0}$ vagy $c = \ket{1}$ vektor és ha feldobjuk, akkor a
-Hadamard-mátrixszal szorzódik.
+\begin{align}
+ H\ket{0} = \frac{1}{\sqrt{2}}\begin{pmatrix}
+      1 & 1  \\
+      1 & -1
+    \end{pmatrix} \begin{pmatrix} 1 \\ 0 \end{pmatrix}
+    = \frac{1}{\sqrt{2}} \begin{pmatrix} 1 \\ 1 \end{pmatrix} = \frac{1}{\sqrt{2}} \ket{0} + \frac{1}{\sqrt{2}} \ket{1}
+\end{align}
 
-Klasszikus érmék esetében ha feldobjuk 1-szer akkor $50\%$ eséllyel kapunk
-fejet, $50\%$ eséllyel pedig írást. Kvantumérmék esetében 1-szer feldobás után
-hasonló a helyzet. Például $\ket{0}$-ból kiindulva $H\ket{0} =
-  \frac{1}{\sqrt{2}}\ket{0} + \frac{1}{\sqrt{2}}\ket{1}$, tehát
-$(\frac{1}{\sqrt{2}})^2 = \frac{1}{2}$ valószínűséggel kapunk majd $\ket{0}$,
-illetve $\ket{1}$ vektort ha megmérjük a kvantumérmét a feldobás után.
+If we measured the above coin, the probability of measuring $\ket{0}$ is $\left\lvert\frac{1}{\sqrt{2}}\right\rvert^2 + \left\lvert\frac{1}{\sqrt{2}}\right\rvert^2 = \frac{1}{2}$.
 
-Klasszikus érmékre a második feldobás után a helyzet hasonló: $50\%$ eséllyel
-kapunk fejet, $50\%$ eséllyel pedig írást. Kvantumérmék esetében azonban
-érdekes jelenség figyelhető meg: $H^2\ket{0} = H(\frac{1}{\sqrt{2}}\ket{0} +
-  \frac{1}{\sqrt{2}}\ket{1}) = \ket{0}$, hiszen a Hadamard-mátrix négyzete az
-identitás mátrix. Tehát a 2. feldobás után $100\%$ valószínűséggel a kiindulási
-értéket fogjuk visszakapni.
+Similarly the starting coin state is $\ket{1}$, then flipping the coin once results in the following state:
 
-Klasszikus gráfbolyongások vizsgálatánál ha 2-reguláris gráfról van szó, akkor
-a szomszéd véletlenszerű kiválasztása megfeleltethető egy klasszikus
-érmefeldobás eredményének. Ebből a megfigyelésből kiindulva definiálhatjuk a
-kvantum gráfbolyongást 2-reguláris gráfok esetén a kvantumérme
-felhasználásával. A fenti eredményekből látszik, hogy nagyon más viselkedésre
-lehet számítani, ezért érdemes ezzel a továbbiakban részletesen foglalkozni.
+\begin{align}
+   H\ket{1} = \frac{1}{\sqrt{2}}\begin{pmatrix}
+      1 & 1  \\
+      1 & -1
+    \end{pmatrix} \begin{pmatrix} 0 \\ 1 \end{pmatrix}
+    = \frac{1}{\sqrt{2}} \begin{pmatrix} 1 \\ -1 \end{pmatrix} = \frac{1}{\sqrt{2}} \ket{0} - \frac{1}{\sqrt{2}} \ket{1}
+\end{align}
 
-\chapter{Kvantumséta az egyenesen}
+the probability of measuring $\ket{1}$ is similarly $\left\lvert\frac{1}{\sqrt{2}}\right\rvert^2 + \left\lvert-\frac{1}{\sqrt{2}}\right\rvert^2 = \frac{1}{2}$.
+
+An interesting property about this coin is related to the fact, that the Hadamard-matrix is Hermitian (self-adjoint), i.e. $H^{\dagger} = H$, while also unitary, i.e. $H^{\dagger} = H^{-1}$, which results in $H^{-1} = H$, thus $HH = I$. This means, that if we flip the coin twice, without measuring it, it will return to its original state, for example:
+
+\begin{align}
+ H^2 \ket{0} = H\frac{1}{\sqrt{2}}(\ket{0} + \ket{1}) = \frac{1}{2}(\ket{0} + \ket{1} + \ket{0} - \ket{1}) = \ket{0}
+\end{align}
+
+After the second flip, the probability of measuring $\ket{0}$ is 1, due to the destrutive interference between the $\ket{1}$ vectors. This illustrates the vast difference between classical and quantum walks.
+
+\definition{\textbf{$2^n$ dimensional Hadamard-coin}}: A $2^n$ dimensional Hadamard-coin can be created by taking the tensor product of the $2$ dimensional Hadamard-coin $n$ times: $H^{\otimes{}n}$
+
+
+
+\definition{\textbf{Grover coin}}
+
+The Grover coin's origin is the Grover search algorithm, where it is used as the diffusion operator, defined as follows:
+
+The diagonal state of the coin space:
+
+\begin{align}
+    \ket{D} = H^{\otimes{}n}\ket{0} = \frac{1}{\sqrt{2^n}} \sum\limits_{i=0}^{2^n-1} \ket{i}
+\end{align}
+
+Grover coin:
+
+\begin{align}
+    G = 2\ket{D}\bra{D} - I
+\end{align}
+
+If $N = 2^n$, then
+
+\begin{align}
+  G = \begin{pmatrix}
+      \frac{2}{N} - 1 & \frac{2}{N} & \dots  & \frac{2}{N} \\
+      \frac{2}{N} & \frac{2}{N} - 1 & \dots  & \frac{2}{N} \\
+      \vdots & \vdots & \ddots & \vdots \\
+      \frac{2}{N} & \frac{2}{N} & \ddots & \frac{2}{N} - 1
+    \end{pmatrix}
+\end{align}
+
+\paragraph{Fourier coin}
+
+While both the Hadamard and the Fourier coin need to be sized as a power of $2$, the Fourier coin does not have this limitation. A size $N$ Fourier-coin, $F_N$ is defined by the matrix of the Fourier-transform:
+
+\unsure{A Quanutm diszkrét Fourier transzformáció mátrixa talán ez?}
+
+\begin{align}
+[F_N]_{k,l} = \frac{1}{\sqrt{N}} \omega^{kl}
+\end{align}
+
+where 
+\begin{align}
+    \omega = e^{\frac{2\pi{}i}{N}}
+\end{align}
+
+\begin{align}
+  F_N = \frac{1}{\sqrt{N}}\begin{pmatrix}
+      1 &  1 & \dots  & 1 \\
+      1 &  e^{\frac{2\pi{}i}{N}} & \dots  & e^{\frac{2\pi{}i(N-1)}{N}} \\
+      \vdots & \vdots & \ddots & \vdots \\
+      1 &  e^{\frac{2\pi{}i(N-1)}{N}} & \ddots & e^{\frac{2\pi{}i(N-1)^2}{N}}
+    \end{pmatrix}
+\end{align}
+
+\section{Quantum walks on the line}
+
+\change{Ez az önlabomból van, picit rövidítve be lehetne tenni ide.}
+
+The simplest form of a quantum walk to discuss is the quantum walk on the line. A great introduction into this is in \cite{KempeIntroduction}.
+
+A line is an infinite 2-regular graph
 
 A kvantumbolyongásokat 2-reguláris gráfok esetén tehát a Hadamard-mátrix
 segítségével definiáljuk. A következőkben az egyenesen, mint 2-reguláris gráfon
