@@ -1,0 +1,660 @@
+\chapter{Quantum informatics, quantum computing}
+
+\section{The postulates of quantum mechanics}
+
+Based on Quantum  computing  and  communications: an  engineering  approach by Balázs Ferenc and Imre Sándor \cite{ImreSandor} and Mika Hirvensalo's Quantum Computing\cite{Hirvensalo}.
+
+\info{Ez azért jó felvezető, mert a mérés posztulátumnál el tudom mondani az unitér tranfó azonosságait, a tenzoros posztulátumnál pedig a tenzorszorzás azonosságait, amikre később hivatkozni fogok.}
+
+\unsure{Vajon szó szerint bemásolni a könyvből nagyon rosszul néz ki, pláne hogy valószínűleg olyan javítja aki olvasta?}
+
+\paragraph{First postulate: State space}
+
+The actual state of any closed physical system can be described by means of a so called \textbf{state vector} $v$ having complex coefficients and unit length in a Hilbert space $V$ i.e. a complex linear vector space (\textbf{state space}) equipped with inner product.
+
+A 2 dimensional Hilbert space is the simplest example of a closed physical system.
+
+\definition{\textbf{Qubit}} A unit vector in the 2 dimensional Hilbert space ($H_2$) is a qubit. The base vectors in this space are $\ket{0} = \begin{pmatrix} 1 \\ 0 \end{pmatrix}$ and $\ket{1} = \begin{pmatrix} 0 \\ 1 \end{pmatrix}$. Any qubit can be written in the form $a\ket{0} + b\ket{1} = \begin{pmatrix} a \\ b \end{pmatrix}$, where $a, b \in{} \mathds{C}$ and $|a|^2 + |b|^2 = 1$. 
+
+\paragraph{Postulate 2. Time evolution}
+
+The evolution of any closed physical system in time can be characterized by means of unitary transforms depending only on the starting and finishing time of the evolution.
+
+
+\definition{\textbf{Unitary matrix}} U is unitary if $U^{\dagger} = U^{-1}$.
+
+\change{TODO: https://en.wikipedia.org/wiki/Unitary\_matrix vagy kvantumos előadás diasora, citation?. Az ortonormált bázist alkotó sorosat használom az élszíncsoportok = érmeoldalak bizonyításnál.}
+
+Equivalent definitions:
+
+\begin{enumerate}
+    \item U's rows form an orthonormal basis of $\mathds{C}^n$.
+    \item U's columns form an orthonormal basis of $\mathds{C}^n$.
+    \item U is an isometry: injective and preserves length.
+    \item U preserves the inner product.
+\end{enumerate}
+
+\paragraph{Postulate 3. Measurement}
+
+Any quantum measurement can be described by means of a set of measurement operators ${M_m}$, where $m$ stands for the
+possible results of the measurement. The probability of measuring $m$ if the system is in state $\ket{v}$ can be calculated as
+
+\begin{align}
+    P(m | \ket{v}) = \bra{v} M_m^{\dagger} M_m \ket{v}
+\end{align}
+
+and the system after measuring $m$ goes to state
+
+\begin{align}
+    \ket{v'} = \frac{M_m\ket{v}}{\sqrt{\bra{v} M_m^{\dagger} M_m \ket{v}}}
+\end{align}
+
+due to classical probability
+
+\begin{align}
+    \sum\limits_{m} P(m | \ket{v}) = \sum\limits_{m} \bra{v} M_m^{\dagger} M_m \ket{v} = 1
+\end{align}
+
+which means the measurement operators have to satisfy the following \textbf{completeness relation}
+
+
+\begin{align}
+    \sum\limits_{m}  M_m^{\dagger} M_m = I
+\end{align}
+
+The value of a qubit can be any unit length vector in ($H_2$), however when we measure it, we will receive one
+of the base vectors of ($H_2$). For $a\ket{0} + b\ket{1}$ we measure $\ket{0}$ with probability $|a|^2$ and $\ket{1}$ with probability $|b|^2$.
+
+\paragraph{Postulate 4. Composite system}
+The state space of a composite physical system $W$ can be determined using the tensor product of the individual systems $W = V \otimes Y$. Furthermore having defined $v \in V$ $y \in Y$ then the joint state of the composite system is $w = v \otimes y$.
+
+\definition{\textbf{Tensor product}} The tensor product $A \otimes B$ of matrix $A$ of size $r \times s$ and matrix $B$ of size $t \times u$ is of size $rt \times su$ and is defined as follows:
+
+\begin{center}
+  $A = \begin{pmatrix}
+      a_{11} & a_{12} & \dots  & a_{1s} \\
+      a_{21} & a_{22} & \dots  & a_{2s} \\
+      \vdots & \vdots & \ddots & \vdots \\
+      a_{r1} & a_{r2} & \ddots & a_{rs}
+    \end{pmatrix}
+  $
+  és
+  $B = \begin{pmatrix}
+      b_{11} & b_{12} & \dots  & b_{1u} \\
+      b_{21} & b_{22} & \dots  & b_{2u} \\
+      \vdots & \vdots & \ddots & \vdots \\
+      b_{t1} & b_{t2} & \ddots & b_{tu}
+    \end{pmatrix}
+  $ esetén
+\end{center}
+
+\begin{center}
+  $A \otimes B = \begin{pmatrix}
+      a_{11}B & a_{12}B & \dots  & a_{1s}B \\
+      a_{21}B & a_{22}B & \dots  & a_{2s}B \\
+      \vdots  & \vdots  & \ddots & \vdots  \\
+      a_{r1}B & a_{r2}B & \ddots & a_{rs}B
+    \end{pmatrix}
+  $
+\end{center}
+
+\change{Citation needed for these.}
+
+\subsection{Identities of tensor products}
+
+\theorem[Associativity]
+\begin{align}
+  (A \otimes B) \otimes C = A \otimes (B \otimes C)
+\end{align}
+
+\theorem[Distributivity over matrix product] If A and C; and B and D are compatible (can be multiplied) then:
+\begin{align}
+  (A \otimes B)(C \otimes D) = (AC) \otimes (BD)
+\end{align}
+
+\unsure{Need a better name here}
+
+\theorem["Unitary matrices disappearing"]
+\begin{align}
+  (A_n \otimes I_m)(I_n \otimes B_m) = A_n \otimes B_m
+\end{align}
+
+\definition{Quantum register} The quantum register consisting of n qubits is the tensor product of n qubits (on $H_2$).
+
+\begin{align}
+H_2^{\otimes{}n} = H_2 \otimes H_2 \otimes ... \otimes H_2
+\end{align}
+
+\chapter{Quantum walk}
+
+\section{Definition of the coin}
+
+According to Postulate 2 unitary matrices are the physical operations we can execute on qubits. The following matrices are used in the program.
+
+\paragraph{Hadamard matrix}
+
+\begin{center}
+  $H = \frac{1}{\sqrt{2}}\begin{pmatrix}
+      1 & 1  \\
+      1 & -1
+    \end{pmatrix}$
+\end{center}
+
+\section{Hadamard-type quantum coin}
+
+A Hadamard-féle kvantumérme egy olyan qubit, melynek a kiindulási állapota a $c
+  = \ket{0}$ vagy $c = \ket{1}$ vektor és ha feldobjuk, akkor a
+Hadamard-mátrixszal szorzódik.
+
+Klasszikus érmék esetében ha feldobjuk 1-szer akkor $50\%$ eséllyel kapunk
+fejet, $50\%$ eséllyel pedig írást. Kvantumérmék esetében 1-szer feldobás után
+hasonló a helyzet. Például $\ket{0}$-ból kiindulva $H\ket{0} =
+  \frac{1}{\sqrt{2}}\ket{0} + \frac{1}{\sqrt{2}}\ket{1}$, tehát
+$(\frac{1}{\sqrt{2}})^2 = \frac{1}{2}$ valószínűséggel kapunk majd $\ket{0}$,
+illetve $\ket{1}$ vektort ha megmérjük a kvantumérmét a feldobás után.
+
+Klasszikus érmékre a második feldobás után a helyzet hasonló: $50\%$ eséllyel
+kapunk fejet, $50\%$ eséllyel pedig írást. Kvantumérmék esetében azonban
+érdekes jelenség figyelhető meg: $H^2\ket{0} = H(\frac{1}{\sqrt{2}}\ket{0} +
+  \frac{1}{\sqrt{2}}\ket{1}) = \ket{0}$, hiszen a Hadamard-mátrix négyzete az
+identitás mátrix. Tehát a 2. feldobás után $100\%$ valószínűséggel a kiindulási
+értéket fogjuk visszakapni.
+
+Klasszikus gráfbolyongások vizsgálatánál ha 2-reguláris gráfról van szó, akkor
+a szomszéd véletlenszerű kiválasztása megfeleltethető egy klasszikus
+érmefeldobás eredményének. Ebből a megfigyelésből kiindulva definiálhatjuk a
+kvantum gráfbolyongást 2-reguláris gráfok esetén a kvantumérme
+felhasználásával. A fenti eredményekből látszik, hogy nagyon más viselkedésre
+lehet számítani, ezért érdemes ezzel a továbbiakban részletesen foglalkozni.
+
+\chapter{Kvantumséta az egyenesen}
+
+A kvantumbolyongásokat 2-reguláris gráfok esetén tehát a Hadamard-mátrix
+segítségével definiáljuk. A következőkben az egyenesen, mint 2-reguláris gráfon
+vett bolyongást fogjuk részletesen megvizsgálni. Ez a fejezet Susan Stepney
+Quantum walking című írása \cite{Stepney} alapján készült.
+
+Tegyük fel, hogy a bolyongás az egyenesen az origóból indul és a $k.$ lépés
+után megáll. Ekkor a pozíció tárolására elegendő egy $(2k+1)$ méretű
+állapotvektor, hiszen legfeljebb $k$ messzire juthatunk mindkét irányban a
+kezdőponttól. Jelöljük ezt $\ket{P}$-vel és legyen $\ket{P}=(p_{-k}, ..., p_0,
+  ..., p_{k})$, ahol $p_i\in\mathds{C}$ $\forall i$-re és $\sum\limits_{i=-k}^{k}
+  |p_i|^2 = 1$. Azt mondjuk, hogy annak a valószínűsége, hogy a bolyongó éppen az
+$i.$ koordinátán van $|p_i|^2$. Ezáltal egy teljes valószínűségi eloszlást
+kaptunk a bolyongó pozíciója szerint.
+
+Mivel kezdetben a bolyongó az origóban van, ezért a hozzá tartozó állapotvektor
+$\ket{P_0} = (0, ..., 0, 1, 0, ..., 0)$, vagyis $p_0=1$, a többi $0$. A kvantumérme
+kiindulási állapota pedig legyen $\ket{C_0} = \begin{pmatrix} \frac{1}{\sqrt{2}} \\
+    \frac{i}{\sqrt{2}}\end{pmatrix}$. Ekkor a teljes rendszer állapotát e kettő
+tenzorszorzata fogja megadni:
+
+\begin{center}
+  $\ket{\Psi_0} = \ket{P_0} \otimes \ket{C_0}
+    = \frac{1}{\sqrt{2}} \begin{pmatrix}
+      p_{-k}         \\
+      i\cdot{}p_{-k} \\
+      \vdots         \\
+      p_{0}          \\
+      i\cdot{}p_{0}  \\
+      \vdots         \\
+      p_{k}          \\
+      i\cdot{}p_{k}
+    \end{pmatrix}
+  $
+\end{center}
+
+A lépés ezek után két fázisból áll. Az első fázisban az érmével dobunk. Ahhoz, hogy
+a $\ket{\Psi}$ vektorban az érme állapotát frissítsük, azt az $I_{2k+1} \otimes H$
+mátrixszal kell beszorozni. Ez egy olyan $(4k+2) \times (4k+2)$ -es mátrix, mely
+$2 \times 2$-es almátrixokból áll és az átlójában Hadamard-mátrixok vannak:
+
+\begin{center}
+  \[ \hat{C} =
+    \left(
+    \begin{array}{cc|cc|cc|cc|cc|cc|cc}
+        \frac{1}{\sqrt{2}} & \frac{1}{\sqrt{2}}  & 0      & 0      & \dots              & \dots               & \dots              & \dots               & \dots              & \dots               & \dots  & \dots  & 0                  & 0                   \\
+        \frac{1}{\sqrt{2}} & -\frac{1}{\sqrt{2}} & 0      & 0      & \dots              & \dots               & \dots              & \dots               & \dots              & \dots               & \dots  & \dots  & 0                  & 0                   \\ \hline
+        0                  & 0                   & \ddots &        & \ddots             &                     & \ddots             &                     & \ddots             &                     & \ddots &        & \vdots             & \vdots              \\
+        0                  & 0                   &        & \ddots &                    & \ddots              &                    & \ddots              &                    & \ddots              &        & \ddots & \vdots             & \vdots              \\ \hline
+        \vdots             & \vdots              & \ddots &        & \frac{1}{\sqrt{2}} & \frac{1}{\sqrt{2}}  & 0                  & 0                   & \ddots             &                     & \ddots &        & \vdots             & \vdots              \\
+        \vdots             & \vdots              &        & \ddots & \frac{1}{\sqrt{2}} & -\frac{1}{\sqrt{2}} & 0                  & 0                   &                    & \ddots              &        & \ddots & \vdots             & \vdots              \\ \hline
+        \vdots             & \vdots              & \ddots &        & 0                  & 0                   & \frac{1}{\sqrt{2}} & \frac{1}{\sqrt{2}}  & 0                  & 0                   & \ddots &        & \vdots             & \vdots              \\
+        \vdots             & \vdots              &        & \ddots & 0                  & 0                   & \frac{1}{\sqrt{2}} & -\frac{1}{\sqrt{2}} & 0                  & 0                   &        & \ddots & \vdots             & \vdots              \\ \hline
+        \vdots             & \vdots              & \ddots &        & \ddots             &                     & 0                  & 0                   & \frac{1}{\sqrt{2}} & \frac{1}{\sqrt{2}}  & \ddots &        & \vdots             & \vdots              \\
+        \vdots             & \vdots              &        & \ddots &                    & \ddots              & 0                  & 0                   & \frac{1}{\sqrt{2}} & -\frac{1}{\sqrt{2}} &        & \ddots & \vdots             & \vdots              \\ \hline
+        \vdots             & \vdots              & \ddots &        & \ddots             &                     & \ddots             &                     & \ddots             &                     & \ddots &        & 0                  & 0                   \\
+        \vdots             & \vdots              &        & \ddots &                    & \ddots              &                    & \ddots              &                    & \ddots              &        & \ddots & 0                  & 0                   \\ \hline
+        0                  & 0                   & \dots  & \dots  & \dots              & \dots               & \dots              & \dots               & \dots              & \dots               & 0      & 0      & \frac{1}{\sqrt{2}} & \frac{1}{\sqrt{2}}  \\
+        0                  & 0                   & \dots  & \dots  & \dots              & \dots               & \dots              & \dots               & \dots              & \dots               & 0      & 0      & \frac{1}{\sqrt{2}} & -\frac{1}{\sqrt{2}} \\
+      \end{array}
+    \right)
+  \]
+\end{center}
+
+A második fázisban a gráfon lépünk a következő csúcsba. Ahhoz, hogy balra lépjünk
+a pozíció állapotvektorát egy olyan $S_{-}$ mátrixszal kell megszorozni, ami
+az átló feletti 1-eseket tartalmaz:
+
+\begin{center}
+  \[ S_{-} =
+    \left(
+    \begin{array}{ccccc}
+        0      & 1      & 0      & \cdots & 0      \\
+               & \ddots & \ddots & \ddots & \vdots \\
+        \vdots &        & \ddots & \ddots & 0      \\
+               &        &        & \ddots & 1      \\
+        0      &        & \cdots &        & 0
+      \end{array}
+    \right)
+  \]
+\end{center}
+
+Ahhoz pedig, hogy jobbra lépjünk, egy olyan $S_{+}$ mátrixszal kell szorozni,
+ami az átló alatti 1-eseket tartalmaz:
+
+\begin{center}
+  \[ S_{+} =
+    \left(
+    \begin{array}{ccccc}
+
+        0      &        & \cdots &        & 0      \\
+        1      & \ddots &        &        &        \\
+        0      & \ddots & \ddots &        & \vdots \\
+        \vdots & \ddots & \ddots & \ddots &        \\
+        0      & \cdots & 0      & 1      & 0
+      \end{array}
+    \right)
+  \]
+\end{center}
+
+Az érme $\ket{0}$ értékére lépünk balra, az $\ket{1}$ értékére pedig jobbra.
+Tehát
+
+\begin{center}
+  \[ \hat{S} = S_{-}\otimes\ket{0}\bra{0} + S_{+}\otimes\ket{1}\bra{1}
+  \]
+\end{center}
+
+Ami kifejtve,
+
+\begin{center}
+  \[ \hat{S} =
+    \left(
+    \begin{array}{cc|cc|cc|cc|cc|cc|cc}
+        0                    & 0                    & \cellcolor{green!10} 1 & \cellcolor{green!10} 0 & 0                    & 0                    & \dots                  & \dots                  & \dots                  & \dots                  & \dots                & \dots                & 0                      & 0                      \\
+        0                    & 0                    & \cellcolor{green!10} 0 & \cellcolor{green!10} 0 & 0                    & 0                    & \dots                  & \dots                  & \dots                  & \dots                  & \dots                & \dots                & 0                      & 0                      \\ \hline
+        \cellcolor{red!10} 0 & \cellcolor{red!10} 0 & \ddots                 &                        & \ddots               &                      & \ddots                 &                        & \ddots                 &                        & \ddots               &                      & \vdots                 & \vdots                 \\
+        \cellcolor{red!10} 0 & \cellcolor{red!10} 1 &                        & \ddots                 &                      & \ddots               &                        & \ddots                 &                        & \ddots                 &                      & \ddots               & \vdots                 & \vdots                 \\ \hline
+        0                    & 0                    & \ddots                 &                        & 0                    & 0                    & \cellcolor{green!10} 1 & \cellcolor{green!10} 0 & \ddots                 &                        & \ddots               &                      & \vdots                 & \vdots                 \\
+        0                    & 0                    &                        & \ddots                 & 0                    & 0                    & \cellcolor{green!10} 0 & \cellcolor{green!10} 0 &                        & \ddots                 &                      & \ddots               & \vdots                 & \vdots                 \\ \hline
+        \vdots               & \vdots               & \ddots                 &                        & \cellcolor{red!10} 0 & \cellcolor{red!10} 0 & 0                      & 0                      & \cellcolor{green!10} 1 & \cellcolor{green!10} 0 & \ddots               &                      & \vdots                 & \vdots                 \\
+        \vdots               & \vdots               &                        & \ddots                 & \cellcolor{red!10} 0 & \cellcolor{red!10} 1 & 0                      & 0                      & \cellcolor{green!10} 0 & \cellcolor{green!10} 0 &                      & \ddots               & \vdots                 & \vdots                 \\ \hline
+        \vdots               & \vdots               & \ddots                 &                        & \ddots               &                      & \cellcolor{red!10} 0   & \cellcolor{red!10} 0   & 0                      & 0                      & \ddots               &                      & 0                      & 0                      \\
+        \vdots               & \vdots               &                        & \ddots                 &                      & \ddots               & \cellcolor{red!10} 0   & \cellcolor{red!10} 1   & 0                      & 0                      &                      & \ddots               & 0                      & 0                      \\ \hline
+        \vdots               & \vdots               & \ddots                 &                        & \ddots               &                      & \ddots                 &                        & \ddots                 &                        & \ddots               &                      & \cellcolor{green!10} 1 & \cellcolor{green!10} 0 \\
+        \vdots               & \vdots               &                        & \ddots                 &                      & \ddots               &                        & \ddots                 &                        & \ddots                 &                      & \ddots               & \cellcolor{green!10} 0 & \cellcolor{green!10} 0 \\ \hline
+        0                    & 0                    & \dots                  & \dots                  & \dots                & \dots                & \dots                  & \dots                  & 0                      & 0                      & \cellcolor{red!10} 0 & \cellcolor{red!10} 0 & 0                      & 0                      \\
+        0                    & 0                    & \dots                  & \dots                  & \dots                & \dots                & \dots                  & \dots                  & 0                      & 0                      & \cellcolor{red!10} 0 & \cellcolor{red!10} 1 & 0                      & 0                      \\
+      \end{array}
+    \right)
+  \]
+\end{center}
+
+A két fázist összevonva egy lépéshez a következő mátrix tartozik:
+
+\begin{center}
+  \[ \hat{U} = \hat{S} \cdot \hat{C} =
+    (S_{-}\otimes\ket{0}\bra{0} + S_{+}\otimes\ket{1}\bra{1})\cdot\hat{C}
+  \]
+\end{center}
+
+Ami kifejtve,
+
+\begin{center}
+  \[ \hat{U} =
+    \left(
+    \begin{array}{cc|cc|cc|cc|cc|cc|cc}
+        0                    & 0                                      & \cellcolor{green!10} \frac{1}{\sqrt{2}} & \cellcolor{green!10} 0 & 0                    & 0                                      & \dots                                   & \dots                                  & \dots                                   & \dots                  & \dots                & \dots                                  & 0                                       & 0                      \\
+        0                    & 0                                      & \cellcolor{green!10} \frac{1}{\sqrt{2}} & \cellcolor{green!10} 0 & 0                    & 0                                      & \dots                                   & \dots                                  & \dots                                   & \dots                  & \dots                & \dots                                  & 0                                       & 0                      \\ \hline
+        \cellcolor{red!10} 0 & \cellcolor{red!10} \frac{1}{\sqrt{2}}  & \ddots                                  &                        & \ddots               &                                        & \ddots                                  &                                        & \ddots                                  &                        & \ddots               &                                        & \vdots                                  & \vdots                 \\
+        \cellcolor{red!10} 0 & \cellcolor{red!10} -\frac{1}{\sqrt{2}} &                                         & \ddots                 &                      & \ddots                                 &                                         & \ddots                                 &                                         & \ddots                 &                      & \ddots                                 & \vdots                                  & \vdots                 \\ \hline
+        0                    & 0                                      & \ddots                                  &                        & 0                    & 0                                      & \cellcolor{green!10} \frac{1}{\sqrt{2}} & \cellcolor{green!10} 0                 & \ddots                                  &                        & \ddots               &                                        & \vdots                                  & \vdots                 \\
+        0                    & 0                                      &                                         & \ddots                 & 0                    & 0                                      & \cellcolor{green!10} \frac{1}{\sqrt{2}} & \cellcolor{green!10} 0                 &                                         & \ddots                 &                      & \ddots                                 & \vdots                                  & \vdots                 \\ \hline
+        \vdots               & \vdots                                 & \ddots                                  &                        & \cellcolor{red!10} 0 & \cellcolor{red!10} \frac{1}{\sqrt{2}}  & 0                                       & 0                                      & \cellcolor{green!10} \frac{1}{\sqrt{2}} & \cellcolor{green!10} 0 & \ddots               &                                        & \vdots                                  & \vdots                 \\
+        \vdots               & \vdots                                 &                                         & \ddots                 & \cellcolor{red!10} 0 & \cellcolor{red!10} -\frac{1}{\sqrt{2}} & 0                                       & 0                                      & \cellcolor{green!10} \frac{1}{\sqrt{2}} & \cellcolor{green!10} 0 &                      & \ddots                                 & \vdots                                  & \vdots                 \\ \hline
+        \vdots               & \vdots                                 & \ddots                                  &                        & \ddots               &                                        & \cellcolor{red!10} 0                    & \cellcolor{red!10} \frac{1}{\sqrt{2}}  & 0                                       & 0                      & \ddots               &                                        & 0                                       & 0                      \\
+        \vdots               & \vdots                                 &                                         & \ddots                 &                      & \ddots                                 & \cellcolor{red!10} 0                    & \cellcolor{red!10} -\frac{1}{\sqrt{2}} & 0                                       & 0                      &                      & \ddots                                 & 0                                       & 0                      \\ \hline
+        \vdots               & \vdots                                 & \ddots                                  &                        & \ddots               &                                        & \ddots                                  &                                        & \ddots                                  &                        & \ddots               &                                        & \cellcolor{green!10} \frac{1}{\sqrt{2}} & \cellcolor{green!10} 0 \\
+        \vdots               & \vdots                                 &                                         & \ddots                 &                      & \ddots                                 &                                         & \ddots                                 &                                         & \ddots                 &                      & \ddots                                 & \cellcolor{green!10} \frac{1}{\sqrt{2}} & \cellcolor{green!10} 0 \\ \hline
+        0                    & 0                                      & \dots                                   & \dots                  & \dots                & \dots                                  & \dots                                   & \dots                                  & 0                                       & 0                      & \cellcolor{red!10} 0 & \cellcolor{red!10} \frac{1}{\sqrt{2}}  & 0                                       & 0                      \\
+        0                    & 0                                      & \dots                                   & \dots                  & \dots                & \dots                                  & \dots                                   & \dots                                  & 0                                       & 0                      & \cellcolor{red!10} 0 & \cellcolor{red!10} -\frac{1}{\sqrt{2}} & 0                                       & 0                      \\
+      \end{array}
+    \right)
+  \]
+\end{center}
+
+Az $i.$ lépés után tehát az aktuális $\Psi$ állapotvektor: $\ket{\Psi_i} =
+  {\hat{U}}^i\cdot{}\ket{\Psi_0}$.
+
+\paragraph{Mérés}
+
+Annak a mérése, hogy a $i.$ koordinátán mekkora valószínűséggel van a bolyongó
+a $j.$ lépésben.
+
+Legyen $e_i$ egy $(2k+1)$ méretű csupa-0 vektor, kivéve az $i.$ koordinátát,
+ahol 1 az értéke. Ekkor az állapotvektorból az i. koordinátához tartozó blokkot
+az $\ket{e_i}\bra{e_i} \otimes \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}$
+mátrixszal történő beszorzással lehet kivágni:
+
+\begin{center} \[ \ket{\phi_{i,j}} =
+    (\ket{e_i}\bra{e_i} \otimes
+    \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix})
+    \cdot{} \ket{\Psi_j} \]
+\end{center}
+
+A blokkhoz tartozó valószínűség értéke az önmagával vett
+(komplex) skalárszorzatának az eredménye lesz, azaz $\braket{\phi_{i,j}}$, ami valós.
+
+Az ebben a fejezetben bemutatott algoritmust implementáltam a félév során. A 6.
+fejezetben részletesen ismertetem az ezzel kapcsolatos szimulációs
+eredményeket.
+
+\section{Kvantumséta a rácson}
+
+A következőkben a rácson, mint 4-reguláris gráfon vett bolyongást fogjuk
+részletesen megvizsgálni.
+
+Legyen a rács $N = n \times n$ -es.
+
+Pozíció vektor: $\ket{P} =  (p_{0}, \dots, p_{N})$, ahol
+$p_{i}\in\mathds{C}$ ahol $0 \leq{} i < N$, $\forall{}i$-re és $\sum\limits_{i=0}^{N} |p_i|^2 = 1$.
+
+\begin{align}
+  \ket{P_{0}} =  (0, \dots, 0, 1, 0, \dots, 0)
+\end{align}
+
+\begin{align}
+  C = (\frac{1}{\sqrt{2}}, \frac{i}{\sqrt{2}}) \otimes (\frac{1}{\sqrt{2}}, \frac{i}{\sqrt{2}})
+\end{align}
+
+\begin{align}
+  S_{\text{left}} =
+  \begin{pmatrix}
+    0      & 0      & 0      & \dots  & 0 \\
+    1      & 0      & 0      & \dots  & 0 \\
+    0      & 1      & 0      & \ddots & 0 \\
+    \vdots & \ddots & \ddots & 0
+  \end{pmatrix}
+\end{align}
+
+% https://hu.wikipedia.org/wiki/Kronecker_delta_f%C3%BCggv%C3%A9ny
+\begin{definition}[Kronecker delta]
+  Olyan kétváltozós függvény ami akkor $1$, ha a két változója egyenlő, egyébként $0$.
+  \begin{align}
+    \delta_{ij} =
+    \begin{cases}
+      0 & \text{ha $i\neq{}j$} \\
+      1 & \text{ha $i=j$}
+    \end{cases}
+  \end{align}
+\end{definition}
+
+% https://en.wikipedia.org/wiki/Shift_matrix
+\begin{definition}[Upper cyclic shift matrix]
+  Az $U_{k}$ mátrix egy olyan ($k\times{}k$)-s mátrix, aminek a felső mellékátlóján és a bal alsó sarokban
+  $1$-esek vannak, máshol $0$-k.
+  Az index számozása moduló k történik.
+  Ennek az $i$. sor, $j$. oszlopában:
+  \begin{align}
+    U_{k}[i,j] = \delta_{(i+1),j}
+  \end{align}
+\end{definition}
+
+\begin{definition}[Lower cyclic shift matrix]
+  Az $L_{k}$ mátrix egy olyan ($k\times{}k$)-s mátrix, aminek az alsó mellékátlóján és a jobb felső sarokban
+  $1$-esek vannak, máshol $0$-k.
+  Az index számozása moduló k történik.
+  Ennek az $i$. sor, $j$. oszlopában:
+  \begin{align}
+    L_{k}[i,j] = \delta_{i,j+1}
+  \end{align}
+\end{definition}
+
+\begin{align}
+  L = U^{T}
+\end{align}
+
+
+\begin{itemize}
+  \item Rács = két körnek a tenzorszorzata.
+  \item Fel/le = mindig 1 sorral felette/alatta lévő (modulóval) van összekötve = n-el van elcsúsztatva.
+  \item Függőlegesen számozva ugyanígy csak fordított elnevezések.
+  \item Jobbra-balra = 1 távolság, kivéve sor végén, ahol a sor elejére ugrik = kis körök.
+  \item Tenzorszorzás tulajdonságait előre kiszedni, műveletek, használatkor hivatkozni.
+  \item Többsoros képleteknek csak 1 száma legyen.
+\end{itemize}
+
+\section{Példa}
+
+\begin{align}
+  n = 3
+\end{align}
+
+\begin{figure}[!ht]
+  \begin{center}
+    \begin{tikzpicture}
+
+      \draw(0,0) -- (0,2);
+      \draw(1,0) -- (1,2);
+      \draw(2,0) -- (2,2);
+
+      \draw [black, dashed] plot [smooth, tension=0.8] coordinates { (0,0) (0.45,-0.25) (0.45,2.25) (0,2)};
+      \draw [black, dashed] plot [smooth, tension=0.8] coordinates { (1,0) (1.45,-0.25) (1.45,2.25) (1,2)};
+      \draw [black, dashed] plot [smooth, tension=0.8] coordinates { (2,0) (2.45,-0.25) (2.45,2.25) (2,2)};
+
+
+      \draw(0,0) -- (2,0);
+      \draw(0,1) -- (2,1);
+      \draw(0,2) -- (2,2);
+
+      \draw [black, dashed] plot [smooth, tension=0.8] coordinates { (0,0) (-0.35,0.45) (2.35,0.45) (2,0)};
+      \draw [black, dashed] plot [smooth, tension=0.8] coordinates { (0,1) (-0.35,1.45) (2.35,1.45) (2,1)};
+      \draw [black, dashed] plot [smooth, tension=0.8] coordinates { (0,2) (-0.35,2.45) (2.35,2.45) (2,2)};
+
+      \draw[black,fill=white](0,0) circle (0.3) node {0};
+      \draw[black,fill=white](1,0) circle (0.3) node {1};
+      \draw[black,fill=white](2,0) circle (0.3) node {2};
+
+      \draw[black,fill=white](0,1) circle (0.3) node {3};
+      \draw[black,fill=red!60](1,1) circle (0.3) node {4};
+      \draw[black,fill=white](2,1) circle (0.3) node {5};
+
+      \draw[black,fill=white](0,2) circle (0.3) node {6};
+      \draw[black,fill=white](1,2) circle (0.3) node {7};
+      \draw[black,fill=white](2,2) circle (0.3) node {8};
+
+    \end{tikzpicture}
+  \end{center}
+  \caption{n=3-ös rács}
+  \label{fig:3Racs}
+\end{figure}
+
+\begin{align}
+  N = n^2 = 9
+\end{align}
+
+\begin{align}
+  S_{\text{left}} = I_3 \otimes U_3 =
+  \begin{pmatrix}
+    0                  & \textcolor{red}{1} & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  \\
+    0                  & 0                  & \textcolor{red}{1} & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  \\
+    \textcolor{red}{1} & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  \\
+    0                  & 0                  & 0                  & 0                  & \textcolor{red}{1} & 0                  & 0                  & 0                  & 0                  \\
+    0                  & 0                  & 0                  & 0                  & 0                  & \textcolor{red}{1} & 0                  & 0                  & 0                  \\
+    0                  & 0                  & 0                  & \textcolor{red}{1} & 0                  & 0                  & 0                  & 0                  & 0                  \\
+    0                  & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  & \textcolor{red}{1} & 0                  \\
+    0                  & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  & \textcolor{red}{1} \\
+    0                  & 0                  & 0                  & 0                  & 0                  & 0                  & \textcolor{red}{1} & 0                  & 0
+  \end{pmatrix}
+\end{align}
+
+\begin{align}
+  S_{\text{right}} = I_3 \otimes L_3 =
+  \begin{pmatrix}
+    0                  & 0                  & \textcolor{red}{1} & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  \\
+    \textcolor{red}{1} & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  \\
+    0                  & \textcolor{red}{1} & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  \\
+    0                  & 0                  & 0                  & 0                  & 0                  & \textcolor{red}{1} & 0                  & 0                  & 0                  \\
+    0                  & 0                  & 0                  & \textcolor{red}{1} & 0                  & 0                  & 0                  & 0                  & 0                  \\
+    0                  & 0                  & 0                  & 0                  & \textcolor{red}{1} & 0                  & 0                  & 0                  & 0                  \\
+    0                  & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  & \textcolor{red}{1} \\
+    0                  & 0                  & 0                  & 0                  & 0                  & 0                  & \textcolor{red}{1} & 0                  & 0                  \\
+    0                  & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  & \textcolor{red}{1} & 0
+  \end{pmatrix}
+\end{align}
+
+
+\begin{align}
+  S_{\text{down}} = U_3^3 = U_3 \otimes I_3 =
+  \begin{pmatrix}
+    0                  & 0                  & 0                  & \textcolor{red}{1} & 0                  & 0                  & 0                  & 0                  & 0                  \\
+    0                  & 0                  & 0                  & 0                  & \textcolor{red}{1} & 0                  & 0                  & 0                  & 0                  \\
+    0                  & 0                  & 0                  & 0                  & 0                  & \textcolor{red}{1} & 0                  & 0                  & 0                  \\
+    0                  & 0                  & 0                  & 0                  & 0                  & 0                  & \textcolor{red}{1} & 0                  & 0                  \\
+    0                  & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  & \textcolor{red}{1} & 0                  \\
+    0                  & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  & \textcolor{red}{1} \\
+    \textcolor{red}{1} & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  \\
+    0                  & \textcolor{red}{1} & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  \\
+    0                  & 0                  & \textcolor{red}{1} & 0                  & 0                  & 0                  & 0                  & 0                  & 0
+  \end{pmatrix}
+\end{align}
+
+
+\begin{align}
+  S_{\text{up}} = L_3^3 = L_3 \otimes I_3 =
+  \begin{pmatrix}
+    0                  & 0                  & 0                  & 0                  & 0                  & 0                  & \textcolor{red}{1} & 0                  & 0                  \\
+    0                  & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  & \textcolor{red}{1} & 0                  \\
+    0                  & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  & \textcolor{red}{1} \\
+    \textcolor{red}{1} & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  \\
+    0                  & \textcolor{red}{1} & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  \\
+    0                  & 0                  & \textcolor{red}{1} & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  \\
+    0                  & 0                  & 0                  & \textcolor{red}{1} & 0                  & 0                  & 0                  & 0                  & 0                  \\
+    0                  & 0                  & 0                  & 0                  & \textcolor{red}{1} & 0                  & 0                  & 0                  & 0                  \\
+    0                  & 0                  & 0                  & 0                  & 0                  & \textcolor{red}{1} & 0                  & 0                  & 0
+  \end{pmatrix}
+\end{align}
+
+\begin{align}
+  X_{\text{head}} =
+  \begin{pmatrix}
+    1 & 0 \\
+    0 & 0
+  \end{pmatrix}
+\end{align}
+
+\begin{align}
+  X_{\text{tail}} =
+  \begin{pmatrix}
+    0 & 0 \\
+    0 & 1
+  \end{pmatrix}
+\end{align}
+
+
+\begin{align}
+  S =
+  (S_{\text{up}} S_{\text{left}}) \otimes (X_{\text{head}} \otimes X_{\text{head}}) +    \\
+  (S_{\text{up}}  S_{\text{right}}) \otimes (X_{\text{head}} \otimes X_{\text{tail}}) +  \\
+  (S_{\text{down}}  S_{\text{left}}) \otimes (X_{\text{tail}} \otimes X_{\text{head}}) + \\
+  (S_{\text{down}} S_{\text{right}}) \otimes (X_{\text{tail}} \otimes X_{\text{tail}})
+\end{align}
+
+\begin{align}
+  C_4 = H^{\otimes2} = \frac{1}{2}
+  \begin{pmatrix}
+    1 & 1  & 1  & 1  \\
+    1 & -1 & 1  & -1 \\
+    1 & 1  & -1 & -1 \\
+    1 & -1 & -1 & 1
+  \end{pmatrix}
+\end{align}
+
+\begin{align}
+  U = S  (I_9 \otimes C_4)
+\end{align}
+
+\begin{align}
+  U =
+  ((S_{\text{up}}  S_{\text{left}}) \otimes (X_{\text{head}} \otimes X_{\text{head}}) +  \\
+  (S_{\text{up}} S_{\text{right}}) \otimes (X_{\text{head}} \otimes X_{\text{tail}}) +   \\
+  (S_{\text{down}}  S_{\text{left}}) \otimes (X_{\text{tail}} \otimes X_{\text{head}}) + \\
+  (S_{\text{down}} S_{\text{right}}) \otimes (X_{\text{tail}} \otimes X_{\text{tail}}))
+  (I_9 \otimes C_4)
+\end{align}
+
+\definition[Tenzorszorzás azonosság: mátrix szorzással disztibutív]
+
+Bal oldalt 9*9-es, jobb oldalt 4*4-es mátrixok vannak.
+
+\begin{align}
+  U =
+  (S_{\text{up}}  S_{\text{left}}) \otimes ((X_{\text{head}} \otimes X_{\text{head}})  C_4) +   \\
+  (S_{\text{up}}  S_{\text{right}}) \otimes ((X_{\text{head}} \otimes X_{\text{tail}}) C_4) +   \\
+  (S_{\text{down}}  S_{\text{left}}) \otimes ((X_{\text{tail}} \otimes X_{\text{head}})  C_4) + \\
+  (S_{\text{down}}  S_{\text{right}}) \otimes ((X_{\text{tail}} \otimes X_{\text{tail}}) C_4)
+\end{align}
+
+\begin{align}
+  C_4 = C_2 \otimes C_2
+\end{align}
+
+\begin{align}
+  U =
+  (S_{\text{up}}  S_{\text{left}}) \otimes ((X_{\text{head}} \otimes X_{\text{head}}) (C_2 \otimes C_2)) +   \\
+  (S_{\text{up}}  S_{\text{right}}) \otimes ((X_{\text{head}} \otimes X_{\text{tail}}) (C_2 \otimes C_2)) +  \\
+  (S_{\text{down}}  S_{\text{left}}) \otimes ((X_{\text{tail}} \otimes X_{\text{head}}) (C_2 \otimes C_2)) + \\
+  (S_{\text{down}}  S_{\text{right}}) \otimes ((X_{\text{tail}} \otimes X_{\text{tail}}) (C_2 \otimes C_2))
+\end{align}
+
+\definition[Tenzorszorzás azonosság: mátrix szorzással disztibutív]
+
+\begin{align}
+  U =
+  (S_{\text{up}}  S_{\text{left}}) \otimes (((X_{\text{head}}C_2) \otimes (X_{\text{head}}C_2))) +   \\
+  (S_{\text{up}}  S_{\text{right}}) \otimes (((X_{\text{head}}C_2) \otimes (X_{\text{tail}}C_2))) +  \\
+  (S_{\text{down}}  S_{\text{left}}) \otimes (((X_{\text{tail}}C_2) \otimes (X_{\text{head}}C_2))) + \\
+  (S_{\text{down}}  S_{\text{right}}) \otimes (((X_{\text{tail}}C_2) \otimes (X_{\text{tail}}C_2)))
+\end{align}
+
+\definition[Tenzorszorzás azonosság: asszociatív]
+
+
+\begin{align}
+  U =
+  (S_{\text{up}}  S_{\text{left}}) \otimes (X_{\text{head}}C_2) \otimes (X_{\text{head}}C_2) +   \\
+  (S_{\text{up}}  S_{\text{right}}) \otimes (X_{\text{head}}C_2) \otimes (X_{\text{tail}}C_2) +  \\
+  (S_{\text{down}}  S_{\text{left}}) \otimes (X_{\text{tail}}C_2) \otimes (X_{\text{head}}C_2) + \\
+  (S_{\text{down}}  S_{\text{right}}) \otimes (X_{\text{tail}}C_2) \otimes (X_{\text{tail}}C_2)
+\end{align}
+
+
+\definition[Tenzorszorzás Lemma?]
+
+
+\begin{align}
+  S = ((S_{\text{up}} \otimes  X_{\text{head}} \otimes I) +
+  (S_{\text{down}} \otimes X_{\text{tail}} \otimes I))
+  ((S_{\text{left}} \otimes I \otimes X_{\text{head}}) +
+  (S_{\text{right}} \otimes I \otimes  X_{\text{tail}} ))
+\end{align}
+
+
+% \begin{align}
+%   U =
+%   ((S_{\text{up}}  S_{\text{left}}) \otimes I_2) (I_9 \otimes (X_{\text{head}}C_2)) \otimes (X_{\text{head}}C_2) +   \\
+%   ((S_{\text{up}}  S_{\text{right}}) \otimes I_2) (I_9 \otimes (X_{\text{head}}C_2)) \otimes (X_{\text{tail}}C_2) +  \\
+%   ((S_{\text{down}}  S_{\text{left}}) \otimes I_2) (I_9 \otimes (X_{\text{tail}}C_2)) \otimes (X_{\text{head}}C_2) + \\
+%   ((S_{\text{down}}  S_{\text{right}}) \otimes I_2) (I_9 \otimes (X_{\text{tail}}C_2)) \otimes (X_{\text{tail}}C_2)
+% \end{align}

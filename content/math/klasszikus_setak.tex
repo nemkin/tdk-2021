@@ -1,6 +1,6 @@
 \section{Classical random walks}
 
-A classical random walk describe a stohastic process.
+A classical random walk describes a stohastic process.
 
 \unsure{The sequence can also be regarded as a special category of Markov chain ->Homogenous?}
 
@@ -26,7 +26,8 @@ This allows us to represent Homogenous Markov-chains as directed graphs.
 
 \definition{\textbf{Distribution of the Markov-chain}} at the $i$th step, the Markov-chain's distribution is the distribution of $X_i$, which is $P(X_i = j)$.
 
-\definition{\textbf{Stacionary distribution}} of the Markov chain is $p_{j} = \lim\limits_{i \to \infty} P(X_i = j)$.
+\definition{\textbf{Stationary distribution}} of the Markov chain is $\pi_{j} = \lim\limits_{i \to \infty} P(X_i = j)$, or where $P\pi = \pi$.
+\change{Keep one of the definitions?}
 
 \definition{\textbf{Graph representation of homogenous Markov-chains}}
 Graph $G(V,E)$ represents a homogenous Markov-chain $X_1, X_2, X_3, \dots$, (with value set $A$ and transition probability matrix $P$), if $V=A$ and if $p_{j,i} \neq{} 0$, then $E(i,j) = p_{j,i}$ $\forall{}i,j\in{}A$. If $p_{j,i} = 0$, then there is no edge between vertex $i$ and $j$.
@@ -34,13 +35,23 @@ Graph $G(V,E)$ represents a homogenous Markov-chain $X_1, X_2, X_3, \dots$, (wit
 \definition{\textbf{Random walk on a graph}}
 A random walk on this graph $G$ visits the nodes represented by the Markov-chain: $X_1, X_2, X_3, \dots$. The first node is the start vertex ($X_1$). In the $k$th step we move from vertex $X_k=i$ to vertex $X_{k+1}=j$, with probability $p_{j,i}$.
 
+Important properties for random walks are Hitting time and Mixing time. Hitting time describes how quickly can a vertex be reached from another vertex in the graph and Mixing time how fast the stationary distribution is reached (where we can no longer tell which vertex was the walk started in). Both of these measures will come up later in the analysis of the quantum walks.
+
 \definition{\textbf{Hitting time}} $h_{j,i}$ is the expected number of steps before node $j$ is visited in a random walk starting from node $i$.
 
 Recursively:
-\[h_{j,i} = \left\{\begin{array}{lr}
+\begin{align}
+h_{j,i} = \left\{\begin{array}{lr}
 1 + \sum\limits_{k\in{}A}p_{j,k}h_{k,i} & \text{if } i\neq{}j\\
 0 & \text{if} i=j
 \end{array}
-\]
+\end{align}
 
-\definition{\textbf{Mixing time}} 
+From \cite{KempeIntroduction} (35, 36):
+
+\definition{\textbf{Mixing time}}: The smallest time index of the Markov chain, where the total variational distance between the current and the stationary distribution is not greater than $\epsilon$.
+
+\begin{align}
+m = \min\{T | \forall{}t\geq{}T, \sum\limits_{j}|P(X_t = j) - \pi_j| \leq \epsilon\}
+\end{align}
+
