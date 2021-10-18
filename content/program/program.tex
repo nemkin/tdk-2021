@@ -1,3 +1,7 @@
+\chapter{Szimulátor szoftver}
+
+\change{Itt nagyon kiemelni, hogy önlab1-ben csak a klasszikus bolyongás sikerült + az egyenesen a kvantumos, most meg már tudok bármilyen regulárison bolyongani.}
+
 \section{Tervezési megfontolások}
 
 Az első fázisban a szomszédossági mátrixot generáltam le teljesen. Ez nagyon sok memóriát használt, az unitér mátrix meg mégtöbbet, nagyon rosszul skálázódott. Lecseréltem spare mátrixokra, az már egy fokkal jobb.
@@ -7,5 +11,84 @@ Az első fázisban a szomszédossági mátrixot generáltam le teljesen. Ez nagy
 Ezután kipróbáltam a spare mátrixokat, de azok is picit sokak voltak, ugyan a gráfban sok a 0, de azért
 így is nagyon skálázódott.
 
-A legjobb megoldás az úgynevezett gráf orákulum volt. A gráf orákulum lényege, hogy nem tároljuk a szomszédossági mátrixot, helyette biztosítunk egy függvényt, mely on-the-fly a gráf adott csúcsindexét
-odaadva neki visszaadja hogy annak mik a szomszédai. A coin kis méretű, azt lehet tárolni (max fokszám * max fokszám), ezért azzal nem bajlódtam, bár éppen lehetne. A 
+A legjobb megoldás az úgynevezett gráf orákulum volt. A gráf orákulum lényege, hogy nem tároljuk a szomszédossági mátrixot, helyette biztosítunk egy függvényt, mely on-the-fly a gráf adott csúcsindexét odaadva neki visszaadja hogy annak mik a szomszédai. A coin kis méretű, azt lehet tárolni (max fokszám * max fokszám), ezért azzal nem bajlódtam, bár éppen lehetne.
+
+Emellett a Stratégia tervezési mintát használatam.
+
+\change{TODO: https://en.wikipedia.org/wiki/Strategy\_pattern, de valamilyen Design Patternes könyvből inkább.}
+
+\chapter{Architektúra}
+
+\info{Ezt az önlabomból hoztam át, maga a keret nem sokat változott, az változott nagyot hogy a kvantumos szimulátor is működik már d reguláris gráfokra.}
+
+Ebben a fejezetben bemutatom az elkészült keretrendszert.
+
+Programozási nyelvnek a Python 3-mat választottam. Ennek oka az, hogy nagyon sok data science-el kapcsolatos modulja van, mely nagyban megkönnyíti a különböző matematikai, algoritmuselméleti problémák feltárását, könnyen iterálhatunk a különböző prototípusokon. Emellett a szintaxisa rövid, tömör, lényegretörő programkódok megírását teszi lehetővé.
+
+A forráskód három nagy részre bomlik:
+\begin{itemize}
+  \item Gráfmodellek
+  \item Szimulátorok
+  \item Futtatás, konfiguráció, eredmények ábragenerátora
+\end{itemize}
+
+\section{Gráfmodellek}
+
+A félév során sokféle gráfon futtattam szimulációs kísérleteket, melyek során több problémába ütköztem. Kezdetben úgy oldottam meg a szimulációkat, hogy a célgráfok szomszédossági mátrixait generáltam le, egyben a memóriában tartva azokat és a lépések során a megfelelő csúcshoz tartozó sorokat lekérdezve.
+
+Ezzel a módszerrel több probléma is jelentkezett. Az első gondot az okozta, hogy a szomszédossági mátrix mérete a csúcsszám négyzetével arányos, ezért pár ezer csúcsú gráfot már nem tudtam a memóriában tartva szimulálni. A második probléma pedig az volt, hogy a szomszédossági mátrixos ábrázolás nagyon távol esett az emberi szempontból természetes ábrázolástól. A kvantumbolyongásos szimulációkat tipikusan nem véletlenszerű gráfokon szokták kipróbálni, hanem jól ismert struktúrával rendelkező gráfokon. Ilyen gráfok például a ,,súlyzók''
+vagy a ragasztott bináris fák.
+
+A súlyzó gráf két egyforma méretű kört tartalmaz, mindkét körből kiválasztva $k - k$ darab csúcsot, melyek teljes páros gráfot alkotnak (a súlyzó középső rúdját). A körökben pedig nem csak az egymás melletti csúcsok között fut él, hanem futhat él minden $i.$ csúcs között is. A ragasztott bináris fában két egyforma méretű teljes bináris fa leveleit szembefordítjuk és a két oldali levelek közé egy teljes páros gráfot készítünk.
+
+A fenti leírásból látható, hogy az ember számára természetes leírás a gráfokat ismert részgráfok kompozitjaként adja meg. A félév során olyan architektúrát alakítottam ki a szimulációkhoz, mely ezt a szemléletet támogatja. A szomszédossági mátrixos tárolási mód helyett pedig a szomszédossági orákulum megközelítést használva nagyban csökkent az alkalmazás memóriaigénye. Ennek a megközelítésnek a lényege, hogy az ismert struktúrájú gráfokra nem tárolok a memóriában szomszédossági információt, helyette biztosítok egy függvényt, amely a bemeneti paraméterként kapott csúcsindexre kiszámolja a vele szomszédos csúcsok indexeit.
+
+A félév során a következő nevesített részgráfok szomszédossági orákulumját implementáltam:
+
+\begin{itemize}
+  \item BinaryTree
+  \item Bipartite
+  \item Circle
+  \item Path
+  \item Random
+\end{itemize}
+
+\change{Új: Hiperkocka}
+
+\begin{center}
+  \includegraphics[width=\linewidth]{./figures/program/subgraph.png}
+\end{center}
+
+Ezen részgráfokból épülnek fel az alábbi kompozit gráfok:
+\begin{itemize}
+  \item Dumbbell
+  \item GluedBinary
+\end{itemize}
+
+\begin{center}
+  \includegraphics[width=0.4\linewidth]{./figures/program/graph.png}
+\end{center}
+
+\section{Szimulátorok}
+
+A szimulátor osztályok közül a klasszikus tetszőleges kompozit gráfot tud
+fogadni.
+
+\change{Itt fontos átírni, hogy a kvantumszimulátor mostmár d-regulárist is tud!}
+
+A kvantumszimulátor jelenleg a kvantumbolyongás egy speciális esetét, az egyenesen való bolyongást képes kezelni, mely a 2-regularitása miatt egyszerűbben implementálható. Hosszú távú cél a k-reguláris, illetve az általános gráfokra kiterjeszteni ezt a szimulátort.
+
+\begin{center}
+  \includegraphics[width=0.8\linewidth]{./figures/program/simulator.png}
+\end{center}
+
+\section{Futtatás, konfiguráció, eredmények ábragenerátora}
+
+\change{Itt van pár újdonság, pl. sajátértékek kiírása, stb.}
+
+A fenti osztályok segítségével egy olyan keretrendszert alakítottam ki, melyben
+nagyon gyorsan fel lehet 1-1 futtatást konfigurálni. A futtatás eredményeit egy
+összesített Latex dokumentumba gyűjti a program. Ez tartalmazza a beadott gráf
+részgráfjainak nevesített típusát, szomszédossági mátrixait, illetve a teljes
+gráf szomszédossági mátrixát, valamint a szimulációk eloszlási eredményeit. A
+következő fejezetben több ilyen ábrát is bemutatok.
