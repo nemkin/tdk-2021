@@ -112,7 +112,7 @@ where
 
 \section{Quantum walks on the line}
 
-\change{Ez félig az önlabomból van és a Kempe cikkből, gondoltam picit rövidítve be lehetne tenni ide.}
+\change{Ez félig az önlabomból van és a Kempe cikkből.}
 \change{Az önlabomat lehet fel kellene töltenem valahova, ha már hivatkozok rá.}
 
 The simplest form of a quantum walk to discuss is the quantum walk on the line. A great introduction into this is in \cite{KempeIntroduction}. In this type of walk, a particle is described by its position on the line $\ket{x}$ and its spin state $\ket{s}$.
@@ -258,7 +258,11 @@ The probability of finding the particle in position $i$ is:
     P(i | \ket{x}) = \bra{x,s}P_i\otimes{}I\ket{x,s}
 \end{align}
 
-\section{Kvantumséta a rácson}
+\section{Quantum walks on larger dimensional grids}
+
+One of the ways described in Renato Portugal's book to increase the dimension of the walk is to use independent one-dimensional walks.
+
+\change{Ezt angolra kell majd fordítani és leírást készíteni mellé. Vagy kidobni ha túl sok?}
 
 A következőkben a rácson, mint 4-reguláris gráfon vett bolyongást fogjuk
 részletesen megvizsgálni.
@@ -286,38 +290,6 @@ $p_{i}\in\mathds{C}$ ahol $0 \leq{} i < N$, $\forall{}i$-re és $\sum\limits_{i=
   \end{pmatrix}
 \end{align}
 
-% https://hu.wikipedia.org/wiki/Kronecker_delta_f%C3%BCggv%C3%A9ny
-\begin{definition}[Kronecker delta]
-  Olyan kétváltozós függvény ami akkor $1$, ha a két változója egyenlő, egyébként $0$.
-  \begin{align}
-    \delta_{ij} =
-    \begin{cases}
-      0 & \text{ha $i\neq{}j$} \\
-      1 & \text{ha $i=j$}
-    \end{cases}
-  \end{align}
-\end{definition}
-
-% https://en.wikipedia.org/wiki/Shift_matrix
-\begin{definition}[Upper cyclic shift matrix]
-  Az $U_{k}$ mátrix egy olyan ($k\times{}k$)-s mátrix, aminek a felső mellékátlóján és a bal alsó sarokban
-  $1$-esek vannak, máshol $0$-k.
-  Az index számozása moduló k történik.
-  Ennek az $i$. sor, $j$. oszlopában:
-  \begin{align}
-    U_{k}[i,j] = \delta_{(i+1),j}
-  \end{align}
-\end{definition}
-
-\begin{definition}[Lower cyclic shift matrix]
-  Az $L_{k}$ mátrix egy olyan ($k\times{}k$)-s mátrix, aminek az alsó mellékátlóján és a jobb felső sarokban
-  $1$-esek vannak, máshol $0$-k.
-  Az index számozása moduló k történik.
-  Ennek az $i$. sor, $j$. oszlopában:
-  \begin{align}
-    L_{k}[i,j] = \delta_{i,j+1}
-  \end{align}
-\end{definition}
 
 \begin{align}
   L = U^{T}
@@ -528,7 +500,6 @@ Bal oldalt 9*9-es, jobb oldalt 4*4-es mátrixok vannak.
 
 \definition[Tenzorszorzás azonosság: asszociatív]
 
-
 \begin{align}
   U =
   (S_{\text{up}}  S_{\text{left}}) \otimes (X_{\text{head}}C_2) \otimes (X_{\text{head}}C_2) +   \\
@@ -537,9 +508,7 @@ Bal oldalt 9*9-es, jobb oldalt 4*4-es mátrixok vannak.
   (S_{\text{down}}  S_{\text{right}}) \otimes (X_{\text{tail}}C_2) \otimes (X_{\text{tail}}C_2)
 \end{align}
 
-
 \definition[Tenzorszorzás Lemma?]
-
 
 \begin{align}
   S = ((S_{\text{up}} \otimes  X_{\text{head}} \otimes I) +
@@ -548,11 +517,85 @@ Bal oldalt 9*9-es, jobb oldalt 4*4-es mátrixok vannak.
   (S_{\text{right}} \otimes I \otimes  X_{\text{tail}} ))
 \end{align}
 
+\begin{align}
+   U =
+   ((S_{\text{up}}  S_{\text{left}}) \otimes I_2) (I_9 \otimes (X_{\text{head}}C_2)) \otimes (X_{\text{head}}C_2) + \\
+   ((S_{\text{up}}  S_{\text{right}}) \otimes I_2) (I_9 \otimes (X_{\text{head}}C_2)) \otimes (X_{\text{tail}}C_2) + \\
+   ((S_{\text{down}}  S_{\text{left}}) \otimes I_2) (I_9 \otimes (X_{\text{tail}}C_2)) \otimes (X_{\text{head}}C_2) + \\
+   ((S_{\text{down}}  S_{\text{right}}) \otimes I_2) (I_9 \otimes (X_{\text{tail}}C_2)) \otimes (X_{\text{tail}}C_2)
+\end{align}
 
-% \begin{align}
-%   U =
-%   ((S_{\text{up}}  S_{\text{left}}) \otimes I_2) (I_9 \otimes (X_{\text{head}}C_2)) \otimes (X_{\text{head}}C_2) +   \\
-%   ((S_{\text{up}}  S_{\text{right}}) \otimes I_2) (I_9 \otimes (X_{\text{head}}C_2)) \otimes (X_{\text{tail}}C_2) +  \\
-%   ((S_{\text{down}}  S_{\text{left}}) \otimes I_2) (I_9 \otimes (X_{\text{tail}}C_2)) \otimes (X_{\text{head}}C_2) + \\
-%   ((S_{\text{down}}  S_{\text{right}}) \otimes I_2) (I_9 \otimes (X_{\text{tail}}C_2)) \otimes (X_{\text{tail}}C_2)
-% \end{align}
+\section{Quantum walks on Class 1 regular graphs}
+
+The generalization technique described in the previous chapter only works for grids of any dimension. To generalize to arbitrary graphs, first we need to describe the quantum walk on a regular graph. This is done following Renato Portugal's work \cite{Portugal}.
+
+In a $d$-regular graph, the number of neighbours is always $d$. This means, that the coin is $d$ dimensional. In non-regular graphs, there is an issue arising from needing different sized coins at different vertexes, which is discussed in the next section.
+
+The coin operator can be defined as before, by applying the identity operator on the position register and any coin flip unitary matrix on the coin register.
+
+To define the shift operator, let's introduce the edge chromatic number of a graph.
+
+\change{Cite these, they are from wikipedia.}
+
+\definition{\textbf{Edge coloring}}
+
+An edge coloring of a graph is an assignment of colors to the edges of the graph, so that no two incident edges have the same color.
+
+\definition{\textbf{Edge chromatic number}}, $\chi'(G)$ is the minimum number of colors that can be used to correctly color the graph.
+
+\theorem{\textbf{Vizing's theorem}} 
+
+The edge chromatic number $\chi'(G)$ of graph $G$ is $\Delta(G) \leq{} \chi'(G) \leq{} \Delta(G)+1$. Graphs with $\chi'(G) = \Delta(G)$ are called Class 1 graphs and graphs with $\chi'(G) = \Delta(G)+1$ are called Class 2 graphs.
+
+\info{Ez az a tétel amit nem találtam meg sehol, itt kellene írni hogy én bizonyítottam, de ismert eredmény.}
+
+\theorem{}For Class 1, d-regular graphs, the coin sides correspond to the color sets of a correct edge coloring.
+
+$d$-reguláris gráfra $d$ oldalú érmével:
+\begin{itemize}
+\item A gráf egy adott csúcsából úgy döntjük el, hogy melyik következő csúcsba lépünk tovább, hogy feldobjuk az érmét és a kapott oldalhoz tartozó élen megyünk a következő csúcsba.
+\item Ehhez akkor tudni kell, hogy adott csúcsból nézve melyik hozzá tartozó él melyik érmeoldalhoz tartozik.
+\item Az érmeoldalakat számozzuk $0$,...,$d-1$ -el.
+\item Minden csúcsban a hozzá tartozó d darab élet megszámozzuk $0$,...,$d-1$-el.
+\item (Ha ezt lehet úgy, hogy minden élre az él két végéhez ugyanaz a szám tartozik akkor irányítatlan gráfként kezeljük, ha nem lehet akkor meg irányítottként és a kezdőpontjában az eredeti élhez rendelt számot kapja. ?)
+\item Ha egy adott csúcsban i-t dobunk az érmével akkor a hozzá tartozó i. sorszámú élen megyünk tovább.
+\item Ezt a mesét most mátrixszorzásokkal akarjuk felírni:
+\item Az érme legyen az $\ket{i}$ vektor $i=0...,d-1$, az pedig hogy éppen melyik gráfcsúcsban vagyunk legyen a $\ket{v}$ vektor $v=0,...,n-1$.
+\item Akkor az aktuális állapot (melyik oldala van felül az érmének és hol vagyok a gráfban) $\ket{v}\otimes{}\ket{i}$.
+\item Jelölje $S_i$ azt a mátrixot, ahol akkor van az $x$. sor $y$. oszlopában $1$-es, ha van a gráfban $(y,x)$ él és az $y$ csúcsban az él sorszáma $i$.
+\item Ekkor minden oszlopban csak $1$ darab nem $0$ elem van, mert az $y$ csúcsnak csak $1$ darab $i$. szomszédja van.
+\item Azt a lépést, hogy ha az érme $k$-t mutat akkor az adott csúcs $k$. szomszédjába megyek $S_k \otimes \ket{k}\bra{k}$ -vel lehet leírni, mert ha ezzel balról szorzom a $\ket{v} \otimes{} \ket{i}$-t akkor ez csak akkor nem $0$ ha $\bra{k}\ket{i}$ nem $0$, vagyis ha $k = i$ és ilyenkor az $S_k$ pont a $v$ csúcs $i=k.$ szomszédjába transzformálja $\ket{v}$-t.
+\item Akkor a teljes lépés mátrix $S = \sum\limits_{i=0}^{d-1} S_i \otimes{} \ket{i}\bra{i}$.
+\item Ennek unitérnek kell lennie, mert kvantum.
+\item Ezért az oszlopok ortonormált bázist alkotnak. (Meg a sorok is, de az most nem kell.)
+\item Ezért az oszlopok skaláris szorzata 0 kell hogy legyen.
+\item Nincsenek negatív értékek az $S_i$ mátrixokban és a $\ket{k}\bra{k}$-kban sem és ezért az $S$-ben sem, ezért ez csak úgy lehet ha nincs két olyan különböző oszlop $S$-ben ahol ugyanannyiadik cellában van nem $0$ érték.
+\item Kétféleképpen fordulhat elő, hogy $S$-ben két különböző oszlopban ugyanannyiadik cellában nem $0$ érték: a két nem $0$ elem vagy ugyanabból az $S_i \otimes \ket{i}\bra{i}$  mátrixból jött az  $S = \sum\limits_{i=0}^{d-1} S_i \otimes{} \ket{i}\bra{i}$ összegben vagy $2$ különbözőből.
+\item Különbözőből nem jöhetett, mert az $\ket{i}\bra{i}$-vel való tenzorzszorzás különböző sorokba fogja tenni az $1$-eseket a különböző $S_i \otimes{}\ket{i}\bra{i}$-kre.
+\item Ha azonosból jött akkor egy $S_i \otimes{} \ket{i}\bra{i}$  mátrixban van két különböző oszlop ahol ugyanannyiadik cellában van nem $0$ elem.
+\item Mivel $\ket{i}\bra{i}$-ben csak $1$ darab nem $0$ elem van, ezért
+\item Akkor az $S_i$ mátrixban van két különböző oszlop ahol ugyanannyiadik cellában van nem $0$ elem.
+
+És akkor ezek a lépések eddig végig "akkor és csak akkor" kapcsolatban voltak egymással.
+
+\unsure{Ez igaz?}
+
+Vagyis az jött ebből ki, hogy akkor és csak akkor unitér $S$ ha az $S_i$ mátrixokban nincs két különböző oszlop ahol ugyanannyiadik cellában van nem $0$ elem. Vagyis minden sorban csak $1$ darab nem $0$ elem lehet. Közben pedig valahol felírtuk hogy minden oszlopban is csak $1$ darab nem $0$ elem lehet. És mivel $d$-reguláris a gráf ezért minden sorban és oszlopban van is $1$ darab $1$-es és ezért ezek permutációmátrixok lehetnek csak.
+
+Az $S_i$ pedig egy élszínosztályt ír le, mert ha az $x.$ sor $y.$ eleme $1$-es akkor az egy él a gráfban és $S_i$-ben nincs másik él ami $y$-ból mutatna kifele vagy $x$-be mutatna befele. (Itt akkor kell hogy irányított legyen, mert az $x.$ oszlopban vagy az $y.$ sorban még lesz 1-es.)
+
+És akkor ilyen módon csak azokra a gráfokra lehet csak sétát definiálni amik $d$ színnel élszínezhetőek és amik pedig $d+1$-el azokra pedig nem, azokkal a következő fejezet foglalkozik.
+
+\section{Quantum walks on Class 2 or non-regular graphs}
+
+\subsection{Class 2}
+
+For graphs in class 2, we can not use the same coin-position notation, we have to use the arc notation and replace the simple graph by an associated symmetric digraph, whose underlying graph is the original graph. In this case, the walker steps on the arcs of the digraph. After those considerations, we are able to define formally coined quantum walks.
+
+\subsection{Make the graph regular}
+
+\change{Add loops (and hope they don't ruin the edge chromatic number?).}
+
+\subsection{Szegedy walk}
+
+\change{Walk on the edges.}
