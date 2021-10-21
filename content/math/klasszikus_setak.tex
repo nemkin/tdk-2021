@@ -41,10 +41,12 @@ Important properties for random walks are Hitting time and Mixing time. Hitting 
 
 Recursively:
 \begin{align}
-h_{j,i} = \left\{\begin{array}{lr}
-1 + \sum\limits_{k\in{}A}p_{j,k}h_{k,i} & \text{if } i\neq{}j\\
-0 & \text{if} i=j
-\end{array}
+    h_{j,i} = \left\{
+        \begin{array}{lr}
+            1 + \sum\limits_{k\in{}A}p_{j,k}h_{k,i} & \text{if } i\neq{}j\\
+            0 & \text{if} i=j
+        \end{array}
+    \right.
 \end{align}
 
 From \cite{KempeIntroduction} (35, 36):
