@@ -1,0 +1,32 @@
+\chapter{Other Quantum Walk Packages}
+
+\change{Ennek a fejezetnek az lenne a célja, hogy megnéztem sok más programot és egyik se olyan jó mint az enyém, talán kevesebb szöveg kellene és arra fókuszálni hogy miért nem jók ezek, nem hogy pont mit csinálnak, de csak beraktam amit a könyv ír róluk. Általánosan mindegyik bonyolult, C++-os, nem szép tervezési mintájú, vagy csak speciális gráfokra működik (pl. csak grid).}
+
+\cite{Portugal} gives a detailed description of currently available quantum walk packages.
+
+\section{QWalk}
+
+QWalk aims to simulate the coined quantum walk dynamics on one- and twodimensional lattices. The package is written in C and uses Gnuplot to plot the probability distribution. The user can choose the coin and the initial condition. There is an option to simulate decoherent dynamics based on broken links—also known as percolation [251, 280]. The links of the lattice can be broken at random at each step or the user can specify which edges will be missing during the evolution. QWalk allows the user to simulate quantum walks on any graph that is a subgraph of the two-dimensional lattice. Some plots in this section were made using QWalk. The package can be obtained from Mendeley: \url{https://data.mendeley.com/datasets/b93c846dhs/1}, 
+
+\unsure{Ez ugyanaz: \url{https://github.com/QWalk/mainline}?}
+
+\section{QwViz}
+
+QwViz aims at plotting graphics for visualizing the probability distribution of quantum walks on graphs. The package is written in C and uses OpenGL to generate two- or three-dimensional graphics. The user must enter the adjacency matrix of the graph, and the package simulates the dynamics of the coined model to calculate the probability distribution. By default, the walker starts at vertex $1$ with the coin in uniform superposition. The initial location can be changed by the user. It is possible to specify marked vertices, which tell the package to use quantum-walk-based search procedures starting from a uniform superposition of all vertices and using the Grover coin on the unmarked vertices and ($−I$) on the marked vertices. The package can be obtained from \url{https://data.mendeley.com/datasets/kj58zkdmt7/1}.
+
+\section{PyCTQW}
+
+PyCTQW aims to simulate large multi-particle continuous-time quantum walks using object-oriented Python and Fortran. The package takes advantage of modern HPC systems and runs using distributed memory. There are tools to visualize the probability distribution and tools for data analysis. The package can be obtained from \url{https://data.mendeley.com/datasets/wy29d79ds4/1}.
+
+\section{Hiperwalk}
+
+Hiperwalk (high-performance quantum walk) aims to simulate the quantum walk dynamics using high-performance computing (HPC). Hiperwalk uses OpenCL to run in parallel on accelerator cards, multicore CPU, or GPGPU. It is not required any knowledge of parallel programming, but the installation of the package dependencies is tricky, in special, OpenCL. Besides, Hiperwalk uses the Neblina programming language. In the CUSTOM option, the input is an initial state $\ket{\Psi_0}$ and a unitary operator U, which must be stored in two different files (only nonzero entries in order to take advantage of sparsity). Hiperwalk calculates $U^t\ket{\Psi_0}$ for integer $t$ using HPC and saves the output in a file. There are extra commands for the coined and staggered models. The Hiperwalk manual has a detailed description of the installation steps and some examples of applications.
+
+\section{QSWalk}
+
+QSWalk is a Mathematica package that aims to simulate the time evolution of quantum stochastic walks on directed weighted graphs. The quantum stochastic walk is a generalization of the continuous-time quantum walk that includes the incoherent dynamics. The dynamic uses the Lindblad formalism for open quantum systems using density matrices. The package can be obtained from the Computer Physics Communications library.
+
+
+\section{QSWalk.jl}
+
+QSWalk.jl is a Julia package that aims to simulate the time evolution of quantum stochastic walks on directed weighted graphs. The authors claim that is faster than QSWalk when used in large networks. Besides, it can be used for nonmoralizing evolution, which means that the evolution takes place on a directed acyclic graph and does not change to an evolution on the corresponding moral graph. The package can be downloaded from GitHub \url{https://github.com/iitis/QSWalk.jl}.
