@@ -1,65 +1,81 @@
-\chapter{Quantum walk}
+\chapter{Quantum walks}
 
-Classical random graph walks can be seen as using a classical coin flip to decide in the current vertex which neighbouring vertex to step next. To create a quantum version of these walks, we define the quantum coin to randomize the walk, then use entanglement between the coin and the register of the current vertex, to influence stepping.
+In classical random walks, the walker moves from the current vertex via one of its outgoing edges, chosen randomly, weighted by the edge weights. This random choice can be interpreted as a (generalized) coin toss.
 
-A great introduction to quantum walks is in Portugal's Quantum Walks and Search Algorithms book \cite{Portugal}.
+To formulate a quantum version of graph walking, we define the quantum coin, which will replace the classical concept of randomness with quantum superposition.
 
-\section{Definition of the quantum coin}
+\section{Formulating the Quantum coin}
 
-The quantum coin has a current state, which according to Postulate 1 and 4 is an n-qubit register and a transition operator, which according to Postulate 2 is a unitary matrix.
+I used Renato Portugal's Quantum Walks and Search Algorithms\cite{Portugal} book as a reference for the different types of coins I present in this section.
 
-The current state decides where to step next. If there are $d$ neighbours to choose from, the coin's current state register must be $d$ dimensional.
+A \textit{quantum coin} is a quantum system, which behaves according to the postulates of quantum mechanics. It has a current state, represented by a state vector in a Hilbert space and a unitary time evolution operator, describing a coin toss.
 
-The transition operator decides how the coin is flipped. If the coin is $d$ dimensional, the transition operator is a $d\times{}d$ dimensional matrix. Based on what the transition operator is, multiple types of coins can be defined. The following ones are typically used in quantum walks.
+After tossing the coin, the resulting coin state chooses the next step of the quantum walker. If there are $d$ outgoing edges to choose from, then the coin's state space must have $d$ orthonormal basis states, each corresponding to one of the possible edges. If the current state is one of the basis states, then the walker moves in that direction. However, in the quantum world, the coin can also be in a superposition, consisting of multiple basis states. This means that the walker will simultaneously move in all corresponding directions and occupy more than one vertex at the same time, resulting in the walker spreading over the graph in a superposition.
 
-\definition{\textbf{Hadamard coin}}
+For the $d$ dimensional coin state, the corresponding coin flip operator is a $(d\times{}d)$ dimensional unitary matrix. Based on what the transition operator is, multiple types of coins can be defined. The following ones are typically used in quantum walks.
 
-The Hadamard coin uses the Hadamard-matrix as a transition operator, which is the following:
+\subsection{Hadamard coin}
 
-\begin{align}
+The Hadamard coin uses the Hadamard-matrix as a transition operator:
+
+\begin{align*}
   H = \frac{1}{\sqrt{2}}\begin{pmatrix}
       1 & 1  \\
       1 & -1
     \end{pmatrix}
-\end{align}
+\end{align*}
 
 If the starting coin state is $\ket{0}$, then flipping the coin once results in the following state:
 
-\begin{align}
+\begin{align*}
  H\ket{0} = \frac{1}{\sqrt{2}}\begin{pmatrix}
       1 & 1  \\
       1 & -1
     \end{pmatrix} \begin{pmatrix} 1 \\ 0 \end{pmatrix}
     = \frac{1}{\sqrt{2}} \begin{pmatrix} 1 \\ 1 \end{pmatrix} = \frac{1}{\sqrt{2}} \ket{0} + \frac{1}{\sqrt{2}} \ket{1}
-\end{align}
+\end{align*}
 
-If we measured the above coin, the probability of measuring $\ket{0}$ is $\left\lvert\frac{1}{\sqrt{2}}\right\rvert^2 + \left\lvert\frac{1}{\sqrt{2}}\right\rvert^2 = \frac{1}{2}$.
+If we measured the above coin, the probability of measuring $0$ is
 
-Similarly the starting coin state is $\ket{1}$, then flipping the coin once results in the following state:
+\begin{align*}
+P(0 \mid \frac{1}{\sqrt{2}} (\ket{0} + \ket{1})) =
+\left\lvert\frac{1}{\sqrt{2}}\right\rvert^2 =
+\frac{1}{2}
+\end{align*}
 
-\begin{align}
+Similarly, if the starting coin state is $\ket{1}$, then flipping the coin once results in the following state:
+
+\begin{align*}
    H\ket{1} = \frac{1}{\sqrt{2}}\begin{pmatrix}
       1 & 1  \\
       1 & -1
     \end{pmatrix} \begin{pmatrix} 0 \\ 1 \end{pmatrix}
     = \frac{1}{\sqrt{2}} \begin{pmatrix} 1 \\ -1 \end{pmatrix} = \frac{1}{\sqrt{2}} \ket{0} - \frac{1}{\sqrt{2}} \ket{1}
-\end{align}
+\end{align*}
 
-the probability of measuring $\ket{1}$ is similarly $\left\lvert\frac{1}{\sqrt{2}}\right\rvert^2 + \left\lvert-\frac{1}{\sqrt{2}}\right\rvert^2 = \frac{1}{2}$.
+The probability of measuring $1$ here is similarly
 
-An interesting property about this coin is related to the fact, that the Hadamard-matrix is Hermitian (self-adjoint), i.e. $H^{\dagger} = H$, while also unitary, i.e. $H^{\dagger} = H^{-1}$, which results in $H^{-1} = H$, thus $HH = I$. This means, that if we flip the coin twice, without measuring it, it will return to its original state, for example:
+\begin{align*}
+P(1 \mid \frac{1}{\sqrt{2}} (\ket{0} - \ket{1})) =
+\left\lvert-\frac{1}{\sqrt{2}}\right\rvert^2 =
+\frac{1}{2}
+\end{align*}
 
-\begin{align}
+An unexpected feature of this coin comes from the fact, that the Hadamard-matrix is Hermitian (self-adjoint), i.e. $H^{\dagger} = H$, while also unitary, i.e. $H^{\dagger} = H^{-1}$, which results in $H^{-1} = H$, thus $HH = I$. This means, that after flipping the coin twice without measuring it, it will return the coin state to its origin. For example, starting from $\ket{0}$:
+
+\begin{align*}
  H^2 \ket{0} = H\frac{1}{\sqrt{2}}(\ket{0} + \ket{1}) = \frac{1}{2}(\ket{0} + \ket{1} + \ket{0} - \ket{1}) = \ket{0}
-\end{align}
+\end{align*}
 
-After the second flip, the probability of measuring $\ket{0}$ is 1, due to the destrutive interference between the $\ket{1}$ vectors. This illustrates the vast difference between classical and quantum walks.
+After the second flip, the probability of measuring $\ket{0}$ is $1$, due to the destructive interference between the two $\ket{1}$ probability amplitudes, demonstrating a significant contrast between classical and quantum walks.
 
-\definition{\textbf{$2^n$ dimensional Hadamard-coin}}: A $2^n$ dimensional Hadamard-coin can be created by taking the tensor product of the $2$ dimensional Hadamard-coin $n$ times: $H^{\otimes{}n}$
+\begin{definition}[$2^n$ dimensional Hadamard-coin]
 
+A $2^n$ dimensional Hadamard-coin operator can be created by taking the tensor product of the $2$ dimensional Hadamard-coin $n$ times: $H^{\otimes{}n}$.
 
+\end{definition}
 
-\definition{\textbf{Grover coin}}
+\subsection{Grover coin}
 
 The Grover coin's origin is the Grover search algorithm, where it is used as the diffusion operator, defined as follows:
 
@@ -86,7 +102,7 @@ If $N = 2^n$, then
     \end{pmatrix}
 \end{align}
 
-\paragraph{Fourier coin}
+\subsection{Fourier coin}
 
 While both the Hadamard and the Fourier coin need to be sized as a power of $2$, the Fourier coin does not have this limitation. A size $N$ Fourier-coin, $F_N$ is defined by the matrix of the Fourier-transform:
 
