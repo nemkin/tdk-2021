@@ -10,7 +10,9 @@ This introduction is based on the following books: Quantum Computing and Communi
 
 An isolated physical system's state can be described using a unit length \textit{state vector} in a Hilbert space (i.e. complex linear vector space), or \textit{state space}, equipped with an inner product.
 
-\definition{\textbf{Qubit}} A state vector in the 2 dimensional Hilbert space ($H_2$) is a qubit. The base vectors in this space are
+\begin{definition}[Qubit]
+A state vector in the 2 dimensional Hilbert space ($H_2$) is a qubit. The base vectors in this space are
+\end{definition}
 
 \begin{align*}
 \ket{0} = \begin{pmatrix} 1 \\ 0 \end{pmatrix} \text{, and } \ket{1} = \begin{pmatrix} 0 \\ 1 \end{pmatrix}
@@ -111,6 +113,8 @@ Since
 \mathbf{P}_m
 \end{align*}
 
+\end{property}
+
 \begin{property}[$\mathbf{P}_m$-s are orthogonal]
 
 \begin{align*}
@@ -126,7 +130,10 @@ Since
 \mathbf{0}
 \end{align*}
 
+\end{property}
+
 From these properties follows, that the probability of measuring $m$ in case of a projective measurement:
+
 \begin{align*}
 P(m | \ket{v}) =
 \bra{v}\mathbf{P}_m^{\dagger}\mathbf{P}_m \ket{v} =
@@ -186,17 +193,40 @@ and has the following properties:
 \end{align*}
 \end{property}
 
-\theorem[Distributivity over matrix product] If A and C; and B and D are compatible (can be multiplied) then:
-\begin{align}
+\begin{property}[Distributivity over product]
+
+If the corresponding matrices are compatible, then
+
+\begin{align*}
   (A \otimes B)(C \otimes D) = (AC) \otimes (BD)
-\end{align}
+\end{align*}
+\end{property}
 
-\definition{\textbf{Quantum register}} The quantum register consisting of n qubits is the tensor product of n qubits (on $H_2$).
+\begin{definition}[Quantum register]
 
-\begin{align}
+The composite system of $n$ qubits is a \textit{quantum register}, having the composite state space
+
+\begin{align*}
 H_2^{\otimes{}n} = H_2 \otimes H_2 \otimes ... \otimes H_2
-\end{align}
+\end{align*}
 
-\definition{\textbf{Entangled state}} Any state consisting of multiple qubits, that can not be written in the form of a tensor product of individual qubits is entangled.
+and for $\ket{q_{n-1}} \in H_2, \dots, \ket{q_{0}} \in H_2$ individual state vectors, the composite state vector is
 
-For example, the state $\frac{1}{\sqrt{2}}(\ket{00} + \ket{11})$, is entangled, since it can not be written in the form $(a_0\ket{0} + a_1\ket{1})\otimes(b_0\ket{0}+b_1\ket{1}) = a_0b_0\ket{00}+a_0b_1\ket{01}+a_1b_0\ket{10}+a_1b_1\ket{11}$, since that would require from $a_0b_0 = a_1b_1 = \frac{1}{\sqrt{1}}$, for all coefficients to be non-zero and from $a_0b_1 = a_1b_0 = 0$ for either $a_0$ or $b_1$ and either $a_1$ or $b_0$ to be zero, which is a contradiction.
+\begin{align*}
+\ket{q_{n-1}} \otimes \dots \otimes \ket{q_{0}} = \ket{q_{n-1},\dots,q_0}
+\end{align*}
+
+\end{definition}
+
+\begin{definition}[Entangled state]
+Any state consisting of multiple qubits, that is not decomposable, i.e. that can not be written in the form of a composite system of qubits is \textit{entangled}.
+\end{definition}
+
+For example, the state $\frac{1}{\sqrt{2}}(\ket{00} + \ket{11})$, is entangled, since it can not be written in the form
+
+\begin{align*}
+(a_0\ket{0} + a_1\ket{1})\otimes(b_0\ket{0}+b_1\ket{1}) = a_0b_0\ket{00}+a_0b_1\ket{01}+a_1b_0\ket{10}+a_1b_1\ket{11}
+\end{align*}
+
+since that would require from $a_0b_0 = a_1b_1 = \frac{1}{\sqrt{2}}$, for all coefficients to be non-zero
+and from $a_0b_1 = a_1b_0 = 0$ for either $a_0$ or $b_1$ and either $a_1$ or $b_0$ to be zero, which is a contradiction.
