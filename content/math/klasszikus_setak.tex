@@ -1,64 +1,75 @@
 \chapter{Classical random walks}
 
-A classical random walk describes a stohastic process.
+The book Probability and Computing\cite{MitzenmacherProbability}, written by Michael Mitzenmacher and Eli Upfal, introduces random walks in the classical sense the following way.
 
-\unsure{The sequence can also be regarded as a special category of Markov chain ->Homogenous?}
+A \textit{random walk} is a stochastic process modeled by a particular type of Markov chain. While a variety of Markov chains exist, in this dissertation, I use the following definition exclusively.
 
-Classical random walks on graphs can be defined using Markov-chains. Markov-chains
-are well explained in \cite{BreimanProbability} and in \cite{XiaReview}.
+\begin{definition}[Markov chain]
 
-\change{Breiman egy könyv, de a Xia cikkben jobban le van írva.}
+A discrete time stochastic process $X_0, X_1, X_2, \dots$ on a finite state space $A$ is a Markov chain if it has the Markov property:
 
-(Információelmélet előadás / a könyvet be lehetne idézni, bár kevésbé szeretik)
+\begin{align*}
+P(X_k = a_k \mid X_{k-1} = a_{k-1}, \dots, X_0 = a_0) = P(X_k = a_k \mid X_{k-1} = a_{k-1}) && \forall a_0,\dots,a_k\in A
+\end{align*}
 
-\definition{\textbf{Markov-chain}} (First order, discrete-time, discrete-space) A Markov-chain is a sequence of independent random variables from the same distribution, $X_1, X_2, X_3, \dots$, (with value set $A$), that have the Markov property:
+\end{definition}
 
-\unsure{Hogy kellene az értékkészletet ($A$) jelölni?}
+Without loss of generality, we can assume, that $A = \{0,1,\dots,n\}$.
 
-$P(X_k = x_k | X_{k-1} = x_{k-1}, \dots, X_1 = x_1) = P(X_k = x_k | X_{k-1} = x_{k-1})$
+If the Markov chain is homogenous (time-invariant), the probability of moving from state $i \in A$ to state $j \in A$ is independent of $k$, and thus can be shortened the following way.
 
-$\forall k\geq{}2$ and $x_{1},\dots, x{k}$ from the value set.
+\begin{align*}
+P(X_k = j \mid X_{k-1} = i) = p_{j\leftarrow{}i} = p_{j,i} && \forall k \in \mathds{Z}^+
+\end{align*}
 
-\definition{\textbf{Homogenous Markov-chain}} Time invariant, i.e.:
-$P(\Phi_k = i | \Phi_{k-1} = j) = p_{j,i}$ $\forall k\geq{}2$, $\forall i,j \in{} A$, which is called the transition probability from $i$ to $j$ and form the transition probability matrix $P$.
+Where $p_{j,i}$ is called the \textit{transition probability} between states $i$ and $j$.
 
-This allows us to represent Homogenous Markov-chains as directed graphs.
+The \textit{transition matrix} $\mathbf{P}$ is formed by the transition probabilities.
 
-\definition{\textbf{Distribution of the Markov-chain}} at the $i$th step, the Markov-chain's distribution is the distribution of $X_i$, which is $P(X_i = j)$.
+\begin{align*}
+    \mathbf{P}[j,i] = p_{j,i} 
+\end{align*}
 
-\definition{\textbf{Stationary distribution}} of the Markov chain is $\pi_{j} = \lim\limits_{i \to \infty} P(X_i = j)$, or where $P\pi = \pi$.
-\change{Keep one of the definitions?}
+It follows, that for each column in $\mathbf{P}$, the sum is $1$.
 
-\definition{\textbf{Graph representation of homogenous Markov-chains}}
-Graph $G(V,E)$ represents a homogenous Markov-chain $X_1, X_2, X_3, \dots$, (with value set $A$ and transition probability matrix $P$), if $V=A$ and if $p_{j,i} \neq{} 0$, then $E(i,j) = p_{j,i}$ $\forall{}i,j\in{}A$. If $p_{j,i} = 0$, then there is no edge between vertex $i$ and $j$.
+\begin{align*}
+    \sum\limits_{j=0}^{n}\mathbf{P}[j,i] = 1 && \forall i \in \{0,\dots,n\}
+\end{align*}
 
-\definition{\textbf{Random walk on a graph}}
-A random walk on this graph $G$ visits the nodes represented by the Markov-chain: $X_1, X_2, X_3, \dots$. The first node is the start vertex ($X_1$). In the $k$th step we move from vertex $X_k=i$ to vertex $X_{k+1}=j$, with probability $p_{j,i}$.
+Let the \textit{probability distribution} of the process in the $t$-th step be $\pi_t$. Then, $\pi_t$ can be computed from the starting distribution $\pi_0$ using $\mathbf{P}$.
 
-Important properties for random walks are Hitting time and Mixing time. Hitting time describes how quickly can a vertex be reached from another vertex in the graph and Mixing time how fast the stationary distribution is reached (where we can no longer tell which vertex was the walk started in). Both of these measures will come up later in the analysis of the quantum walks.
+\begin{align*}
+\pi_{t} = \mathbf{P}^t\pi_{0}
+\end{align*}
 
-\definition{\textbf{Hitting time}} $h_{j,i}$ is the expected number of steps before node $j$ is visited in a random walk starting from node $i$.
+The \textit{stationary distribution} ($\pi$) of the Markov chain is a distribution that does not change with a transition, i.e. $\pi = \mathbf{P}\pi$.
 
-Recursively:
+Markov chains can be represented using graphs. A directed, weighted graph $G(V,E)$ with weight function $w:E\rightarrow{}[0,1]$ represents a Markov chain, if $V=A$ and $w(i,j) = \mathbf{P}[j,i]$. If $\mathbf{P}[j,i] = 0$, then $\{i,j\} \not\in E$.
+
+A random walk on graph $G$ starts from $X_0$ and visits the vertexes of the graph according to the states of the Markov-chain: $X_1,X_2,\dots$ .
+
+Frequently studied characteristics of random walks are \textit{hitting time} and \textit{mixing time}. Informally, hitting time describes how quickly can a vertex be reached from another vertex in the graph, while mixing time expresses how fast the walk reaches the stationary distribution, where the starting vertex can no longer be identified.
+
+\begin{definition}[Hitting time] Let $h_{j,i}$ be the expected number of steps before node $j$ is visited in a random walk starting from node $i$.
+Then, $h_{j,i}$ is given by the following recursive formula:
 \begin{align}
     h_{j,i} = \left\{
         \begin{array}{lr}
             1 + \sum\limits_{k\in{}A}p_{j,k}h_{k,i} & \text{if } i\neq{}j\\
-            0 & \text{if} i=j
+            0 & \text{if } i=j
         \end{array}
     \right.
 \end{align}
+\end{definition}
 
 From \cite{KempeIntroduction} (35, 36):
 
-\definition{\textbf{Mixing time}}: The smallest time index of the Markov chain, where the total variational distance between the current and the stationary distribution is not greater than $\epsilon$.
+\begin{definition}[Mixing time] The smallest time index of the Markov chain, where the total variational distance between the current and the stationary distribution is not greater than a given $\varepsilon$. This measure depends on the starting distrubiton $\pi_0$.
 
 \begin{align}
-m = \min\{T | \forall{}t\geq{}T, \sum\limits_{j}|P(X_t = j) - \pi_j| \leq \epsilon\}
+m(\varepsilon, \pi_0) = \min\{t : \sum\limits_{j=0}^{n}|\pi_t[j] - \pi[j]| \leq \varepsilon\}
 \end{align}
 
-\change{Should I define graphs too?}
+For 
 
-\definition{\textbf{Maximum degree of a graph}} the maximum number of outgoing edges from a vertex is the maximum degree of a graph, for graph $G$, it is denoted as $\Delta(G)$.
-
-\definition{\textbf{Graph regularity}} We call a directed graph d-regular if all vertexes have d outgoing edges.
+\end{definition}
