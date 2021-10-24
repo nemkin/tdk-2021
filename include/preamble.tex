@@ -59,7 +59,6 @@
 
 % Set up theorem-like environments
 
-\theoremstyle{plain}
 \theoremseparator{.}
 \theorembodyfont{\upshape}
 \newtheorem{example}{\pelda}
@@ -70,6 +69,9 @@
 \numberwithin{property}{chapter}
 \numberwithin{definition}{chapter}
 \numberwithin{theorem}{chapter}
+
+\newcommand{\lineparagraph}[1]{\paragraph{#1}\mbox{}\\}
+\newcommand{\linesubparagraph}[1]{\subparagraph{#1}\mbox{}\\}
 
 % Setup captions
 \captionsetup[figure]{

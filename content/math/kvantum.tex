@@ -1,134 +1,194 @@
-\chapter{Quantum informatics, quantum computing}
+\chapter{Quantum computing}
+
+Algorithms in quantum computing are derived from the postulates of quantum mechanics. These fundamental rules define how a quantum computer operates, and therefore they are essential for any discourse on quantum algorithms.
 
 \section{The postulates of quantum mechanics}
 
-Based on Quantum  computing  and  communications: an  engineering  approach by Balázs Ferenc and Imre Sándor \cite{ImreSandor} and Mika Hirvensalo's Quantum Computing\cite{Hirvensalo}.
+This introduction is based on the following books: Quantum Computing and Communications\cite{ImreSandor} by Sándor Imre and Ferenc Balázs, Quantum Computing\cite{Hirvensalo} by Mika Hirvensalo and Quantum Walks and Search Algorithms\cite{Portugal} by Renato Portugal.
 
-\info{Ez azért jó felvezető, mert a mérés posztulátumnál el tudom mondani az unitér tranfó azonosságait, a tenzoros posztulátumnál pedig a tenzorszorzás azonosságait, amikre később hivatkozni fogok.}
+\lineparagraph{Postulate I. State space}
 
-\unsure{Vajon szó szerint bemásolni a könyvből nagyon rosszul néz ki, pláne hogy valószínűleg olyan javítja aki olvasta?}
+An isolated physical system's state can be described using a unit length \textit{state vector} in a Hilbert space (i.e. complex linear vector space), or \textit{state space}, equipped with an inner product.
 
-\paragraph{First postulate: State space}
+\definition{\textbf{Qubit}} A state vector in the 2 dimensional Hilbert space ($H_2$) is a qubit. The base vectors in this space are
 
-The actual state of any closed physical system can be described by means of a so called \textbf{state vector} $v$ having complex coefficients and unit length in a Hilbert space $V$ i.e. a complex linear vector space (\textbf{state space}) equipped with inner product.
+\begin{align*}
+\ket{0} = \begin{pmatrix} 1 \\ 0 \end{pmatrix} \text{, and } \ket{1} = \begin{pmatrix} 0 \\ 1 \end{pmatrix}
+\end{align*}
 
-A 2 dimensional Hilbert space is the simplest example of a closed physical system.
+Any qubit can be written in the form
 
-\definition{\textbf{Qubit}} A unit vector in the 2 dimensional Hilbert space ($H_2$) is a qubit. The base vectors in this space are $\ket{0} = \begin{pmatrix} 1 \\ 0 \end{pmatrix}$ and $\ket{1} = \begin{pmatrix} 0 \\ 1 \end{pmatrix}$. Any qubit can be written in the form $a\ket{0} + b\ket{1} = \begin{pmatrix} a \\ b \end{pmatrix}$, where $a, b \in{} \mathds{C}$ and $|a|^2 + |b|^2 = 1$. 
+\begin{align*}
+a\ket{0} + b\ket{1} = \begin{pmatrix} a \\ b \end{pmatrix}
+\end{align*}
 
-\paragraph{Postulate 2. Time evolution}
+where $a, b \in{} \mathds{C}$ and $|a|^2 + |b|^2 = 1$.
 
-The evolution of any closed physical system in time can be characterized by means of unitary transforms depending only on the starting and finishing time of the evolution.
+\lineparagraph{Postulate II. Evolution}
 
+The time evolution of an isolated physical system is described using unitary transformation, which depends only on the starting and finishing time of the evolution.
 
-\definition{\textbf{Unitary matrix}} U is unitary if $U^{\dagger} = U^{-1}$.
+A \textit{quantum algorithm} is a sequence of unitary operators applied to an initial state.
 
-\change{TODO: https://en.wikipedia.org/wiki/Unitary\_matrix vagy kvantumos előadás diasora, citation?. Az ortonormált bázist alkotó sorosat használom az élszíncsoportok = érmeoldalak bizonyításnál.}
+\begin{definition}[Unitary matrix]
 
-Equivalent definitions:
+$\mathbf{U}$ is unitary if $\mathbf{U}^{\dagger} = \mathbf{U}^{-1}$.
+
+\change{Cite this!}
+
+The following definitions are equivalent:
 
 \begin{enumerate}
-    \item U's rows form an orthonormal basis of $\mathds{C}^n$.
-    \item U's columns form an orthonormal basis of $\mathds{C}^n$.
-    \item U is an isometry: injective and preserves length.
-    \item U preserves the inner product.
+    \item $\mathbf{U}$'s rows form an orthonormal basis of $\mathds{C}^n$.
+    \item $\mathbf{U}$'s columns form an orthonormal basis of $\mathds{C}^n$.
+    \item $\mathbf{U}$ is an isometry: it is injective and preserves length.
+    \item $\mathbf{U}$ preserves the inner product.
 \end{enumerate}
 
-\paragraph{Postulate 3. Measurement}
+\end{definition}
 
-Any quantum measurement can be described by means of a set of measurement operators ${M_m}$, where $m$ stands for the
-possible results of the measurement. The probability of measuring $m$ if the system is in state $\ket{v}$ can be calculated as
+\lineparagraph{Postulate III. Measurement}
 
-\begin{align}
-    P(m | \ket{v}) = \bra{v} M_m^{\dagger} M_m \ket{v}
-\end{align}
+A quantum measurement is defined by a set of measurement operators $\{\mathbf{M}_m\}$, where $m$ stands for the possible results of the measurement. The probability of measuring $m$ if the system is in state $\ket{v}$ is:
 
-and the system after measuring $m$ goes to state
+\begin{align*}
+    P(m | \ket{v}) = \bra{v} \mathbf{M}_m^{\dagger} \mathbf{M}_m \ket{v}
+\end{align*}
 
-\begin{align}
-    \ket{v'} = \frac{M_m\ket{v}}{\sqrt{\bra{v} M_m^{\dagger} M_m \ket{v}}}
-\end{align}
+The state of the system after measuring $m$ is then:
 
-due to classical probability
+\begin{align*}
+    \ket{v'} = \frac{\mathbf{M}_m\ket{v}}{\sqrt{\bra{v} \mathbf{M}_m^{\dagger} \mathbf{M}_m \ket{v}}}
+\end{align*}
 
-\begin{align}
-    \sum\limits_{m} P(m | \ket{v}) = \sum\limits_{m} \bra{v} M_m^{\dagger} M_m \ket{v} = 1
-\end{align}
+The set of measurement operators have to satisfy the following \textit{completeness relation}:
 
-which means the measurement operators have to satisfy the following \textbf{completeness relation}
+\begin{align*}
+    \sum\limits_{m}  \mathbf{M}_m^{\dagger} \mathbf{M}_m = I
+\end{align*}
 
+Due to
 
-\begin{align}
-    \sum\limits_{m}  M_m^{\dagger} M_m = I
-\end{align}
+\begin{align*}
+    1 = \sum\limits_{m} P(m | \ket{v}) = \sum\limits_{m} \bra{v} \mathbf{M}_m^{\dagger} \mathbf{M}_m \ket{v}
+\end{align*}
 
-\subparagraph{Projective measurement}
+\linesubparagraph{Projective measurement}
 
-To distinguish a set of orthonormal states $(\ket{\varphi_m})$, the corresponding measurement operators can be produced by $P_m = \ket{\varphi_m}\bra{\varphi_m}$.
+To distinguish a set of orthonormal states $\{\ket{\varphi_m}\}$, the corresponding measurement operators can be produced by $\mathbf{P}_m = \ket{\varphi_m}\bra{\varphi_m}$, with the following properties.
 
-Properties of projective measurement operators ($P_m$):
+\begin{property}[$\mathbf{P}_m$ is self adjoint]
 
-\theorem{\textbf{$P_m$ is self adjoint}}: $P_m^{\dagger} = P_m$, since $(\ket{\varphi_m}\bra{\varphi_m})^{\dagger} = 
-\bra{\varphi_m}^{\dagger}\ket{\varphi_m}^{\dagger} = \ket{\varphi_m}\bra{\varphi_m} $
-\theorem{\textbf{$P_mP_m = P_m$}}: $\ket{\varphi_m}\bra{\varphi_m}\ket{\varphi_m}\bra{\varphi_m} = 
-\ket{\varphi_m}(\bra{\varphi_m}\ket{\varphi_m})\bra{\varphi_m} = \ket{\varphi_m}1\bra{\varphi_m} = \ket{\varphi_m}\bra{\varphi_m}$
-\theorem{\textbf{$P_m$ and $P_n$ are orthogonal}}: If $n\neq{}m$, then $P_mP_n = 0$, since $P_mP_n =\ket{\varphi_m}\bra{\varphi_m}\ket{\varphi_n}\bra{\varphi_n} =\ket{\varphi_m}(\bra{\varphi_m}\ket{\varphi_n})\bra{\varphi_n} =\ket{\varphi_m}0\bra{\varphi_n} = 0$.
+\begin{align*}
+\mathbf{P}_m^{\dagger} = \mathbf{P}_m
+\end{align*}
 
-The value of a qubit can be any unit length vector in ($H_2$), however when we measure it, we will receive one
-of the base vectors of ($H_2$). For $a\ket{0} + b\ket{1}$ we measure $\ket{0}$ with probability $|a|^2$ and $\ket{1}$ with probability $|b|^2$.
+Since
 
-\paragraph{Postulate 4. Composite system}
-The state space of a composite physical system $W$ can be determined using the tensor product of the individual systems $W = V \otimes Y$. Furthermore having defined $v \in V$ $y \in Y$ then the joint state of the composite system is $w = v \otimes y$.
+\begin{align*}
+\mathbf{P}_m^{\dagger} =
+(\ket{\varphi_m}\bra{\varphi_m})^{\dagger} =
+\bra{\varphi_m}^{\dagger}\ket{\varphi_m}^{\dagger} =
+\ket{\varphi_m}\bra{\varphi_m} =
+\mathbf{P}_m
+\end{align*}
 
-\definition{\textbf{Tensor product}} The tensor product $A \otimes B$ of matrix $A$ of size $r \times s$ and matrix $B$ of size $t \times u$ is of size $rt \times su$ and is defined as follows:
+\end{property}
 
-\begin{center}
-  $A = \begin{pmatrix}
-      a_{11} & a_{12} & \dots  & a_{1s} \\
-      a_{21} & a_{22} & \dots  & a_{2s} \\
-      \vdots & \vdots & \ddots & \vdots \\
-      a_{r1} & a_{r2} & \ddots & a_{rs}
-    \end{pmatrix}
-  $
-  és
-  $B = \begin{pmatrix}
-      b_{11} & b_{12} & \dots  & b_{1u} \\
-      b_{21} & b_{22} & \dots  & b_{2u} \\
-      \vdots & \vdots & \ddots & \vdots \\
-      b_{t1} & b_{t2} & \ddots & b_{tu}
-    \end{pmatrix}
-  $ esetén
-\end{center}
+\begin{property}[$\mathbf{P}_m$ is a projection]
 
-\begin{center}
-  $A \otimes B = \begin{pmatrix}
-      a_{11}B & a_{12}B & \dots  & a_{1s}B \\
-      a_{21}B & a_{22}B & \dots  & a_{2s}B \\
-      \vdots  & \vdots  & \ddots & \vdots  \\
-      a_{r1}B & a_{r2}B & \ddots & a_{rs}B
-    \end{pmatrix}
-  $
-\end{center}
+\begin{align*}
+\mathbf{P}_m\mathbf{P}_m = \mathbf{P}_m
+\end{align*}
 
-\change{Citation needed for these.}
+Since
+\begin{align*}
+\mathbf{P}_m\mathbf{P}_m =
+(\ket{\varphi_m}\bra{\varphi_m})(\ket{\varphi_m}\bra{\varphi_m}) =
+\ket{\varphi_m}(\bra{\varphi_m}\ket{\varphi_m})\bra{\varphi_m} =
+\ket{\varphi_m}1\bra{\varphi_m} =
+\ket{\varphi_m}\bra{\varphi_m} =
+\mathbf{P}_m
+\end{align*}
 
-\subsection{Identities of tensor products}
+\begin{property}[$\mathbf{P}_m$-s are orthogonal]
 
-\theorem[Associativity]
-\begin{align}
+\begin{align*}
+m \neq n \Rightarrow \mathbf{P}_m\mathbf{P}_n = \mathbf{0}
+\end{align*}
+
+Since
+\begin{align*}
+\mathbf{P}_m\mathbf{P}_n =
+(\ket{\varphi_m}\bra{\varphi_m})(\ket{\varphi_n}\bra{\varphi_n}) =
+\ket{\varphi_m}(\bra{\varphi_m}\ket{\varphi_n})\bra{\varphi_n} =
+\ket{\varphi_m}0\bra{\varphi_n} =
+\mathbf{0}
+\end{align*}
+
+From these properties follows, that the probability of measuring $m$ in case of a projective measurement:
+\begin{align*}
+P(m | \ket{v}) =
+\bra{v}\mathbf{P}_m^{\dagger}\mathbf{P}_m \ket{v} =
+\bra{v}\mathbf{P}_m\mathbf{P}_m\ket{v} = 
+\bra{v}\mathbf{P}_m\ket{v} =
+\bra{v}\ket{\varphi_m}\bra{\varphi_m}\ket{v} = |\bra{\varphi_m}\ket{v}|^2
+\end{align*}
+
+For example, the value of a qubit can be any unit length vector in $H_2$, however when we measure it, we will receive one
+of the base vectors of $H_2$. For $a\ket{0} + b\ket{1}$ we measure $0$ with probability $|a|^2$ and $1$ with probability $|b|^2$.
+
+\lineparagraph{Postulate IV. Composite systems}
+
+The state space of an isolated composite physical system is the \textit{tensor product} of the state spaces of the individual components. The current state vector of the composite system is the \textit{tensor product} of the current state vectors of the individual systems.
+
+If $V_1,\dots,V_n$ are the state spaces of the individual systems, then $V_1 \otimes \dots \otimes V_n$ is the composite state space and for $\ket{v_1} \in V_1, \dots, \ket{v_n} \in V_n$ state vectors, $\ket{v_1} \otimes \dots \otimes \ket{v_n} = \ket{v_1,\dots,v_n}$ is the composite system's state vector.
+
+\begin{definition}[Tensor product]
+
+The tensor product $A \otimes B$ of matrix $A_{(r \times s)}$ and matrix $B_{(t \times u)}$ is of size $(rt \times su)$ and is defined as follows:
+
+\begin{align*}
+\text{For }
+A = \begin{pmatrix}
+    a_{11} & a_{12} & \dots  & a_{1s} \\
+    a_{21} & a_{22} & \dots  & a_{2s} \\
+    \vdots & \vdots & \ddots & \vdots \\
+    a_{r1} & a_{r2} & \ddots & a_{rs}
+\end{pmatrix}
+\text{, and }
+B = \begin{pmatrix}
+    b_{11} & b_{12} & \dots  & b_{1u} \\
+    b_{21} & b_{22} & \dots  & b_{2u} \\
+    \vdots & \vdots & \ddots & \vdots \\
+    b_{t1} & b_{t2} & \ddots & b_{tu}
+\end{pmatrix}
+\end{align*}
+
+\begin{align*}
+A \otimes B = \begin{pmatrix}
+    a_{11}B & a_{12}B & \dots  & a_{1s}B \\
+    a_{21}B & a_{22}B & \dots  & a_{2s}B \\
+    \vdots  & \vdots  & \ddots & \vdots  \\
+    a_{r1}B & a_{r2}B & \ddots & a_{rs}B
+\end{pmatrix}
+\end{align*}
+
+\end{definition}
+
+and has the following properties:
+
+\change{Cite this!}
+
+\begin{property}[Associativity]
+\begin{align*}
   (A \otimes B) \otimes C = A \otimes (B \otimes C)
-\end{align}
+\end{align*}
+\end{property}
 
 \theorem[Distributivity over matrix product] If A and C; and B and D are compatible (can be multiplied) then:
 \begin{align}
   (A \otimes B)(C \otimes D) = (AC) \otimes (BD)
-\end{align}
-
-\unsure{Need a better name here}
-
-\theorem["Unitary matrices disappearing"]
-\begin{align}
-  (A_n \otimes I_m)(I_n \otimes B_m) = A_n \otimes B_m
 \end{align}
 
 \definition{\textbf{Quantum register}} The quantum register consisting of n qubits is the tensor product of n qubits (on $H_2$).

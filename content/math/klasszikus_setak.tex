@@ -1,6 +1,6 @@
 \chapter{Classical random walks}
 
-The book Probability and Computing\cite{MitzenmacherProbability}, written by Michael Mitzenmacher and Eli Upfal, introduces random walks in the classical sense the following way.
+Before introducing quantum computation and specifically quantum walks, I first overview classical random walks, based on the book Probability and Computing\cite{MitzenmacherProbability}, written by Michael Mitzenmacher and Eli Upfal.
 
 A \textit{random walk} is a stochastic process modeled by a particular type of Markov chain. While a variety of Markov chains exist, in this dissertation, I use the following definition exclusively.
 
@@ -52,20 +52,20 @@ Frequently studied characteristics of random walks are \textit{hitting time}\cit
 
 \begin{definition}[Hitting time] Let $h_{j,i}$ be the expected number of steps before node $j$ is visited in a random walk starting from node $i$.
 Then, $h_{j,i}$ is given by the following recursive formula:
-\begin{align}
+\begin{align*}
     h_{j,i} = \left\{
         \begin{array}{lr}
             1 + \sum\limits_{k\in{}A}p_{j,k}h_{k,i} & \text{if } i\neq{}j\\
             0 & \text{if } i=j
         \end{array}
     \right.
-\end{align}
+\end{align*}
 \end{definition}
 
 \begin{definition}[Mixing time] The smallest time index of the Markov chain, where the total variational distance between the current and the stationary distribution is not greater than a given $\varepsilon$. This measure still depends on the starting distrubiton $\pi_0$, so we take the maximum over the possible starting $\pi_0$-s.
 
-\begin{align}
+\begin{align*}
 m(\varepsilon) = \max\limits_{\pi_0}\{\min\{t : \sum\limits_{j=0}^{n}|\pi_t[j] - \pi[j]| \leq \varepsilon\}\}
-\end{align}
+\end{align*}
 
 \end{definition}
