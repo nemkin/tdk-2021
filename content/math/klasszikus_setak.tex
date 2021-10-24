@@ -48,7 +48,7 @@ Markov chains can be represented using graphs. A directed, weighted graph $G(V,E
 
 A random walk on graph $G$ starts from $X_0$ and visits the vertexes of the graph according to the states of the Markov-chain: $X_1,X_2,\dots$ .
 
-Frequently studied characteristics of random walks are \textit{hitting time} and \textit{mixing time}. Informally, hitting time describes how quickly can a vertex be reached from another vertex in the graph, while mixing time expresses how fast the walk reaches the stationary distribution, where the starting vertex can no longer be identified.
+Frequently studied characteristics of random walks are \textit{hitting time}\cite{XiaReview} and \textit{mixing time}\cite{MitzenmacherProbability}. Informally, hitting time describes how quickly can a vertex be reached from another vertex in the graph, while mixing time expresses how fast the walk reaches the stationary distribution, where the starting vertex can no longer be identified.
 
 \begin{definition}[Hitting time] Let $h_{j,i}$ be the expected number of steps before node $j$ is visited in a random walk starting from node $i$.
 Then, $h_{j,i}$ is given by the following recursive formula:
@@ -62,14 +62,10 @@ Then, $h_{j,i}$ is given by the following recursive formula:
 \end{align}
 \end{definition}
 
-From \cite{KempeIntroduction} (35, 36):
-
-\begin{definition}[Mixing time] The smallest time index of the Markov chain, where the total variational distance between the current and the stationary distribution is not greater than a given $\varepsilon$. This measure depends on the starting distrubiton $\pi_0$.
+\begin{definition}[Mixing time] The smallest time index of the Markov chain, where the total variational distance between the current and the stationary distribution is not greater than a given $\varepsilon$. This measure still depends on the starting distrubiton $\pi_0$, so we take the maximum over the possible starting $\pi_0$-s.
 
 \begin{align}
-m(\varepsilon, \pi_0) = \min\{t : \sum\limits_{j=0}^{n}|\pi_t[j] - \pi[j]| \leq \varepsilon\}
+m(\varepsilon) = \max\limits_{\pi_0}\{\min\{t : \sum\limits_{j=0}^{n}|\pi_t[j] - \pi[j]| \leq \varepsilon\}\}
 \end{align}
-
-For 
 
 \end{definition}
