@@ -16,10 +16,10 @@ For the $d$ dimensional coin state, the corresponding coin flip operator is a $(
 
 \subsection{Hadamard coin}
 
-The Hadamard coin uses the Hadamard-matrix as a transition operator:
+The Hadamard coin is the most commonly used quantum coin. It is defined by the Hadamard-matrix as a transition operator:
 
 \begin{align*}
-  H = \frac{1}{\sqrt{2}}\begin{pmatrix}
+  \mathbf{H} = \frac{1}{\sqrt{2}}\begin{pmatrix}
       1 & 1  \\
       1 & -1
     \end{pmatrix}
@@ -28,7 +28,7 @@ The Hadamard coin uses the Hadamard-matrix as a transition operator:
 If the starting coin state is $\ket{0}$, then flipping the coin once results in the following state:
 
 \begin{align*}
- H\ket{0} = \frac{1}{\sqrt{2}}\begin{pmatrix}
+ \mathbf{H}\ket{0} = \frac{1}{\sqrt{2}}\begin{pmatrix}
       1 & 1  \\
       1 & -1
     \end{pmatrix} \begin{pmatrix} 1 \\ 0 \end{pmatrix}
@@ -46,7 +46,7 @@ P(0 \mid \frac{1}{\sqrt{2}} (\ket{0} + \ket{1})) =
 Similarly, if the starting coin state is $\ket{1}$, then flipping the coin once results in the following state:
 
 \begin{align*}
-   H\ket{1} = \frac{1}{\sqrt{2}}\begin{pmatrix}
+   \mathbf{H}\ket{1} = \frac{1}{\sqrt{2}}\begin{pmatrix}
       1 & 1  \\
       1 & -1
     \end{pmatrix} \begin{pmatrix} 0 \\ 1 \end{pmatrix}
@@ -61,77 +61,78 @@ P(1 \mid \frac{1}{\sqrt{2}} (\ket{0} - \ket{1})) =
 \frac{1}{2}
 \end{align*}
 
-An unexpected feature of this coin comes from the fact, that the Hadamard-matrix is Hermitian (self-adjoint), i.e. $H^{\dagger} = H$, while also unitary, i.e. $H^{\dagger} = H^{-1}$, which results in $H^{-1} = H$, thus $HH = I$. This means, that after flipping the coin twice without measuring it, it will return the coin state to its origin. For example, starting from $\ket{0}$:
+An unexpected feature of this coin comes from the fact, that the Hadamard-matrix is Hermitian (self-adjoint), i.e. $\mathbf{H}^{\dagger} = \mathbf{H}$, while also unitary, i.e. $\mathbf{H}^{\dagger} = \mathbf{H}^{-1}$, which results in $\mathbf{H}^{-1} = \mathbf{H}$, thus $\mathbf{H}\mathbf{H} = \mathbf{I}$. This means, that after flipping the coin twice without measuring it, it will return the coin state to its origin. For example, starting from $\ket{0}$:
 
 \begin{align*}
- H^2 \ket{0} = H\frac{1}{\sqrt{2}}(\ket{0} + \ket{1}) = \frac{1}{2}(\ket{0} + \ket{1} + \ket{0} - \ket{1}) = \ket{0}
+ \mathbf{H}^2 \ket{0} = \mathbf{H}\frac{1}{\sqrt{2}}(\ket{0} + \ket{1}) = \frac{1}{2}(\ket{0} + \ket{1} + \ket{0} - \ket{1}) = \ket{0}
 \end{align*}
 
 After the second flip, the probability of measuring $\ket{0}$ is $1$, due to the destructive interference between the two $\ket{1}$ probability amplitudes, demonstrating a significant contrast between classical and quantum walks.
 
 \begin{definition}[$2^n$ dimensional Hadamard-coin]
 
-A $2^n$ dimensional Hadamard-coin operator can be created by taking the tensor product of the $2$ dimensional Hadamard-coin $n$ times: $H^{\otimes{}n}$.
+A $2^n$ dimensional Hadamard-coin operator can be created by taking the tensor product of the $2$ dimensional Hadamard-coin $n$ times: $\mathbf{H}^{\otimes{}n}$.
 
 \end{definition}
 
 \subsection{Grover coin}
 
-The Grover coin's origin is the Grover search algorithm, where it is used as the diffusion operator, defined as follows:
+The Grover coin originates from Grover's search algorithm, where it is applied as the diffusion operator, defined as follows:
 
-The diagonal state of the coin space:
+Let $\ket{D}$ be the diagonal state of the coin space:
 
-\begin{align}
-    \ket{D} = H^{\otimes{}n}\ket{0} = \frac{1}{\sqrt{2^n}} \sum\limits_{i=0}^{2^n-1} \ket{i}
-\end{align}
+\begin{align*}
+\ket{D} = \mathbf{H}^{\otimes{}n}\ket{0} =
+\frac{1}{\sqrt{2^n}} \sum\limits_{i=0}^{2^n-1} \ket{i}
+\end{align*}
 
-Grover coin:
+Using $\ket{D}$, the Grover coin is the following unitary matrix:
 
-\begin{align}
-    G = 2\ket{D}\bra{D} - I
-\end{align}
+\begin{align*}
+    \mathbf{G} = 2\ket{D}\bra{D} - \mathbf{I}
+\end{align*}
 
-If $N = 2^n$, then
+If $N = 2^n$, then $\mathbf{G}$ unrolls to the following representation:
 
-\begin{align}
-  G = \begin{pmatrix}
+\begin{align*}
+  \mathbf{G} = \begin{pmatrix}
       \frac{2}{N} - 1 & \frac{2}{N} & \dots  & \frac{2}{N} \\
       \frac{2}{N} & \frac{2}{N} - 1 & \dots  & \frac{2}{N} \\
       \vdots & \vdots & \ddots & \vdots \\
       \frac{2}{N} & \frac{2}{N} & \ddots & \frac{2}{N} - 1
     \end{pmatrix}
-\end{align}
+\end{align*}
 
 \subsection{Fourier coin}
 
-While both the Hadamard and the Fourier coin need to be sized as a power of $2$, the Fourier coin does not have this limitation. A size $N$ Fourier-coin, $F_N$ is defined by the matrix of the Fourier-transform:
+In contrast to the Hadamard and Grover coins, the Fourier coin can be of any size, not just a power of 2. A size $N$ Fourier-coin, $F_N$ is defined by the matrix of the Quantum Fourier Transform:
 
-\unsure{A Quanutm diszkrét Fourier transzformáció mátrixa talán ez?}
+\begin{align*}
+\mathbf{F}[k,l] = \frac{1}{\sqrt{N}} \omega^{kl}
+\end{align*}
 
-\begin{align}
-[F_N]_{k,l} = \frac{1}{\sqrt{N}} \omega^{kl}
-\end{align}
+where $\omega$ is the $N$-th root of unity.
 
-where 
-\begin{align}
-    \omega = e^{\frac{2\pi{}i}{N}}
-\end{align}
+\begin{align*}
+\omega = e^{\frac{2\pi{}i}{N}}
+\end{align*}
 
-\begin{align}
-  F_N = \frac{1}{\sqrt{N}}\begin{pmatrix}
-      1 &  1 & \dots  & 1 \\
-      1 &  e^{\frac{2\pi{}i}{N}} & \dots  & e^{\frac{2\pi{}i(N-1)}{N}} \\
-      \vdots & \vdots & \ddots & \vdots \\
-      1 &  e^{\frac{2\pi{}i(N-1)}{N}} & \ddots & e^{\frac{2\pi{}i(N-1)^2}{N}}
-    \end{pmatrix}
-\end{align}
+$\mathbf{F}$ unrolls to the following representation:
+
+\begin{align*}
+\mathbf{F} = \frac{1}{\sqrt{N}}
+\begin{pmatrix}
+  1 & 1 & 1 & \dots & 1 \\
+  1 & \omega & \omega^2 & \dots & \omega^{N-1} \\
+  1 & \omega^2 & \omega^4 & \dots & \omega^{2(N-1)} \\
+  \vdots & \vdots & \vdots & \ddots & \vdots \\
+  1 & \omega^{N-1} & \omega^{2(N-1)} & \dots & \omega^{(N-1)(N-1)}
+\end{pmatrix}
+\end{align*}
 
 \section{Quantum walks on the line}
 
-\change{Ez félig az önlabomból van és a Kempe cikkből.}
-\change{Az önlabomat lehet fel kellene töltenem valahova, ha már hivatkozok rá.}
-
-The simplest form of a quantum walk to discuss is the quantum walk on the line. A great introduction into this is in \cite{KempeIntroduction}. In this type of walk, a particle is described by its position on the line $\ket{x}$ and its spin state $\ket{s}$.
+The simplest form of a quantum walk to discuss is the quantum walk on the line. Kempe gives a great introduction into this in \cite{KempeIntroduction}. In this type of walk, a particle is described by its position on the line $\ket{x}$ and its spin state $\ket{s}$.
 
 The spin state is a $2$-dimensional Hilbert space $H_2$ and the basis states are called spin up $\ket{s} = \ket{\uparrow} = \ket{0}$ or a spin down $\ket{s} = \ket{\downarrow} = \ket{1}$. Let us state, that at the start of the walk, the particle is at the origin, $\ket{0}$ and the walking lasts for $\ket{N}$ steps. Then, the position state is a $(2N+1)$-dimensional Hilbert space $H_{(2N+1)}$ with basis vectors $\{\ket{-N},\ket{-(N-1)},\dots,\ket{-1},\ket{0},\ket{1},\dots,\ket{N-1},\ket{N}\}$ corresponding to the possible positions on the line.
 

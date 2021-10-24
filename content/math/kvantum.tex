@@ -4,8 +4,6 @@ Algorithms in quantum computing are derived from the postulates of quantum mecha
 
 \section{The postulates of quantum mechanics}
 
-\change{Hova lehetne besuvasztani még egy szuperpozíció definíciót?}
-
 This introduction is based on the following books: Quantum Computing and Communications\cite{ImreSandor} by Sándor Imre and Ferenc Balázs, Quantum Computing\cite{Hirvensalo} by Mika Hirvensalo and Quantum Walks and Search Algorithms\cite{Portugal} by Renato Portugal.
 
 \lineparagraph{Postulate I. State space}
@@ -20,13 +18,21 @@ A state vector in the 2 dimensional Hilbert space ($H_2$) is a qubit. The base v
 \ket{0} = \begin{pmatrix} 1 \\ 0 \end{pmatrix} \text{, and } \ket{1} = \begin{pmatrix} 0 \\ 1 \end{pmatrix}
 \end{align*}
 
-Any qubit can be written in the form
+A generic qubit is written in the form
 
 \begin{align*}
 a\ket{0} + b\ket{1} = \begin{pmatrix} a \\ b \end{pmatrix}
 \end{align*}
 
-where $a, b \in{} \mathds{C}$ and $|a|^2 + |b|^2 = 1$.
+where $a, b \in{} \mathds{C}$ and $|a|^2 + |b|^2 = 1$
+
+\begin{definition}[Superposition]
+
+A quantum system is said to be in \textit{superpotion}, if its state vector is a linear combination of multiple basis states.
+
+For example $a\ket{0} + b\ket{1}$ is in a superposition of the basis states $\ket{0}$ and $\ket{1}$, with probability amplitudes $a$ and $b$.
+
+\end{definition}
 
 \lineparagraph{Postulate II. Evolution}
 
@@ -155,18 +161,18 @@ If $V_1,\dots,V_n$ are the state spaces of the individual systems, then $V_1 \ot
 
 \begin{definition}[Tensor product]
 
-The tensor product $A \otimes B$ of matrix $A_{(r \times s)}$ and matrix $B_{(t \times u)}$ is of size $(rt \times su)$ and is defined as follows:
+The tensor product $\mathbf{A} \otimes \mathbf{B}$ of matrix $\mathbf{A}_{(r \times s)}$ and matrix $\mathbf{B}_{(t \times u)}$ is of size $(rt \times su)$ and is defined as follows:
 
 \begin{align*}
 \text{For }
-A = \begin{pmatrix}
+\mathbf{A} = \begin{pmatrix}
     a_{11} & a_{12} & \dots  & a_{1s} \\
     a_{21} & a_{22} & \dots  & a_{2s} \\
     \vdots & \vdots & \ddots & \vdots \\
     a_{r1} & a_{r2} & \ddots & a_{rs}
 \end{pmatrix}
 \text{, and }
-B = \begin{pmatrix}
+\mathbf{B} = \begin{pmatrix}
     b_{11} & b_{12} & \dots  & b_{1u} \\
     b_{21} & b_{22} & \dots  & b_{2u} \\
     \vdots & \vdots & \ddots & \vdots \\
@@ -175,11 +181,11 @@ B = \begin{pmatrix}
 \end{align*}
 
 \begin{align*}
-A \otimes B = \begin{pmatrix}
-    a_{11}B & a_{12}B & \dots  & a_{1s}B \\
-    a_{21}B & a_{22}B & \dots  & a_{2s}B \\
+\mathbf{A} \otimes \mathbf{B} = \begin{pmatrix}
+    a_{11}\mathbf{B} & a_{12}\mathbf{B} & \dots  & a_{1s}\mathbf{B} \\
+    a_{21}\mathbf{B} & a_{22}\mathbf{B} & \dots  & a_{2s}\mathbf{B} \\
     \vdots  & \vdots  & \ddots & \vdots  \\
-    a_{r1}B & a_{r2}B & \ddots & a_{rs}B
+    a_{r1}\mathbf{B} & a_{r2}\mathbf{B} & \ddots & a_{rs}\mathbf{B}
 \end{pmatrix}
 \end{align*}
 
@@ -191,7 +197,7 @@ and has the following properties:
 
 \begin{property}[Associativity]
 \begin{align*}
-  (A \otimes B) \otimes C = A \otimes (B \otimes C)
+  (\mathbf{A} \otimes \mathbf{B}) \otimes \mathbf{C} = \mathbf{A} \otimes (\mathbf{B} \otimes \mathbf{C})
 \end{align*}
 \end{property}
 
@@ -200,7 +206,7 @@ and has the following properties:
 If the corresponding matrices are compatible, then
 
 \begin{align*}
-  (A \otimes B)(C \otimes D) = (AC) \otimes (BD)
+  (\mathbf{A} \otimes \mathbf{B})(\mathbf{C} \otimes \mathbf{D}) = (\mathbf{A}\mathbf{C}) \otimes (\mathbf{B}\mathbf{D})
 \end{align*}
 \end{property}
 
