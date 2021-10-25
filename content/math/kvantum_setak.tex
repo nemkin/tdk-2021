@@ -132,116 +132,150 @@ $\mathbf{F}$ unrolls to the following representation:
 
 \section{Quantum walks on the line}
 
-The simplest form of a quantum walk to discuss is the quantum walk on the line. Kempe gives a great introduction into this in \cite{KempeIntroduction}. In this type of walk, a particle is described by its position on the line $\ket{x}$ and its spin state $\ket{s}$.
+Kempe introduces quantum walks from a physicist's perspective in  \cite{KempeIntroduction} using a particle characterised by its position on the line $\ket{x}$ and its spin state $\ket{s}$.
 
-The spin state is a $2$-dimensional Hilbert space $H_2$ and the basis states are called spin up $\ket{s} = \ket{\uparrow} = \ket{0}$ or a spin down $\ket{s} = \ket{\downarrow} = \ket{1}$. Let us state, that at the start of the walk, the particle is at the origin, $\ket{0}$ and the walking lasts for $\ket{N}$ steps. Then, the position state is a $(2N+1)$-dimensional Hilbert space $H_{(2N+1)}$ with basis vectors $\{\ket{-N},\ket{-(N-1)},\dots,\ket{-1},\ket{0},\ket{1},\dots,\ket{N-1},\ket{N}\}$ corresponding to the possible positions on the line.
+\subsection{State space}
 
-\unsure{Itt nem tudom eldönteni, hogy negatív számokat használjak vagy N/2-ből induljon a részecske és ne 0-ból.}
+\lineparagraph{Spin state}
 
-The complete state of the system, according to the 4th Postulate is $\ket{x}\otimes{}\ket{s}$.
+The spin state is in $H_2$ with the basis states spin up and down:
 
-The particle travels on the line based on its current spin state. If the current spin state is $\ket{0}$, the particle moves to the left, i.e. from position $\ket{i}$ the particle travels to position $\ket{i-1}$ $\forall -N < i$ and stays in $\ket{-N}$ for $i=-N$. If the current spin state is $\ket{1}$, the particle moves to the right, i.e. from position $\ket{i}$ the particle travels to position $\ket{i+1}$ $\forall i<N$ and stays in $\ket{N}$ for $i=N$.
+\begin{align*}
+\ket{\uparrow} = \ket{0} \\
+\ket{\downarrow} = \ket{1}
+\end{align*}
 
-This step is described by the unitary matrix $S$, which operates on the complete state of the system, $\ket{x}\otimes{}\ket{s}$ and is constructed as follows:
+The spin state vector is then given by:
 
-\change{Cite this?}
+\begin{align*}
+\ket{s} = s_0 \ket{\uparrow} + s_1 \ket{\downarrow}
+\end{align*}
 
-\definition{\textbf{Kronecker delta}} Kronecker delta is a function acting on two input variables, which takes the output value $1$, when the input variables equal and the output value $0$, when the input variables differ.
+\lineparagraph{Position state}
 
-\begin{align}
-    \delta_{i,j} =
-    \begin{cases}
-      1 & \text{if $i=j$}  \\
-      0 & \text{if $i\neq{}j$}
-    \end{cases}
-  \end{align}
+At the start of the walk, the particle is at the origin, $\ket{0}$ and the walking last for $N$ steps. The position state is in $H_{(2N+1)}$ with the following basis vectors corresponding to the possible positions on the line.
 
-Using the Kronecker delta function, a matrix can be defined with the following notation:
+\begin{align*}
+\{
+\ket{-N},\ket{-(N-1)},\dots,
+\ket{-1},\ket{0},\ket{1},\dots,
+\ket{N-1},\ket{N}
+\}
+\end{align*}
 
-\begin{align}
-    M = [\delta_{f(i),g(j)}]_{i,j}
-\end{align}
+I index the basis states using negative numbers to match the labels on the axis.
 
-which means
+The position state vector is then given by:
 
-\begin{align}
-M_{i,j} = \delta_{f(i),g(j)}
-\end{align}
+\begin{align*}
+    \ket{x} = \sum\limits_{i=-N}^{N}x_i\ket{i}
+\end{align*}
 
-\change{Ezt valahogy szebben kellene írni.}
-To simplify notation, $f(i)$ and $g(j)$ are interpreted with a modulo operator of the size of the matrix.
+\lineparagraph{Composite state}
 
-\definition{\textbf{Left shift operator}}
+The composite state of the system, according to \hyperref[Postulate4]{Postulate IV.} is then the following:
 
-To move from position $\ket{x}$ to the left, $\ket{x}$ is multiplied with a matrix of size $(2N+1)\times(2N+1)$, that contains $1$'s above the diagonal and in the lower left corner, as follows:
+\begin{align*}
+    \ket{x}\otimes{}\ket{s}
+\end{align*}
 
-\begin{center}
-  \[ L = [\delta_{(i+1),j}]_{i,j}
-    \left(
+\subsection{Evolution}
+
+The particle travels on the line based on its current spin state:
+\begin{itemize}
+\item If the current spin state is $\ket{0}$, the particle moves to the left, i.e. from position $\ket{i}$ the particle travels to position $\ket{i-1}$.
+\item If the current spin state is $\ket{1}$, the particle moves to the right, i.e. from position $\ket{i}$ the particle travels to position $\ket{i+1}$.
+\end{itemize}
+
+This step is realised with the unitary matrix $\mathbf{S}$, which operates on the complete state of the system, $\ket{x}\otimes{}\ket{s}$ and is assembled from a left and a right shift operator acting on $\ket{x}$ and another operator for checking $\ket{s}$ compiled using tensor product.
+
+\begin{definition}[Left shift operator]
+
+To move from position $\ket{i}$ to the left, $\ket{i-1}$, the position vector is multiplied with the following $\mathbf{L}$ matrix, containing $1$'s above the diagonal. To keep $\mathbf{S}$ unitary, an unused transition must be added in the lower left corner.
+
+\change{Előrehivatkozni a permutációmátrixos tételre.}
+
+\begin{align*}
+\mathbf{L} = \ket{N}\bra{-N} + \sum\limits_{i=-(N-1)}^{N} \ket{i-1}\bra{i} =
+\left(
     \begin{array}{ccccc}
         0      & 1      & 0      & \cdots & 0      \\
                & \ddots & \ddots & \ddots & \vdots \\
         \vdots &        & \ddots & \ddots & 0      \\
-               &        &        & \ddots & 1      \\
-        1      &        & \cdots &        & 0
+        0      &        &        & \ddots & 1      \\
+        1      & 0      & \cdots &        & 0
       \end{array}
-    \right)
-  \]
-\end{center}
+\right)
+\end{align*}
 
-\definition{\textbf{Right shift operator}}
+For a given basis vector $\ket{j}$ only one of the summands in $\mathbf{L}$ is non-zero, where $i=j$, resulting in the required shift being performed.
 
-To move from position $\ket{x}$ to the right, $\ket{x}$ is multiplied with a matrix of size $(2N+1)\times(2N+1)$, that contains $1$'s below the diagonal and in the upper right corner, as follows:
+\begin{align*}
+\mathbf{L}\ket{j} = \ket{j-1}\bra{j}\ket{j} = \ket{j-1}
+\end{align*}
 
-\begin{center}
-  \[ U = [\delta_{(i-1),j}]_{i,j}
-    \left(
+\end{definition}
+
+\begin{definition}[Right shift operator]
+
+To move from position $\ket{i}$ to the right, $\ket{i+1}$, the position vector is multiplied with the following $\mathbf{R}$ matrix, containing $1$'s under the diagonal. To keep $\mathbf{S}$ unitary, an unused transition must be added in the top right corner.
+
+\change{Előrehivatkozni a permutációmátrixos tételre.}
+
+\begin{align*}
+\mathbf{R} = \ket{-N}\bra{N} + \sum\limits_{i=-N}^{N-1} \ket{i+1}\bra{i} =
+\left(
     \begin{array}{ccccc}
-
-        0      &        & \cdots &        & 1      \\
-        1      & \ddots &        &        &        \\
+        0      &        & \cdots & 0      & 1      \\
+        1      & \ddots &        &        & 0      \\
         0      & \ddots & \ddots &        & \vdots \\
         \vdots & \ddots & \ddots & \ddots &        \\
         0      & \cdots & 0      & 1      & 0
       \end{array}
-    \right)
-  \]
-\end{center}
+\right)
+\end{align*}
 
-\paragraph{Shift operator}
+For a given basis vector $\ket{j}$ only one of the summands in $\mathbf{R}$ is non-zero, where $i=j$, resulting in the required shift being performed.
 
-Using matrixes $L$ and $U$ operating on the position register $\ket{x}$ only, we construct a unitary operator $S$, which operates on the complete state of the system, $\ket{x} \otimes \ket{s}$, executing matrix $L$ on $\ket{x}$ only when $\ket{s} = \ket{0}$ and matrix $U$ only when $\ket{s}=\ket{1}$.
+\begin{align*}
+\mathbf{R}\ket{j} = \ket{j+1}\bra{j}\ket{j} = \ket{j+1}
+\end{align*}
 
-The operator is the following:
+\end{definition}
 
-\begin{align}
-  S = L\otimes\ket{0}\bra{0} + U\otimes\ket{1}\bra{1}
-\end{align}
+\lineparagraph{Shift operator}
+
+Using matrixes $L$ and $R$ operating on the position register $\ket{x}$ only, we construct a unitary operator $S$, which operates on the composite state of the system, $\ket{x} \otimes \ket{s}$, executing matrix $\mathbf{L}$ on $\ket{x}$ only when $\ket{s} = \ket{0}$ and matrix $\mathbf{R}$ only when $\ket{s}=\ket{1}$.
+
+\begin{align*}
+  \mathbf{S} = \mathbf{L}\otimes\ket{0}\bra{0} + \mathbf{R}\otimes\ket{1}\bra{1}
+\end{align*}
 
 The execution logic is as follows:
 
-\change{TODO: tenzorszorzás disztributivitását kellene itt szépen behivatkozni.}
+\begin{gather*}
+    \mathbf{S}(\ket{x}\otimes{}\ket{s}) = \\
+    (\mathbf{L}\otimes\ket{0}\bra{0} + \mathbf{R}\otimes\ket{1}\bra{1})(\ket{x}\otimes{}\ket{s}) = \\ (\mathbf{L}\otimes\ket{0}\bra{0})(\ket{x}\otimes{}\ket{s}) + (\mathbf{R}\otimes\ket{1}\bra{1})(\ket{x}\otimes{}\ket{s}) = \dots
+\end{gather*}
 
-(Let us assume that the position is not $\ket{-N}$ or $\ket{N}$ for simplicity.)
-\change{TODO: |x-1> nem mindig megy balra, ezt hogy kellene jelölni 3.18-ra?}
+Using \ref{TensorDistributivity}:
 
-\begin{align}
-    S(\ket{x}\otimes{}\ket{s}) = \\
-    (L\otimes\ket{0}\bra{0} + U\otimes\ket{1}\bra{1})(\ket{x}\otimes{}\ket{s}) = \\
-    (L\otimes\ket{0}\bra{0})(\ket{x}\otimes{}\ket{s}) + (U\otimes\ket{1}\bra{1})(\ket{x}\otimes{}\ket{s}) = \\
-    L\ket{x}\otimes(\ket{0}\bra{0}\ket{s}) + U\ket{x}\otimes(\ket{1}\bra{1}\ket{s}) = \\
-    \ket{x-1}\otimes{}s_0\ket{0} + \ket{x+1}\otimes{}s_1\ket{1}
-\end{align}
+\begin{gather*}
+    \dots = \mathbf{L}\ket{x}\otimes(\ket{0}\bra{0}\ket{s}) + \mathbf{R}\ket{x}\otimes(\ket{1}\bra{1}\ket{s}) = \\
+    \ket{x-1}\otimes{}s_0\ket{0} + \ket{x+1}\otimes{}s_1\ket{1} = \\
+    s_0\ket{x-1, 0} + s_1\ket{x+1,1} = \\
+\end{gather*}
 
-If the spin state was $\ket{s} = \ket{0}$ at the beginning, then $s_1=0$, which means the resulting system state is $\ket{x-1}\otimes{}\ket{0}$, which means the particle shifted to the left, as designed. If the spin state was $\ket{s} = \ket{1}$ at the beginning, then $s_0=0$, which means the resulting system state is $\ket{x+1}\otimes{}\ket{1}$, which means the particle shifted to the right, also as intended.
+\begin{itemize}
+\item If the spin state was $\ket{s} = \ket{0}$ at the beginning, then $s_0=1$ and $s_1=0$, which means that the resulting system state is $\ket{x-1,0}$, which means that the particle shifted to the left, as designed.
+\item If the spin state was $\ket{s} = \ket{1}$ at the beginning, then $s_0=0$ and $s_1=1$, which means that the resulting system state is $\ket{x+1,1}$, which means that the particle shifted to the right, also as intended.
+\end{itemize}
 
-However the spin state can be any mixed state as well. This means, for a mixed spin state, the particle will shift both to the left and to the right, at the same time. When measured, the particle can be found in position $\ket{x-1}$ with probability $|s_0|^2$ and in $\ket{x+1}$ with probability $|s_1|^2$.
+Furthermore, the spin state can be any mixed state as well. In this case the particle will shift \textit{both} to the left and to the right, at the same time. When measured, the particle can be found in position $\ket{x-1}$ with probability $|s_0|^2$ and in position $\ket{x+1}$ with probability $|s_1|^2$.
 
 In quantum graph walks, the walker can simultaneously explore multiple parallel paths in the graph, at the same time. With good design, this behaviour can be used to search the graph faster than in classical random graph walks.
 
-\unsure{Itt be lehetne rakni azokat a nagy mátrix ábrákat az önlabomból, vagy csak hivatkozni, vagy inkább semmit.}
-
-\paragraph{Coin operator}
+\lineparagraph{Coin operator}
 
 To introduce randomness into the walk, between each step, the particle's spin state is transformed using any $2$ dimensional unitary matrices. The reviously mentioned Hadamard, Grover or Fourier coins are commonly used as coin operators.
 
@@ -253,7 +287,7 @@ For any $U_c$ unitary coin flip transform on the coin register, the coin operato
 
 since the coin operator does not modify the position register.
 
-\paragraph{Complete step}
+\lineparagraph{Complete step operator}
 
 One step of the quantum walk on the line consists of flipping the coin once, then applying the shift operator, as follows:
 
@@ -261,7 +295,7 @@ One step of the quantum walk on the line consists of flipping the coin once, the
     U = SC = S(I\otimes{}U_c)
 \end{align}
 
-\paragraph{Measurement}
+\subsection{Measurement}
 
 To measure the probability of the particle being at position $\ket{i}$, the projective measurement operator acting on $\ket{x}$ is defined as $P_i = \ket{i}\bra{i}$, according to the projective measurement definition previously.
 
