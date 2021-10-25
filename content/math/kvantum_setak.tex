@@ -173,7 +173,7 @@ The position state vector is then given by:
 
 \lineparagraph{Composite state}
 
-The composite state of the system, according to \hyperref[Postulate4]{Postulate IV.} is then the following:
+The composite state of the system, according to \hyperref[PostulateIV]{[PostulateIV]} is then the following:
 
 \begin{align*}
     \ket{x}\otimes{}\ket{s}
@@ -258,7 +258,7 @@ The execution logic is as follows:
     (\mathbf{L}\otimes\ket{0}\bra{0} + \mathbf{R}\otimes\ket{1}\bra{1})(\ket{x}\otimes{}\ket{s}) = \\ (\mathbf{L}\otimes\ket{0}\bra{0})(\ket{x}\otimes{}\ket{s}) + (\mathbf{R}\otimes\ket{1}\bra{1})(\ket{x}\otimes{}\ket{s}) = \dots
 \end{gather*}
 
-Using \ref{TensorDistributivity}:
+Using \hyperref[TensorDistributivity]{[TensorDistributivity]}:
 
 \begin{gather*}
     \dots = \mathbf{L}\ket{x}\otimes(\ket{0}\bra{0}\ket{s}) + \mathbf{R}\ket{x}\otimes(\ket{1}\bra{1}\ket{s}) = \\
@@ -277,13 +277,13 @@ In quantum graph walks, the walker can simultaneously explore multiple parallel 
 
 \lineparagraph{Coin operator}
 
-To introduce randomness into the walk, between each step, the particle's spin state is transformed using any $2$ dimensional unitary matrices. The reviously mentioned Hadamard, Grover or Fourier coins are commonly used as coin operators.
+To inject the quantum superposition into the walk, the particle's spin state is transformed using any $2$ dimensional unitary matrix between shift operations. The Hadamard, Grover and Fourier coins mentioned earlier are commonly used as coin operators.
 
-For any $U_c$ unitary coin flip transform on the coin register, the coin operator for the complete system is defined as follows:
+For any $C$ operator on the coin register, the unitary transform for the composite system is defined as follows:
 
-\begin{align}
-    C = I \otimes U_c
-\end{align}
+\begin{align*}
+    \hat{C} = I \otimes C
+\end{align*}
 
 since the coin operator does not modify the position register.
 
@@ -291,32 +291,46 @@ since the coin operator does not modify the position register.
 
 One step of the quantum walk on the line consists of flipping the coin once, then applying the shift operator, as follows:
 
-\begin{align}
-    U = SC = S(I\otimes{}U_c)
-\end{align}
+\begin{align*}
+    U = S\hat{C} = S(I\otimes{}C)
+\end{align*}
 
 \subsection{Measurement}
 
-To measure the probability of the particle being at position $\ket{i}$, the projective measurement operator acting on $\ket{x}$ is defined as $P_i = \ket{i}\bra{i}$, according to the projective measurement definition previously.
-
-\change{Behivatkozni hogyan kell?}
+To measure the probability of the particle being at position $\ket{i}$, the projective measurement operator acting on $\ket{x}$ is defined as $P_i = \ket{i}\bra{i}$, in accordance with \hyperref[PostulateIIIProjective]{[PostulateIIIProjective]}.
 
 Since the coin register need not be measured, we apply the identity operator on it, using $P_i \otimes I$ on the complete system to measure the particle's current position.
 
 The probability of finding the particle in position $i$ is:
 
-\begin{align}
-    P(i | \ket{x}) = \bra{x,s}P_i\otimes{}I\ket{x,s}
-\end{align}
+\begin{gather*}
+    P(i | \ket{x}) = \bra{x,s}P_i\otimes{}I\ket{x,s} = \dots
+\end{gather*}
 
-\section{Quantum walks on larger dimensional grids}
+Using \hyperref[TensorDistributivity]{[TensorDistributivity]}:
 
-One of the ways described in Renato Portugal's book to increase the dimension of the walk is to use independent one-dimensional walks.
+\begin{gather*}
+    \dots = \bra{x}P_i\ket{x}\bra{s}I\ket{s} =
+    \bra{x}P_i\ket{x}1 =
+    \bra{x}P_i\ket{x} =
+    \bra{x}\ket{i}\bra{i}\ket{x} =
+    |\bra{i}\ket{x}|^2 =
+    |x_i|^2
+\end{gather*}
 
-\change{Ezt angolra kell majd fordítani és leírást készíteni mellé. Vagy kidobni ha túl sok?}
 
-A következőkben a rácson, mint 4-reguláris gráfon vett bolyongást fogjuk
-részletesen megvizsgálni.
+\section{Generalization of Quantum Walks}
+
+There are two ways to generalize quantum walking on the line to higher dimensional grids.
+
+\begin{enumerate}
+    \item \textbf{Use multiple independent 2 dimensional coins}: In \cite{Portugal} Renato Portugal describes the generalization of a quantum walk on a line to a 2 dimensional grid, using this technique with two independent walks on the $x$ and $y$ axes. In my dissertation I will show the generalization technique for arbitrarily large dimensional grids.
+    \item \textbf{Use a single higher dimensional coin}: In \cite{Portugal} Renato Portugal describes the generalization of a quantum walk on a line to an arbitrary undirected graph and gives the necessary condition for the creation of the unitary transition matrix, without proof. In my dissertation I generalize to directed graphs and give proof of the generalization of the condition using directed graphs.
+\end{enumerate}
+
+\subsection{Generalization using multiple independent 2 dimensional coins}
+
+\subsubsection{Quantum Walk on a 2D grid}
 
 Legyen a rács $N = n \times n$ -es.
 
