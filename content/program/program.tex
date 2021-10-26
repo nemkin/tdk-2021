@@ -1,8 +1,41 @@
-\chapter{Szimulátor szoftver}
+\chapter{Simulator software}
 
-\change{Itt nagyon kiemelni, hogy önlab1-ben csak a klasszikus bolyongás sikerült + az egyenesen a kvantumos, most meg már tudok bármilyen regulárison bolyongani.}
+In this chapter, I present the simulator software I wrote. I discuss the currently available solutions, why I chose to write the software, the architecture, the components and design patterns I used, the challenges I faced during the development and the solutions I found.
 
-\section{Tervezési megfontolások}
+\section{Currently available solutions}
+
+Since publicly accessible quantum computers currently only have around 5-10 qubits, it is not viable at the moment to run quantum walks on a real quantum computer. Hence why, when I started researching quantum walks, I quickly began looking into simulator software. While there are many of these currently available (for example \cite{Portugal} contains an extensive selection of open-source simulator software), most of them have at least one of the following issues:
+
+\begin{enumerate}
+\item Not maintained and developed anymore: the last commit was years ago.
+\item Written in a low-level language, like C++, in a script-like fashion, with a prominent focus on memory and performance optimization while neglecting readability, modularity and extensibility.
+\item Works exclusively on a specific type of graph, for example, n-dimensional lattices only.
+\item Unable to compare and contrast classical and quantum walks on the same graph, running only quantum simulations.
+\item Hard to understand as a novice.
+\end{enumerate}
+
+There is no general, open-source solution available that is designed and developed using sound software engineering practices and an architecture that allows for experimentation with different kinds of graphs with both classical and quantum simulations available.
+
+I intend my solution to be valuable for research purposes while also providing a readable open-source codebase for college students to study the algorithm.
+
+\section{High level design}
+
+
+Define a family of algorithms, encapsulate each one, and make them
+interchangeable. Strategy lets the algorithm vary independently from clients that
+use it.
+
+
+
+
+
+
+
+
+
+
+
+
 
 Az első fázisban a szomszédossági mátrixot generáltam le teljesen. Ez nagyon sok memóriát használt, az unitér mátrix meg mégtöbbet, nagyon rosszul skálázódott. Lecseréltem spare mátrixokra, az már egy fokkal jobb.
 
