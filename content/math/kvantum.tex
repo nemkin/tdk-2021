@@ -200,15 +200,21 @@ and has the following properties:
 \end{align*}
 \end{property}
 
-\begin{property}[Distributivity over product]
-\label{TensorDistributivity}
+\begin{property}[Mixed product property]
+\label{TensorMixedProduct}
 
 If the corresponding matrices are compatible, then
 
 \begin{align*}
-  (\mathbf{A} \otimes \mathbf{B})(\mathbf{C} \otimes \mathbf{D}) = (\mathbf{A}\mathbf{C}) \otimes (\mathbf{B}\mathbf{D}).
+  (\mathbf{A} \otimes \mathbf{B})(\mathbf{C} \otimes \mathbf{D}) = (\mathbf{A}\mathbf{C}) \otimes (\mathbf{B}\mathbf{D}),
 \end{align*}
 \end{property}
+
+and as an immediate consequence, we obtain 
+
+\begin{align*}
+  (\mathbf{A} \otimes \mathbf{I})(\mathbf{I} \otimes \mathbf{B}) = \mathbf{A} \otimes \mathbf{B}.
+\end{align*}
 
 \begin{definition}[Quantum register]
 

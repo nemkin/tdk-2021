@@ -195,7 +195,8 @@ To move from position $\ket{i}$ to the left ($\ket{i-1}$) the position vector is
 
 \change{Előrehivatkozni a permutációmátrixos tételre.}
 
-\begin{align*}
+\begin{align}
+\label{LeftShift}
 \mathbf{L} = \ket{N}\bra{-N} + \sum\limits_{i=-(N-1)}^{N} \ket{i-1}\bra{i} =
 \left(
     \begin{array}{ccccc}
@@ -206,7 +207,7 @@ To move from position $\ket{i}$ to the left ($\ket{i-1}$) the position vector is
         1      & 0      & \cdots &        & 0
       \end{array}
 \right)
-\end{align*}
+\end{align}
 
 For a given basis vector $\ket{j}$ only one of the summands in $\mathbf{L}$ is non-zero, where $i=j$, resulting in the required shift being performed.
 
@@ -222,7 +223,8 @@ To move from position $\ket{i}$ to the right ($\ket{i+1}$) the position vector i
 
 \change{Előrehivatkozni a permutációmátrixos tételre.}
 
-\begin{align*}
+\begin{align}
+\label{RightShift}
 \mathbf{R} = \ket{-N}\bra{N} + \sum\limits_{i=-N}^{N-1} \ket{i+1}\bra{i} =
 \left(
     \begin{array}{ccccc}
@@ -233,7 +235,7 @@ To move from position $\ket{i}$ to the right ($\ket{i+1}$) the position vector i
         0      & \cdots & 0      & 1      & 0
       \end{array}
 \right)
-\end{align*}
+\end{align}
 
 For a given basis vector $\ket{j}$ only one of the summands in $\mathbf{R}$ is non-zero, where $i=j$, resulting in the required shift being performed.
 
@@ -247,9 +249,10 @@ For a given basis vector $\ket{j}$ only one of the summands in $\mathbf{R}$ is n
 
 Using matrixes $L$ and $R$ operating on the position register $\ket{x}$ only, we construct a unitary operator $S$, which operates on the composite state of the system, $\ket{x} \otimes \ket{s}$, executing matrix $\mathbf{L}$ on $\ket{x}$ only when $\ket{s} = \ket{0}$ and matrix $\mathbf{R}$ only when $\ket{s}=\ket{1}$.
 
-\begin{align*}
+\begin{align}
+\label{ShiftOperator}
   \mathbf{S} = \mathbf{L}\otimes\ket{0}\bra{0} + \mathbf{R}\otimes\ket{1}\bra{1}
-\end{align*}
+\end{align}
 
 The execution logic is as follows:
 
@@ -258,7 +261,7 @@ The execution logic is as follows:
     (\mathbf{L}\otimes\ket{0}\bra{0} + \mathbf{R}\otimes\ket{1}\bra{1})(\ket{x}\otimes{}\ket{s}) = \\ (\mathbf{L}\otimes\ket{0}\bra{0})(\ket{x}\otimes{}\ket{s}) + (\mathbf{R}\otimes\ket{1}\bra{1})(\ket{x}\otimes{}\ket{s}) = \dots
 \end{gather*}
 
-using \hyperref[TensorDistributivity]{[TensorDistributivity]}:
+using \hyperref[TensorMixedProduct]{[TensorMixedProduct]}:
 
 \begin{gather*}
     \dots = \mathbf{L}\ket{x}\otimes(\ket{0}\bra{0}\ket{s}) + \mathbf{R}\ket{x}\otimes(\ket{1}\bra{1}\ket{s}) = \\
@@ -282,55 +285,161 @@ To inject the quantum superposition into the walk, the particle's spin state is 
 For any $C$ operator on the coin register, the unitary transform for the composite system is defined as follows:
 
 \begin{align*}
-    \hat{C} = I \otimes C
+    \mathbf{\hat{C}} = \mathbf{I} \otimes \mathbf{C}
 \end{align*}
 
 since the coin operator does not modify the position register.
 
-\lineparagraph{Complete step operator}
+\lineparagraph{Evolution operator}
 
-One step of the quantum walk on the line consists of flipping the coin once, then applying the shift operator, as follows:
+Combining the shift operator and the coin operator together, we obtain the following evolution operator, defining one step of the quantum walk on the line. The step consists of flipping the coin once, then applying the shifting the walker's position accordingly, as follows:
 
 \begin{align*}
-    U = S\hat{C} = S(I\otimes{}C)
+    \mathbf{U} = \mathbf{S}\mathbf{\hat{C}} = \mathbf{S}(\mathbf{I}\otimes{}\mathbf{C})
 \end{align*}
 
 \subsection{Measurement}
 
-To measure the probability of the particle being at position $\ket{i}$, the projective measurement operator acting on $\ket{x}$ is defined as $P_i = \ket{i}\bra{i}$, in accordance with \hyperref[PostulateIIIProjective]{[PostulateIIIProjective]}.
+To measure the probability of the particle being at position $\ket{i}$, the projective measurement operator acting on $\ket{x}$ is defined as $\mathbf{P_i} = \ket{i}\bra{i}$, in accordance with \hyperref[PostulateIIIProjective]{[PostulateIIIProjective]}.
 
-Since the coin register need not be measured, we apply the identity operator on it, using $P_i \otimes I$ on the complete system to measure the particle's current position.
+Since the coin register need not be measured, we apply the identity operator on it, using $\mathbf{P_i} \otimes \mathbf{I}$ on the complete system to measure the particle's current position.
 
 The probability of finding the particle in position $i$ is:
 
 \begin{gather*}
-    P(i | \ket{x}) = \bra{x,s}P_i\otimes{}I\ket{x,s} = \dots
+    P(i | \ket{x}) = \bra{x,s}\mathbf{P_i}\otimes{}\mathbf{I}\ket{x,s} = \dots
 \end{gather*}
 
-using \hyperref[TensorDistributivity]{[TensorDistributivity]}:
+using \hyperref[TensorMixedProduct]{[TensorMixedProduct]}:
 
 \begin{gather*}
-    \dots = \bra{x}P_i\ket{x}\bra{s}I\ket{s} =
-    \bra{x}P_i\ket{x}1 =
-    \bra{x}P_i\ket{x} =
+    \dots = \bra{x}\mathbf{P_i}\ket{x}\bra{s}\mathbf{I}\ket{s} =
+    \bra{x}\mathbf{P_i}\ket{x}1 =
+    \bra{x}\mathbf{P_i}\ket{x} =
     \bra{x}\ket{i}\bra{i}\ket{x} =
     |\bra{i}\ket{x}|^2 =
     |x_i|^2
 \end{gather*}
 
-
 \section{Generalization of Quantum Walks}
 
-There are two ways to generalize quantum walking on the line to higher dimensional grids.
+After presenting quantum walking on the line, I review and extend two approaches to generalize it in this chapter.
 
 \begin{enumerate}
-    \item \textbf{Use multiple independent 2 dimensional coins}: In~\cite{Portugal}, Renato Portugal describes the generalization of a quantum walk on a line to a 2 dimensional grid, using this technique with two independent walks on the $x$ and $y$ axes. In this work I will show the generalization technique for arbitrarily large dimensional grids.
-    \item \textbf{Use a single higher dimensional coin}: In~\cite{Portugal}, Renato Portugal describes the generalization of a quantum walk on a line to an arbitrary undirected graph and gives the necessary condition for the creation of the unitary transition matrix, without proof. In this work I generalize to directed graphs and give proof of the generalization of the condition using directed graphs.
+    \item \textbf{Use multiple two-dimensional coins}: In~\cite{Portugal}, Renato Portugal shows the generalization of quantum walks on a line to a two-dimensional grid, using a method with 2 two-dimensional coins. In this work, I prove how his method reduces to effectively two synchronous independent walks on the $x$ and $y$ axes. Then I improve his technique by generalizing to arbitrarily large dimensional grids in a more memory-efficient way than what would naturally follow from his description.
+    \item \textbf{Use a single higher dimensional coin}: In~\cite{Portugal}, Renato Portugal describes the generalization of a quantum walk on a line to an arbitrary undirected graph and gives the necessary condition for creating the unitary transition matrix without proof. In this work, I generalize to directed graphs and give proof of the generalization of the condition using directed graphs.
 \end{enumerate}
 
 \subsection{Generalization using multiple independent 2 dimensional coins}
 
+\change{TODO}
+
 \subsubsection{Quantum Walk on a 2D grid}
+
+In \cite{Portugal} defines the following method:
+
+Let the position state of the walker be $\ket{x,y}$ and the two coins $\ket{c_x}$, acting on the $x$ coordinate and $\ket{c_y}$, acting on the $y$ coordinate of the walker.
+
+The shift operator moves the walker on the grid diagonally, according to the current state of the two coins, described by
+
+\begin{align}
+\label{Portugal2DShift}
+    \mathbf{S}\ket{x,y}\ket{c_x}\ket{c_y} = \ket{x + (-1)^{c_x}, y + (-1)^{c_y}}\ket{c_x}\ket{c_y},
+\end{align}
+
+and the coin operator leaves the position state in place while flipping both coins at the same time, described by
+
+\begin{align}
+\mathbf{\hat{C}} = \mathbf{I} \otimes \mathbf{C_4} = \mathbf{I} \otimes (\mathbf{C_2} \otimes \mathbf{C_2}).
+\end{align}
+
+\lineparagraph{Issues with this method}
+
+In \ref{Portugal2DShift}, we can see how the matrix $\mathbf{S}$ will quickly increase in size, as further dimensions are
+added to the equation. In 2D, if the walker takes $N$ steps, the size of $\mathbf{S}$ is
+
+\begin{align*}
+(2N+1)^2(2N+1)^22^22^2 = 16(2N+1)^4 = O(N^4).
+\end{align*}
+
+To increase the dimension count, one would naturally append more coordinates to the composite position state and add further coins, for example in 3D $\mathbf{S}$ would become
+
+\begin{align*}
+    \mathbf{S}\ket{x,y,z}\ket{c_x}\ket{c_y}\ket{c_z} =
+    \ket{x + (-1)^{c_x}, y + (-1)^{c_y}, z + (-1)^{c_z}}\ket{c_x}\ket{c_y}\ket{c_z},
+\end{align*}
+
+For a dimension count $d$, the size of $\mathbf{S}$ is exponential in $d$.
+
+\begin{align*}
+((2N+1)^2)^d(2^2)^d = (4(2N+1)^2)^d = O(N^{2d}).
+\end{align*}
+
+\lineparagraph{My improvements}
+
+Since in \ref{Portugal2DShift} the coordinates of the walker are updated independently by the separate coins, I was able to disassemble $\mathbf{S}$ into smaller matrices, using the properties of the tensor product.
+
+To do this, I first needed to define $\mathbf{S}$ in 2D explicitly (as opposed to the implicit definition in \ref{Portugal2DShift}, stating only how $\mathbf{S}$ updates the state of the system). I will be using the matrices $\mathbf{L}$ defined by \ref{LeftShift} and $\mathbf{R}$ defined by \ref{RightShift}.
+
+Notice that $\mathbf{R}$ increases the walker's coordinates on the line, while $\mathbf{L}$ decreases them. This means, that on the $y$ axis $\mathbf{R}$ acts by moving the walker up, and $\mathbf{L}$ acts by moving the walker down.
+
+When the coins are in the state $\ket{c_x,c_y} = \ket{0,0}$, the walker moves up and to the right. This movement is captured by $\mathbf{S}_{0,0}$, acting on the position state:
+
+\begin{align*}
+    \mathbf{S}_{0,0} =  \mathbf{R} \otimes \mathbf{R}
+\end{align*}
+
+The other $3$ $\mathbf{S}_{c_x,c_y}$ matrices are defined similarly: 
+
+\begin{align*}
+    \mathbf{S}_{0,1} =  \mathbf{R} \otimes \mathbf{L}\\
+    \mathbf{S}_{1,0} =  \mathbf{L} \otimes \mathbf{R}\\
+    \mathbf{S}_{1,1} =  \mathbf{L} \otimes \mathbf{L}
+\end{align*}
+
+Then, I assemble $\mathbf{S}$ using $\mathbf{S}_{0,0}$, $\mathbf{S}_{0,1}$, $\mathbf{S}_{1,0}$ and $\mathbf{S}_{1,1}$ the following way. I want $\mathbf{S}_{0,0}$ to act only when $\ket{c_x,c_y} = \ket{0,0}$, $\mathbf{S}_{0,1}$ to act only when $\ket{c_x,c_y} = \ket{0,1}$, $\mathbf{S}_{1,0}$ to act only when $\ket{c_x,c_y} = \ket{1,0}$, and finally $\mathbf{S}_{1,1}$ to act only when $\ket{c_x,c_y} = \ket{1,1}$.
+
+Using the same method as in \ref{ShiftOperator} I arrive at:
+
+\begin{align*}
+    \mathbf{S} =
+    \mathbf{S}_{0,0} \otimes \ket{0,0}\bra{0,0} + \\
+    \mathbf{S}_{0,1} \otimes \ket{0,1}\bra{0,1} + \\
+    \mathbf{S}_{1,0} \otimes \ket{1,0}\bra{1,0} + \\
+    \mathbf{S}_{1,1} \otimes \ket{1,1}\bra{1,1}\phantom{+}
+\end{align*}
+
+After substituting the $\mathbf{S}_{c_x,c_y}$ matrices in:
+
+\begin{align*} 
+    \mathbf{S} =   
+    (\mathbf{R} \otimes \mathbf{R}) \otimes \ket{0,0}\bra{0,0} + \\
+    (\mathbf{R} \otimes \mathbf{L}) \otimes \ket{0,1}\bra{0,1} + \\
+    (\mathbf{L} \otimes \mathbf{R}) \otimes \ket{1,0}\bra{1,0} + \\
+    (\mathbf{L} \otimes \mathbf{L}) \otimes \ket{1,1}\bra{1,1}\phantom{+}
+\end{align*}
+
+Then, using the following equalities (introducing $\mathbf{X}_0$ and $\mathbf{X}_1$):
+
+\begin{align*} 
+    \ket{0,0}\bra{0,0} = (\ket{0}\bra{0}) \otimes (\ket{0}\bra{0}) = \mathbf{X}_0 \otimes \mathbf{X}_0 \\
+    \ket{0,1}\bra{0,1} = (\ket{0}\bra{0}) \otimes (\ket{1}\bra{1}) = \mathbf{X}_0 \otimes \mathbf{X}_1 \\
+    \ket{1,0}\bra{1,0} = (\ket{1}\bra{1}) \otimes (\ket{0}\bra{0}) = \mathbf{X}_1 \otimes \mathbf{X}_0 \\
+    \ket{1,1}\bra{1,1} = (\ket{1}\bra{1}) \otimes (\ket{1}\bra{1}) = \mathbf{X}_1 \otimes \mathbf{X}_1
+\end{align*}
+
+I arrive at:
+
+\begin{align*} 
+    \mathbf{S} =   
+    (\mathbf{R} \otimes \mathbf{R}) \otimes (\mathbf{X}_0 \otimes \mathbf{X}_0) + \\
+    (\mathbf{R} \otimes \mathbf{L}) \otimes (\mathbf{X}_0 \otimes \mathbf{X}_1) + \\
+    (\mathbf{L} \otimes \mathbf{R}) \otimes (\mathbf{X}_1 \otimes \mathbf{X}_0) + \\
+    (\mathbf{L} \otimes \mathbf{L}) \otimes (\mathbf{X}_1 \otimes \mathbf{X}_1)\phantom{+}
+\end{align*}
+
+Then, using \hyperref[TensorMixedProduct]{[TensorMixedProduct]}:
+
 
 Legyen a rács $N = n \times n$ -es.
 
