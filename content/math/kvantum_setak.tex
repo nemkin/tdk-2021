@@ -543,7 +543,7 @@ In 1 dimension, $\mathbf{S}$ was defined the following way:
 \mathbf{S} = \mathbf{L}\otimes\ket{0}\bra{0} + \mathbf{R}\otimes\ket{1}\bra{1}.
 \end{align*}
 
-$\ket{0}\bra{0}$ and $\ket{1}\bra{1}$ were matrices that checked the current state of the coin and ''activated'' the transition $\mathbf{L}$ or $\mathbf{R}$ accordingly. In $d$ dimensions, the coin has $d$ possible states
+$\ket{0}\bra{0}$ and $\ket{1}\bra{1}$ were matrices that checked the current state of the coin and ''activated'' the transition $\mathbf{L}$ or $\mathbf{R}$ accordingly. In $d$ dimensions, the coin has $d$ possible states, i.e. ''sides''
 
 \begin{align*}
     \{\ket{0}, \ket{1}, \dots, \ket{d-1}\},
@@ -558,9 +558,44 @@ which means $\mathbf{S}$ will be constructed using $d$ transition matrices, desc
 In the 1 dimensional case $\mathbf{L}$ and $\mathbf{R}$ described stepping to the left and to the right, which are
 the directed edges of the line graph and $\mathbf{L} + \mathbf{R}$ is the adjacency matrix of the line graph. To generalize this, $\mathbf{S}_0 + \mathbf{S}_1 + \dots + \mathbf{S}_{d-1}$ is going to be the adjacency matrix of the $d$-regular graph.
 
-The question is how do we construct the matrices $\mathbf{S}_0, \mathbf{S}_1, \dots, \mathbf{S}_{d-1}$ from a given adjacency matrix of a $d$-regular graph? It turns out, that in order for $\mathbf{S}$ to satisfy \hyperref[PostulateII]{[PostulateII]}, there are strict rules on how these $S_i$ matrices can be defined.
+The question is how do we construct the matrices $\mathbf{S}_0, \mathbf{S}_1, \dots, \mathbf{S}_{d-1}$ from a given adjacency matrix of a $d$-regular graph? It turns out, that in order for $\mathbf{S}$ to satisfy \hyperref[PostulateII]{[PostulateII]}, there are strict rules on how these $\mathbf{S}_i$ matrices can be defined.
 
-It seems to be a well-known fact in the literature, that for undirected graphs, given a valid coloring of the edges the for all $i$, the $S_i$ matrix contains the edges colored using $i$th color.
+It seems to be a well-known fact in the literature, that for $d$-regular undirected graphs with a valid edge coloring using $d$ colors, the sides of the coin correspond to the colorsets of the edges. This means, that the $S_i$ adjacency matrix contains all of the edges that have the $i$th color assigned to them, in both directions (i.e. $S_i$ is symmetric). This fact is also mentioned in \cite{Portugal}, however no proof is given in this book or any other books and articles I have found during research.
+
+In the following section, I present a more generalized theorem for directed $d$-regular graphs formulated and proven by me. Then I discuss how the special case of the theorem for undirected graphs gives the edge coloring as a result.
+
+\begin{theorem}
+Given a coined quantum walk on a directed, $d$-regular graph $G$, in the shift operator of the walk: $\mathbf{S} = \sum\limits_{i=0}^{d-1} \mathbf{S}_i \otimes{} \ket{i}\bra{i}$, the $\mathbf{S}_{i}$ are \textbf{permutation} matrices.
+\end{theorem}
+
+\textit{Proof.}
+
+According to \hyperref[PostulateII]{[PostulateII]}, $\mathbf{S}$ must be unitary.
+
+According to \hyperref[Unitary]{[Unitary]} the columns of $\mathbf{S}$ form an orthonormal basis. This means, that the scalar product of any two different columns is $0$.
+
+Let $\mathbf{S}$ be a size $N\times{}N$ matrix, then
+
+\begin{align*}
+    (\mathbf{S}\ket{k})^{\dagger}(\mathbf{S}\ket{j}) = 0 \addspace{} \forall{}j\neq{}k,\ 0\leq{}j,k\leq{}N.
+\end{align*}
+
+Since both the $\mathbf{S}_i$ matrices and the $\ket{i}\bra{i}$ matrices contain only non-complex, non-negative values, this means that $\mathbf{S}$ contains also only non-complex, non-negative values. Thus the only way the scalar product of two different columns can be $0$ is if the columns don't contain non-zero values in the same row.
+
+From this observation follows, that for each individual $S_i$ matrix, no two different columns can contain non-zero values in the same row. If there were two different columns in $S_i$, that contained non-zero values in the same row, then that would result in $\mathbf{S}_i \otimes \ket{i}\bra{i}$ containing two different columns containing non-zero values in the same row, which would result in $\mathbf{S}$ containing two different columns containing non-zero values in the same row (since no matrices contain negative or complex values), which is a contradiction.
+
+Using \hyperref[Unitary]{[Unitary]}, the rows of $\mathbf{S}$ also form an orthonormal basis. With similar reasoning, it can be proven that for each individual $S_i$ matrix, no two different rows can contain non-zero values in the same column.
+
+From these two observations follows, that each $\mathbf{S}_i$ matrix contains exactly one non-zero value in each row and also each column. Adding the fact, that $\mathbf{S}$ matrix's rows and columns are normalized, means that this non-zero value must always be a $1$, resulting in the $\mathbf{S}_i$ being \textbf{permutation} matrices.
+
+\flushright{$\square{}.$}
+
+
+
+Az $S_i$ pedig egy élszínosztályt ír le, mert ha az $x.$ sor $y.$ eleme $1$-es akkor az egy él a gráfban és $S_i$-ben nincs másik él ami $y$-ból mutatna kifele vagy $x$-be mutatna befele. (Itt akkor kell hogy irányított legyen, mert az $x.$ oszlopban vagy az $y.$ sorban még lesz 1-es.)
+
+És akkor ilyen módon csak azokra a gráfokra lehet csak sétát definiálni amik $d$ színnel élszínezhetőek és amik pedig $d+1$-el azokra pedig nem, azokkal a következő fejezet foglalkozik.
+
 
 
 
@@ -586,40 +621,7 @@ The edge chromatic number $\chi'(G)$ of graph $G$ is $\Delta(G) \leq{} \chi'(G) 
 \theorem{}For Class 1, d-regular graphs, the coin sides correspond to the color sets of a correct edge coloring.
 
 $d$-reguláris gráfra $d$ oldalú érmével:
-\begin{itemize}
-\item A gráf egy adott csúcsából úgy döntjük el, hogy melyik következő csúcsba lépünk tovább, hogy feldobjuk az érmét és a kapott oldalhoz tartozó élen megyünk a következő csúcsba.
-\item Ehhez akkor tudni kell, hogy adott csúcsból nézve melyik hozzá tartozó él melyik érmeoldalhoz tartozik.
-\item Az érmeoldalakat számozzuk $0$,...,$d-1$ -el.
-\item Minden csúcsban a hozzá tartozó d darab élet megszámozzuk $0$,...,$d-1$-el.
-\item (Ha ezt lehet úgy, hogy minden élre az él két végéhez ugyanaz a szám tartozik akkor irányítatlan gráfként kezeljük, ha nem lehet akkor meg irányítottként és a kezdőpontjában az eredeti élhez rendelt számot kapja. ?)
-\item Ha egy adott csúcsban i-t dobunk az érmével akkor a hozzá tartozó i. sorszámú élen megyünk tovább.
-\item Ezt a mesét most mátrixszorzásokkal akarjuk felírni:
-\item Az érme legyen az $\ket{i}$ vektor $i=0...,d-1$, az pedig hogy éppen melyik gráfcsúcsban vagyunk legyen a $\ket{v}$ vektor $v=0,...,n-1$.
-\item Akkor az aktuális állapot (melyik oldala van felül az érmének és hol vagyok a gráfban) $\ket{v}\otimes{}\ket{i}$.
-\item Jelölje $S_i$ azt a mátrixot, ahol akkor van az $x$. sor $y$. oszlopában $1$-es, ha van a gráfban $(y,x)$ él és az $y$ csúcsban az él sorszáma $i$.
-\item Ekkor minden oszlopban csak $1$ darab nem $0$ elem van, mert az $y$ csúcsnak csak $1$ darab $i$. szomszédja van.
-\item Azt a lépést, hogy ha az érme $k$-t mutat akkor az adott csúcs $k$. szomszédjába megyek $S_k \otimes \ket{k}\bra{k}$ -vel lehet leírni, mert ha ezzel balról szorzom a $\ket{v} \otimes{} \ket{i}$-t akkor ez csak akkor nem $0$ ha $\bra{k}\ket{i}$ nem $0$, vagyis ha $k = i$ és ilyenkor az $S_k$ pont a $v$ csúcs $i=k.$ szomszédjába transzformálja $\ket{v}$-t.
-\item Akkor a teljes lépés mátrix $S = \sum\limits_{i=0}^{d-1} S_i \otimes{} \ket{i}\bra{i}$.
-\item Ennek unitérnek kell lennie, mert kvantum.
-\item Ezért az oszlopok ortonormált bázist alkotnak. (Meg a sorok is, de az most nem kell.)
-\item Ezért az oszlopok skaláris szorzata 0 kell hogy legyen.
-\item Nincsenek negatív értékek az $S_i$ mátrixokban és a $\ket{k}\bra{k}$-kban sem és ezért az $S$-ben sem, ezért ez csak úgy lehet ha nincs két olyan különböző oszlop $S$-ben ahol ugyanannyiadik cellában van nem $0$ érték.
-\item Kétféleképpen fordulhat elő, hogy $S$-ben két különböző oszlopban ugyanannyiadik cellában nem $0$ érték: a két nem $0$ elem vagy ugyanabból az $S_i \otimes \ket{i}\bra{i}$  mátrixból jött az  $S = \sum\limits_{i=0}^{d-1} S_i \otimes{} \ket{i}\bra{i}$ összegben vagy $2$ különbözőből.
-\item Különbözőből nem jöhetett, mert az $\ket{i}\bra{i}$-vel való tenzorzszorzás különböző sorokba fogja tenni az $1$-eseket a különböző $S_i \otimes{}\ket{i}\bra{i}$-kre.
-\item Ha azonosból jött akkor egy $S_i \otimes{} \ket{i}\bra{i}$  mátrixban van két különböző oszlop ahol ugyanannyiadik cellában van nem $0$ elem.
-\item Mivel $\ket{i}\bra{i}$-ben csak $1$ darab nem $0$ elem van, ezért
-\item Akkor az $S_i$ mátrixban van két különböző oszlop ahol ugyanannyiadik cellában van nem $0$ elem.
-\end{itemize}
 
-És akkor ezek a lépések eddig végig "akkor és csak akkor" kapcsolatban voltak egymással.
-
-\unsure{Ez igaz?}
-
-Vagyis az jött ebből ki, hogy akkor és csak akkor unitér $S$ ha az $S_i$ mátrixokban nincs két különböző oszlop ahol ugyanannyiadik cellában van nem $0$ elem. Vagyis minden sorban csak $1$ darab nem $0$ elem lehet. Közben pedig valahol felírtuk hogy minden oszlopban is csak $1$ darab nem $0$ elem lehet. És mivel $d$-reguláris a gráf ezért minden sorban és oszlopban van is $1$ darab $1$-es és ezért ezek permutációmátrixok lehetnek csak.
-
-Az $S_i$ pedig egy élszínosztályt ír le, mert ha az $x.$ sor $y.$ eleme $1$-es akkor az egy él a gráfban és $S_i$-ben nincs másik él ami $y$-ból mutatna kifele vagy $x$-be mutatna befele. (Itt akkor kell hogy irányított legyen, mert az $x.$ oszlopban vagy az $y.$ sorban még lesz 1-es.)
-
-És akkor ilyen módon csak azokra a gráfokra lehet csak sétát definiálni amik $d$ színnel élszínezhetőek és amik pedig $d+1$-el azokra pedig nem, azokkal a következő fejezet foglalkozik.
 
 \section{Quantum walks on Class 2 or non-regular graphs}
 
