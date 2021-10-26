@@ -506,44 +506,15 @@ acting on the $x$ coordinate using the first coin's state, the other acting only
 coin's state.
 
 \begin{align*} 
-    S_x = (\mathbf{S}_{\text{right}} \otimes \mathbf{H}_x) + (\mathbf{S}_{\text{left}} \otimes \mathbf{T}_x) \\
-    S_y = (\mathbf{S}_{\text{up}} \otimes \mathbf{H}_y) + (\mathbf{S}_{\text{down}} \otimes \mathbf{T}_y) \\
+    \mathbf{S}_x = (\mathbf{S}_{\text{right}} \otimes \mathbf{H}_x) + (\mathbf{S}_{\text{left}} \otimes \mathbf{T}_x) \\
+    \mathbf{S}_y = (\mathbf{S}_{\text{up}} \otimes \mathbf{H}_y) + (\mathbf{S}_{\text{down}} \otimes \mathbf{T}_y) \\
 \end{align*}    
 
 \begin{align*}
-    \mathbf{S} = S_xS_y
+    \mathbf{S} = \mathbf{S}_x\mathbf{S}_y
 \end{align*}
 
-
-
-Legyen a rács $N = n \times n$ -es.
-
-Pozíció vektor: $\ket{P} =  (p_{0}, \dots, p_{N})$, ahol
-$p_{i}\in\mathds{C}$ ahol $0 \leq{} i < N$, $\forall{}i$-re és $\sum\limits_{i=0}^{N} |p_i|^2 = 1$.
-
-\begin{align}
-  \ket{P_{0}} =  (0, \dots, 0, 1, 0, \dots, 0)
-\end{align}
-
-\begin{align}
-  C = (\frac{1}{\sqrt{2}}, \frac{i}{\sqrt{2}}) \otimes (\frac{1}{\sqrt{2}}, \frac{i}{\sqrt{2}})
-\end{align}
-
-\begin{align}
-  S_{\text{left}} =
-  \begin{pmatrix}
-    0      & 0      & 0      & \dots  & 0 \\
-    1      & 0      & 0      & \dots  & 0 \\
-    0      & 1      & 0      & \ddots & 0 \\
-    \vdots & \ddots & \ddots & 0
-  \end{pmatrix}
-\end{align}
-
-
-\begin{align}
-  L = U^{T}
-\end{align}
-
+\change{TODO finish this}
 
 \begin{itemize}
   \item Rács = két körnek a tenzorszorzata.
@@ -554,231 +525,45 @@ $p_{i}\in\mathds{C}$ ahol $0 \leq{} i < N$, $\forall{}i$-re és $\sum\limits_{i=
   \item Többsoros képleteknek csak 1 száma legyen.
 \end{itemize}
 
-\section{Példa}
+\subsection{Generalization using a single higher dimensional coin}
 
-\begin{align}
-  n = 3
-\end{align}
+Using this method, we generalize quantum walking to arbitrary directed graphs. To do so, we first generalize to regular graphs, then discuss how non-regular graphs can be regularized. This introduction is done following Renato Portugal's book~\cite{Portugal}.
 
-\begin{figure}[!ht]
-  \begin{center}
-    \begin{tikzpicture}
+In a $d$-regular graph, the vertices have $d$ neighbours, meaning the walker must choose from $d$ possible directions at every step. Thus the coin is $d$ dimensional. Using this idea as a starting point, we can reverse engineer the generalized walk from the walk on the line by starting from the evolution operator, which assumes nothing about the given graph or coin.
 
-      \draw(0,0) -- (0,2);
-      \draw(1,0) -- (1,2);
-      \draw(2,0) -- (2,2);
+\begin{align*}
+    \mathbf{U} = \mathbf{S} \mathbf{\hat{C}} = \mathbf{S} (\mathbf{I} \otimes \mathbf{C})
+\end{align*}
 
-      \draw [black, dashed] plot [smooth, tension=0.8] coordinates { (0,0) (0.45,-0.25) (0.45,2.25) (0,2)};
-      \draw [black, dashed] plot [smooth, tension=0.8] coordinates { (1,0) (1.45,-0.25) (1.45,2.25) (1,2)};
-      \draw [black, dashed] plot [smooth, tension=0.8] coordinates { (2,0) (2.45,-0.25) (2.45,2.25) (2,2)};
+In this equation, $\mathbf{C}$ can be any $d$-dimensional unitary matrix. The definition of $\mathbf{S}$ requires more thought, since $\mathbf{S}$ has to encode the graph's structure, while also satisfying \hyperref[PostulateII]{[PostulateII]}.
 
+In 1 dimension, $\mathbf{S}$ was defined the following way:
 
-      \draw(0,0) -- (2,0);
-      \draw(0,1) -- (2,1);
-      \draw(0,2) -- (2,2);
+\begin{align*}
+\mathbf{S} = \mathbf{L}\otimes\ket{0}\bra{0} + \mathbf{R}\otimes\ket{1}\bra{1}.
+\end{align*}
 
-      \draw [black, dashed] plot [smooth, tension=0.8] coordinates { (0,0) (-0.35,0.45) (2.35,0.45) (2,0)};
-      \draw [black, dashed] plot [smooth, tension=0.8] coordinates { (0,1) (-0.35,1.45) (2.35,1.45) (2,1)};
-      \draw [black, dashed] plot [smooth, tension=0.8] coordinates { (0,2) (-0.35,2.45) (2.35,2.45) (2,2)};
+$\ket{0}\bra{0}$ and $\ket{1}\bra{1}$ were matrices that checked the current state of the coin and ''activated'' the transition $\mathbf{L}$ or $\mathbf{R}$ accordingly. In $d$ dimensions, the coin has $d$ possible states
 
-      \draw[black,fill=white](0,0) circle (0.3) node {0};
-      \draw[black,fill=white](1,0) circle (0.3) node {1};
-      \draw[black,fill=white](2,0) circle (0.3) node {2};
+\begin{align*}
+    \{\ket{0}, \ket{1}, \dots, \ket{d-1}\},
+\end{align*}
 
-      \draw[black,fill=white](0,1) circle (0.3) node {3};
-      \draw[black,fill=red!60](1,1) circle (0.3) node {4};
-      \draw[black,fill=white](2,1) circle (0.3) node {5};
+which means $\mathbf{S}$ will be constructed using $d$ transition matrices, describing the graph's structure
 
-      \draw[black,fill=white](0,2) circle (0.3) node {6};
-      \draw[black,fill=white](1,2) circle (0.3) node {7};
-      \draw[black,fill=white](2,2) circle (0.3) node {8};
+\begin{align*}
+    \mathbf{S} = \mathbf{S}_0\ket{0}\bra{0} + \mathbf{S}_1\ket{1}\bra{1} + \dots + \mathbf{S}_{d-1}\ket{d-1}\bra{d-1}.
+\end{align*}
 
-    \end{tikzpicture}
-  \end{center}
-  \caption{n=3-ös rács}
-  \label{fig:3Racs}
-\end{figure}
+In the 1 dimensional case $\mathbf{L}$ and $\mathbf{R}$ described stepping to the left and to the right, which are
+the directed edges of the line graph and $\mathbf{L} + \mathbf{R}$ is the adjacency matrix of the line graph. To generalize this, $\mathbf{S}_0 + \mathbf{S}_1 + \dots + \mathbf{S}_{d-1}$ is going to be the adjacency matrix of the $d$-regular graph.
 
-\begin{align}
-  N = n^2 = 9
-\end{align}
+The question is how do we construct the matrices $\mathbf{S}_0, \mathbf{S}_1, \dots, \mathbf{S}_{d-1}$ from a given adjacency matrix of a $d$-regular graph? It turns out, that in order for $\mathbf{S}$ to satisfy \hyperref[PostulateII]{[PostulateII]}, there are strict rules on how these $S_i$ matrices can be defined.
 
-\begin{align}
-  S_{\text{left}} = I_3 \otimes U_3 =
-  \begin{pmatrix}
-    0                  & \textcolor{red}{1} & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  \\
-    0                  & 0                  & \textcolor{red}{1} & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  \\
-    \textcolor{red}{1} & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  \\
-    0                  & 0                  & 0                  & 0                  & \textcolor{red}{1} & 0                  & 0                  & 0                  & 0                  \\
-    0                  & 0                  & 0                  & 0                  & 0                  & \textcolor{red}{1} & 0                  & 0                  & 0                  \\
-    0                  & 0                  & 0                  & \textcolor{red}{1} & 0                  & 0                  & 0                  & 0                  & 0                  \\
-    0                  & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  & \textcolor{red}{1} & 0                  \\
-    0                  & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  & \textcolor{red}{1} \\
-    0                  & 0                  & 0                  & 0                  & 0                  & 0                  & \textcolor{red}{1} & 0                  & 0
-  \end{pmatrix}
-\end{align}
-
-\begin{align}
-  S_{\text{right}} = I_3 \otimes L_3 =
-  \begin{pmatrix}
-    0                  & 0                  & \textcolor{red}{1} & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  \\
-    \textcolor{red}{1} & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  \\
-    0                  & \textcolor{red}{1} & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  \\
-    0                  & 0                  & 0                  & 0                  & 0                  & \textcolor{red}{1} & 0                  & 0                  & 0                  \\
-    0                  & 0                  & 0                  & \textcolor{red}{1} & 0                  & 0                  & 0                  & 0                  & 0                  \\
-    0                  & 0                  & 0                  & 0                  & \textcolor{red}{1} & 0                  & 0                  & 0                  & 0                  \\
-    0                  & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  & \textcolor{red}{1} \\
-    0                  & 0                  & 0                  & 0                  & 0                  & 0                  & \textcolor{red}{1} & 0                  & 0                  \\
-    0                  & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  & \textcolor{red}{1} & 0
-  \end{pmatrix}
-\end{align}
+It seems to be a well-known fact in the literature, that for undirected graphs, given a valid coloring of the edges the for all $i$, the $S_i$ matrix contains the edges colored using $i$th color.
 
 
-\begin{align}
-  S_{\text{down}} = U_3^3 = U_3 \otimes I_3 =
-  \begin{pmatrix}
-    0                  & 0                  & 0                  & \textcolor{red}{1} & 0                  & 0                  & 0                  & 0                  & 0                  \\
-    0                  & 0                  & 0                  & 0                  & \textcolor{red}{1} & 0                  & 0                  & 0                  & 0                  \\
-    0                  & 0                  & 0                  & 0                  & 0                  & \textcolor{red}{1} & 0                  & 0                  & 0                  \\
-    0                  & 0                  & 0                  & 0                  & 0                  & 0                  & \textcolor{red}{1} & 0                  & 0                  \\
-    0                  & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  & \textcolor{red}{1} & 0                  \\
-    0                  & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  & \textcolor{red}{1} \\
-    \textcolor{red}{1} & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  \\
-    0                  & \textcolor{red}{1} & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  \\
-    0                  & 0                  & \textcolor{red}{1} & 0                  & 0                  & 0                  & 0                  & 0                  & 0
-  \end{pmatrix}
-\end{align}
 
-
-\begin{align}
-  S_{\text{up}} = L_3^3 = L_3 \otimes I_3 =
-  \begin{pmatrix}
-    0                  & 0                  & 0                  & 0                  & 0                  & 0                  & \textcolor{red}{1} & 0                  & 0                  \\
-    0                  & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  & \textcolor{red}{1} & 0                  \\
-    0                  & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  & \textcolor{red}{1} \\
-    \textcolor{red}{1} & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  \\
-    0                  & \textcolor{red}{1} & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  \\
-    0                  & 0                  & \textcolor{red}{1} & 0                  & 0                  & 0                  & 0                  & 0                  & 0                  \\
-    0                  & 0                  & 0                  & \textcolor{red}{1} & 0                  & 0                  & 0                  & 0                  & 0                  \\
-    0                  & 0                  & 0                  & 0                  & \textcolor{red}{1} & 0                  & 0                  & 0                  & 0                  \\
-    0                  & 0                  & 0                  & 0                  & 0                  & \textcolor{red}{1} & 0                  & 0                  & 0
-  \end{pmatrix}
-\end{align}
-
-\begin{align}
-  X_{\text{head}} =
-  \begin{pmatrix}
-    1 & 0 \\
-    0 & 0
-  \end{pmatrix}
-\end{align}
-
-\begin{align}
-  X_{\text{tail}} =
-  \begin{pmatrix}
-    0 & 0 \\
-    0 & 1
-  \end{pmatrix}
-\end{align}
-
-
-\begin{align}
-  S =
-  (S_{\text{up}} S_{\text{left}}) \otimes (X_{\text{head}} \otimes X_{\text{head}}) +    \\
-  (S_{\text{up}}  S_{\text{right}}) \otimes (X_{\text{head}} \otimes X_{\text{tail}}) +  \\
-  (S_{\text{down}}  S_{\text{left}}) \otimes (X_{\text{tail}} \otimes X_{\text{head}}) + \\
-  (S_{\text{down}} S_{\text{right}}) \otimes (X_{\text{tail}} \otimes X_{\text{tail}})
-\end{align}
-
-\begin{align}
-  C_4 = H^{\otimes2} = \frac{1}{2}
-  \begin{pmatrix}
-    1 & 1  & 1  & 1  \\
-    1 & -1 & 1  & -1 \\
-    1 & 1  & -1 & -1 \\
-    1 & -1 & -1 & 1
-  \end{pmatrix}
-\end{align}
-
-\begin{align}
-  U = S  (I_9 \otimes C_4)
-\end{align}
-
-\begin{align}
-  U =
-  ((S_{\text{up}}  S_{\text{left}}) \otimes (X_{\text{head}} \otimes X_{\text{head}}) +  \\
-  (S_{\text{up}} S_{\text{right}}) \otimes (X_{\text{head}} \otimes X_{\text{tail}}) +   \\
-  (S_{\text{down}}  S_{\text{left}}) \otimes (X_{\text{tail}} \otimes X_{\text{head}}) + \\
-  (S_{\text{down}} S_{\text{right}}) \otimes (X_{\text{tail}} \otimes X_{\text{tail}}))
-  (I_9 \otimes C_4)
-\end{align}
-
-\definition[Tenzorszorzás azonosság: mátrix szorzással disztibutív]
-
-Bal oldalt 9*9-es, jobb oldalt 4*4-es mátrixok vannak.
-
-\begin{align}
-  U =
-  (S_{\text{up}}  S_{\text{left}}) \otimes ((X_{\text{head}} \otimes X_{\text{head}})  C_4) +   \\
-  (S_{\text{up}}  S_{\text{right}}) \otimes ((X_{\text{head}} \otimes X_{\text{tail}}) C_4) +   \\
-  (S_{\text{down}}  S_{\text{left}}) \otimes ((X_{\text{tail}} \otimes X_{\text{head}})  C_4) + \\
-  (S_{\text{down}}  S_{\text{right}}) \otimes ((X_{\text{tail}} \otimes X_{\text{tail}}) C_4)
-\end{align}
-
-\begin{align}
-  C_4 = C_2 \otimes C_2
-\end{align}
-
-\begin{align}
-  U =
-  (S_{\text{up}}  S_{\text{left}}) \otimes ((X_{\text{head}} \otimes X_{\text{head}}) (C_2 \otimes C_2)) +   \\
-  (S_{\text{up}}  S_{\text{right}}) \otimes ((X_{\text{head}} \otimes X_{\text{tail}}) (C_2 \otimes C_2)) +  \\
-  (S_{\text{down}}  S_{\text{left}}) \otimes ((X_{\text{tail}} \otimes X_{\text{head}}) (C_2 \otimes C_2)) + \\
-  (S_{\text{down}}  S_{\text{right}}) \otimes ((X_{\text{tail}} \otimes X_{\text{tail}}) (C_2 \otimes C_2))
-\end{align}
-
-\definition[Tenzorszorzás azonosság: mátrix szorzással disztibutív]
-
-\begin{align}
-  U =
-  (S_{\text{up}}  S_{\text{left}}) \otimes (((X_{\text{head}}C_2) \otimes (X_{\text{head}}C_2))) +   \\
-  (S_{\text{up}}  S_{\text{right}}) \otimes (((X_{\text{head}}C_2) \otimes (X_{\text{tail}}C_2))) +  \\
-  (S_{\text{down}}  S_{\text{left}}) \otimes (((X_{\text{tail}}C_2) \otimes (X_{\text{head}}C_2))) + \\
-  (S_{\text{down}}  S_{\text{right}}) \otimes (((X_{\text{tail}}C_2) \otimes (X_{\text{tail}}C_2)))
-\end{align}
-
-\definition[Tenzorszorzás azonosság: asszociatív]
-
-\begin{align}
-  U =
-  (S_{\text{up}}  S_{\text{left}}) \otimes (X_{\text{head}}C_2) \otimes (X_{\text{head}}C_2) +   \\
-  (S_{\text{up}}  S_{\text{right}}) \otimes (X_{\text{head}}C_2) \otimes (X_{\text{tail}}C_2) +  \\
-  (S_{\text{down}}  S_{\text{left}}) \otimes (X_{\text{tail}}C_2) \otimes (X_{\text{head}}C_2) + \\
-  (S_{\text{down}}  S_{\text{right}}) \otimes (X_{\text{tail}}C_2) \otimes (X_{\text{tail}}C_2)
-\end{align}
-
-\definition[Tenzorszorzás Lemma?]
-
-\begin{align}
-  S = ((S_{\text{up}} \otimes  X_{\text{head}} \otimes I) +
-  (S_{\text{down}} \otimes X_{\text{tail}} \otimes I))
-  ((S_{\text{left}} \otimes I \otimes X_{\text{head}}) +
-  (S_{\text{right}} \otimes I \otimes  X_{\text{tail}} ))
-\end{align}
-
-\begin{align}
-   U =
-   ((S_{\text{up}}  S_{\text{left}}) \otimes I_2) (I_9 \otimes (X_{\text{head}}C_2)) \otimes (X_{\text{head}}C_2) + \\
-   ((S_{\text{up}}  S_{\text{right}}) \otimes I_2) (I_9 \otimes (X_{\text{head}}C_2)) \otimes (X_{\text{tail}}C_2) + \\
-   ((S_{\text{down}}  S_{\text{left}}) \otimes I_2) (I_9 \otimes (X_{\text{tail}}C_2)) \otimes (X_{\text{head}}C_2) + \\
-   ((S_{\text{down}}  S_{\text{right}}) \otimes I_2) (I_9 \otimes (X_{\text{tail}}C_2)) \otimes (X_{\text{tail}}C_2)
-\end{align}
-
-\section{Quantum walks on Class 1 regular graphs}
-
-The generalization technique described in the previous chapter only works for grids of any dimension. To generalize to arbitrary graphs, first we need to describe the quantum walk on a regular graph. This is done following Renato Portugal's work~\cite{Portugal}.
-
-In a $d$-regular graph, the number of neighbours is always $d$. This means, that the coin is $d$ dimensional. In non-regular graphs, there is an issue arising from needing different sized coins at different vertices, which is discussed in the next section.
 
 The coin operator can be defined as before, by applying the identity operator on the position register and any coin flip unitary matrix on the coin register.
 
