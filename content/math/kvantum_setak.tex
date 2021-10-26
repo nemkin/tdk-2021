@@ -588,51 +588,14 @@ Using \hyperref[Unitary]{[Unitary]}, the rows of $\mathbf{S}$ also form an ortho
 
 From these two observations follows, that each $\mathbf{S}_i$ matrix contains exactly one non-zero value in each row and also each column. Adding the fact, that $\mathbf{S}$ matrix's rows and columns are normalized, means that this non-zero value must always be a $1$, resulting in the $\mathbf{S}_i$ being \textbf{permutation} matrices.
 
-\flushright{$\square{}.$}
+\begin{flushright}
+$\square{}.$
+\end{flushright}
 
+When this theorem is applied to undirected graphs, the $\mathbf{S}_i$ adjacency matrices can be contructed to be symmetric (since the graph's adjacency matrix is also symmetric) and in this case they correspond to a valid edge coloring using $d$ colors (since if $\mathbf{S}_i[j,k] = 1$, then also $\mathbf{S}[k,j] = 1$ due to symmetry, and the $\{k,j\}$ edge has the color $i$, while no other edges of vertex $j$ or $k$ have the $i$th color, since $\mathbf{S}_i$ is a permutation matrix).
 
-
-Az $S_i$ pedig egy élszínosztályt ír le, mert ha az $x.$ sor $y.$ eleme $1$-es akkor az egy él a gráfban és $S_i$-ben nincs másik él ami $y$-ból mutatna kifele vagy $x$-be mutatna befele. (Itt akkor kell hogy irányított legyen, mert az $x.$ oszlopban vagy az $y.$ sorban még lesz 1-es.)
-
-És akkor ilyen módon csak azokra a gráfokra lehet csak sétát definiálni amik $d$ színnel élszínezhetőek és amik pedig $d+1$-el azokra pedig nem, azokkal a következő fejezet foglalkozik.
-
-
-
-
-
-The coin operator can be defined as before, by applying the identity operator on the position register and any coin flip unitary matrix on the coin register.
-
-To define the shift operator, let's introduce the edge chromatic number of a graph.
-
-\change{Cite these, they are from wikipedia.}
-
-\definition{\textbf{Edge coloring}}
-
-An edge coloring of a graph is an assignment of colors to the edges of the graph, so that no two incident edges have the same color.
-
-\definition{\textbf{Edge chromatic number}}, $\chi'(G)$ is the minimum number of colors that can be used to correctly color the graph.
-
-\theorem{\textbf{Vizing's theorem}} 
-
-The edge chromatic number $\chi'(G)$ of graph $G$ is $\Delta(G) \leq{} \chi'(G) \leq{} \Delta(G)+1$. Graphs with $\chi'(G) = \Delta(G)$ are called Class 1 graphs and graphs with $\chi'(G) = \Delta(G)+1$ are called Class 2 graphs.
-
-\info{Ez az a tétel amit nem találtam meg sehol, itt kellene írni hogy én bizonyítottam, de ismert eredmény.}
-
-\theorem{}For Class 1, d-regular graphs, the coin sides correspond to the color sets of a correct edge coloring.
-
-$d$-reguláris gráfra $d$ oldalú érmével:
-
-
-\section{Quantum walks on Class 2 or non-regular graphs}
-
-\subsection{Class 2}
-
-For graphs in class 2, we can not use the same coin-position notation, we have to use the arc notation and replace the simple graph by an associated symmetric digraph, whose underlying graph is the original graph. In this case, the walker steps on the arcs of the digraph. After those considerations, we are able to define formally coined quantum walks.
-
-\subsection{Make the graph regular}
-
-\change{Add loops (and hope they don't ruin the edge chromatic number?).}
-
-\subsection{Szegedy walk}
-
-\change{Walk on the edges.}
+Applying Vizing's theorem to $d$-regular graphs, the graphs can be categorized into two classes \cite{Portugal}:
+\begin{itemize}
+\item Class 1 $d$-regular graphs: Their edge-chromatic number is $d$. The contruction defined in this section works for these graphs.
+\item Class 2 $d$-regular graphs: Their edge-chromatic number is $d+1$. The construction defined in this section doesn't work for these graphs. According to \cite{Portugal}, no quantum walk using position-coin notation can be constructed for these, one must use the arc notation and replace the simple graph by an associated symmetric digraph, whose underlying graph is the original graph. In this case, the walker steps on the arcs of the digraph. The details of this construction are out of scope for this work.
+\end{itemize}
