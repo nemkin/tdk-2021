@@ -397,7 +397,13 @@ The other $3$ $\mathbf{S}_{c_x,c_y}$ matrices are defined similarly:
     \mathbf{S}_{1,1} =  \mathbf{L} \otimes \mathbf{L}
 \end{align*}
 
-Then, I assemble $\mathbf{S}$ using $\mathbf{S}_{0,0}$, $\mathbf{S}_{0,1}$, $\mathbf{S}_{1,0}$ and $\mathbf{S}_{1,1}$ the following way. I want $\mathbf{S}_{0,0}$ to act only when $\ket{c_x,c_y} = \ket{0,0}$, $\mathbf{S}_{0,1}$ to act only when $\ket{c_x,c_y} = \ket{0,1}$, $\mathbf{S}_{1,0}$ to act only when $\ket{c_x,c_y} = \ket{1,0}$, and finally $\mathbf{S}_{1,1}$ to act only when $\ket{c_x,c_y} = \ket{1,1}$.
+Then, I assemble $\mathbf{S}$ using $\mathbf{S}_{0,0}$, $\mathbf{S}_{0,1}$, $\mathbf{S}_{1,0}$ and $\mathbf{S}_{1,1}$ the following way: I want
+\begin{itemize}
+\item $\mathbf{S}_{0,0}$ to act only when $\ket{c_x,c_y} = \ket{0,0}$,
+\item $\mathbf{S}_{0,1}$ to act only when $\ket{c_x,c_y} = \ket{0,1}$,
+\item $\mathbf{S}_{1,0}$ to act only when $\ket{c_x,c_y} = \ket{1,0}$, and finally
+\item $\mathbf{S}_{1,1}$ to act only when $\ket{c_x,c_y} = \ket{1,1}$.
+\end{itemize}
 
 Using the same method as in \ref{ShiftOperator} I arrive at:
 
@@ -419,26 +425,95 @@ After substituting the $\mathbf{S}_{c_x,c_y}$ matrices in:
     (\mathbf{L} \otimes \mathbf{L}) \otimes \ket{1,1}\bra{1,1}\phantom{+}
 \end{align*}
 
-Then, using the following equalities (introducing $\mathbf{X}_0$ and $\mathbf{X}_1$):
+Let us name the coin state $\ket{0}$ heads and the coin state $\ket{1}$ tails. Then, using the following equalities amd introducing matrices $\mathbf{H}$ and $\mathbf{T}$, as shorthands:
 
 \begin{align*} 
-    \ket{0,0}\bra{0,0} = (\ket{0}\bra{0}) \otimes (\ket{0}\bra{0}) = \mathbf{X}_0 \otimes \mathbf{X}_0 \\
-    \ket{0,1}\bra{0,1} = (\ket{0}\bra{0}) \otimes (\ket{1}\bra{1}) = \mathbf{X}_0 \otimes \mathbf{X}_1 \\
-    \ket{1,0}\bra{1,0} = (\ket{1}\bra{1}) \otimes (\ket{0}\bra{0}) = \mathbf{X}_1 \otimes \mathbf{X}_0 \\
-    \ket{1,1}\bra{1,1} = (\ket{1}\bra{1}) \otimes (\ket{1}\bra{1}) = \mathbf{X}_1 \otimes \mathbf{X}_1
+    \ket{0,0}\bra{0,0} = (\ket{0}\bra{0}) \otimes (\ket{0}\bra{0}) = \mathbf{H} \otimes \mathbf{H} \\
+    \ket{0,1}\bra{0,1} = (\ket{0}\bra{0}) \otimes (\ket{1}\bra{1}) = \mathbf{H} \otimes \mathbf{T} \\
+    \ket{1,0}\bra{1,0} = (\ket{1}\bra{1}) \otimes (\ket{0}\bra{0}) = \mathbf{T} \otimes \mathbf{H} \\
+    \ket{1,1}\bra{1,1} = (\ket{1}\bra{1}) \otimes (\ket{1}\bra{1}) = \mathbf{T} \otimes \mathbf{T}
 \end{align*}
 
 I arrive at:
 
 \begin{align*} 
     \mathbf{S} =   
-    (\mathbf{R} \otimes \mathbf{R}) \otimes (\mathbf{X}_0 \otimes \mathbf{X}_0) + \\
-    (\mathbf{R} \otimes \mathbf{L}) \otimes (\mathbf{X}_0 \otimes \mathbf{X}_1) + \\
-    (\mathbf{L} \otimes \mathbf{R}) \otimes (\mathbf{X}_1 \otimes \mathbf{X}_0) + \\
-    (\mathbf{L} \otimes \mathbf{L}) \otimes (\mathbf{X}_1 \otimes \mathbf{X}_1)\phantom{+}
+    (\mathbf{R} \otimes \mathbf{R}) \otimes (\mathbf{H} \otimes \mathbf{H}) + \\
+    (\mathbf{R} \otimes \mathbf{L}) \otimes (\mathbf{H} \otimes \mathbf{T}) + \\
+    (\mathbf{L} \otimes \mathbf{R}) \otimes (\mathbf{T} \otimes \mathbf{H}) + \\
+    (\mathbf{L} \otimes \mathbf{L}) \otimes (\mathbf{T} \otimes \mathbf{T})\phantom{+}
 \end{align*}
 
-Then, using \hyperref[TensorMixedProduct]{[TensorMixedProduct]}:
+Then, using \hyperref[TensorMixedProduct]{[TensorMixedProduct]} I inflate the equation with (appropriately sized) $\mathbf{I}$ matrices:
+
+\begin{align*} 
+    \mathbf{S} =   
+    ((\mathbf{R} \otimes \mathbf{I})(\mathbf{I} \otimes \mathbf{R})) \otimes ((\mathbf{H} \otimes \mathbf{I}) (\mathbf{I} \otimes \mathbf{H})) + \\
+    ((\mathbf{R} \otimes \mathbf{I})(\mathbf{I} \otimes \mathbf{L})) \otimes ((\mathbf{H} \otimes \mathbf{I}) (\mathbf{I} \otimes \mathbf{T})) + \\
+    ((\mathbf{L} \otimes \mathbf{I})(\mathbf{I} \otimes \mathbf{R})) \otimes ((\mathbf{T} \otimes \mathbf{I}) (\mathbf{I} \otimes \mathbf{H})) + \\
+    ((\mathbf{L} \otimes \mathbf{I})(\mathbf{I} \otimes \mathbf{L})) \otimes ((\mathbf{T} \otimes \mathbf{I}) (\mathbf{I} \otimes \mathbf{T}))\phantom{+}
+\end{align*}
+
+At this point, I introduce a few aliases to make the equation more manageable. Notice, how for example $\mathbf{I} \otimes \mathbf{R}$ is acting on the 2D position state, but only updating the $y$ coordinate to move the walker upward. This
+gives a way to naturally define $\mathbf{S}_{\text{up}} = \mathbf{I} \otimes \mathbf{R}$, and similarly:
+
+\begin{align*} 
+\mathbf{S}_{\text{right}} = \mathbf{R} \otimes \mathbf{I} \\
+\mathbf{S}_{\text{left}} = \mathbf{L} \otimes \mathbf{I} \\
+\mathbf{S}_{\text{up}} = \mathbf{I} \otimes \mathbf{R} \\
+\mathbf{S}_{\text{down}} = \mathbf{I} \otimes \mathbf{L} \\
+\end{align*}
+
+At the same time, for example $\mathbf{I} \otimes \mathbf{H}$ is acting on the composite coin state, but only checking if the second coin's state is heads, which is the coin for the $y$ axis. This gives a way to naturally define $\mathbf{H}_y = \mathbf{I} \otimes \mathbf{H}$, and similarly:
+
+\begin{align*} 
+\mathbf{H}_x = \mathbf{H} \otimes \mathbf{I} \\
+\mathbf{T}_x = \mathbf{T} \otimes \mathbf{I} \\
+\mathbf{H}_y = \mathbf{I} \otimes \mathbf{H} \\
+\mathbf{T}_y = \mathbf{I} \otimes \mathbf{T} \\
+\end{align*}
+
+Substituting all of the aliases:
+
+\begin{align*} 
+    \mathbf{S} =   
+    (\mathbf{S}_{\text{right}}\mathbf{S}_{\text{up}}) \otimes (\mathbf{H}_x\mathbf{H}_y) + \\
+    (\mathbf{S}_{\text{right}}\mathbf{S}_{\text{down}}) \otimes (\mathbf{H}_x\mathbf{T}_y) + \\
+    (\mathbf{S}_{\text{left}}\mathbf{S}_{\text{up}}) \otimes (\mathbf{T}_x\mathbf{H}_y) + \\
+    (\mathbf{S}_{\text{left}}\mathbf{S}_{\text{down}}) \otimes (\mathbf{T}_x\mathbf{T}_y)\phantom{+}
+\end{align*}
+
+Then, using \hyperref[TensorMixedProduct]{[TensorMixedProduct]} again, I arrive at:
+
+\begin{align*} 
+    \mathbf{S} =   
+    (\mathbf{S}_{\text{right}} \otimes \mathbf{H}_x) (\mathbf{S}_{\text{up}} \otimes \mathbf{H}_y) + \\
+    (\mathbf{S}_{\text{right}} \otimes \mathbf{H}_x) (\mathbf{S}_{\text{down}} \otimes \mathbf{T}_y) + \\
+    (\mathbf{S}_{\text{left}} \otimes \mathbf{T}_x) (\mathbf{S}_{\text{up}} \otimes \mathbf{H}_y) + \\
+    (\mathbf{S}_{\text{left}} \otimes \mathbf{T}_x) (\mathbf{S}_{\text{down}} \otimes \mathbf{T}_y)\phantom{+}
+\end{align*}
+
+Then using the distributive property of matrix multiplication with respect to matrix addition I finally arrive at:
+
+\begin{align*} 
+    \mathbf{S} =   
+    ((\mathbf{S}_{\text{right}} \otimes \mathbf{H}_x) + (\mathbf{S}_{\text{left}} \otimes \mathbf{T}_x))
+    ((\mathbf{S}_{\text{up}} \otimes \mathbf{H}_y) + (\mathbf{S}_{\text{down}} \otimes \mathbf{T}_y))
+\end{align*}
+
+We can see from the equation above, that $\mathbf{S}$ is actually the product of two shift operators, one only
+acting on the $x$ coordinate using the first coin's state, the other acting only on the $y$ coordinate, according to the second
+coin's state.
+
+\begin{align*} 
+    S_x = (\mathbf{S}_{\text{right}} \otimes \mathbf{H}_x) + (\mathbf{S}_{\text{left}} \otimes \mathbf{T}_x) \\
+    S_y = (\mathbf{S}_{\text{up}} \otimes \mathbf{H}_y) + (\mathbf{S}_{\text{down}} \otimes \mathbf{T}_y) \\
+\end{align*}    
+
+\begin{align*}
+    \mathbf{S} = S_xS_y
+\end{align*}
+
 
 
 Legyen a rács $N = n \times n$ -es.
