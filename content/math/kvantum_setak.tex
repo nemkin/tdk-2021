@@ -22,7 +22,7 @@ The Hadamard coin is the most commonly used quantum coin. It is defined by the H
   \mathbf{H} = \frac{1}{\sqrt{2}}\begin{pmatrix}
       1 & 1  \\
       1 & -1
-    \end{pmatrix}
+    \end{pmatrix}.
 \end{align*}
 
 If the starting coin state is $\ket{0}$, then flipping the coin once results in the following state:
@@ -32,7 +32,7 @@ If the starting coin state is $\ket{0}$, then flipping the coin once results in 
       1 & 1  \\
       1 & -1
     \end{pmatrix} \begin{pmatrix} 1 \\ 0 \end{pmatrix}
-    = \frac{1}{\sqrt{2}} \begin{pmatrix} 1 \\ 1 \end{pmatrix} = \frac{1}{\sqrt{2}} \ket{0} + \frac{1}{\sqrt{2}} \ket{1}
+    = \frac{1}{\sqrt{2}} \begin{pmatrix} 1 \\ 1 \end{pmatrix} = \frac{1}{\sqrt{2}} \ket{0} + \frac{1}{\sqrt{2}} \ket{1}.
 \end{align*}
 
 If we measured the above coin, the probability of measuring $0$ is
@@ -40,7 +40,7 @@ If we measured the above coin, the probability of measuring $0$ is
 \begin{align*}
 P(0 \mid \frac{1}{\sqrt{2}} (\ket{0} + \ket{1})) =
 \left\lvert\frac{1}{\sqrt{2}}\right\rvert^2 =
-\frac{1}{2}
+\frac{1}{2}.
 \end{align*}
 
 Similarly, if the starting coin state is $\ket{1}$, then flipping the coin once results in the following state:
@@ -50,7 +50,7 @@ Similarly, if the starting coin state is $\ket{1}$, then flipping the coin once 
       1 & 1  \\
       1 & -1
     \end{pmatrix} \begin{pmatrix} 0 \\ 1 \end{pmatrix}
-    = \frac{1}{\sqrt{2}} \begin{pmatrix} 1 \\ -1 \end{pmatrix} = \frac{1}{\sqrt{2}} \ket{0} - \frac{1}{\sqrt{2}} \ket{1}
+    = \frac{1}{\sqrt{2}} \begin{pmatrix} 1 \\ -1 \end{pmatrix} = \frac{1}{\sqrt{2}} \ket{0} - \frac{1}{\sqrt{2}} \ket{1}.
 \end{align*}
 
 The probability of measuring $1$ here is similarly
@@ -58,13 +58,13 @@ The probability of measuring $1$ here is similarly
 \begin{align*}
 P(1 \mid \frac{1}{\sqrt{2}} (\ket{0} - \ket{1})) =
 \left\lvert-\frac{1}{\sqrt{2}}\right\rvert^2 =
-\frac{1}{2}
+\frac{1}{2}.
 \end{align*}
 
 An unexpected feature of this coin comes from the fact, that the Hadamard-matrix is Hermitian (self-adjoint), i.e. $\mathbf{H}^{\dagger} = \mathbf{H}$, while also unitary, i.e. $\mathbf{H}^{\dagger} = \mathbf{H}^{-1}$, which results in $\mathbf{H}^{-1} = \mathbf{H}$, thus $\mathbf{H}\mathbf{H} = \mathbf{I}$. This means, that after flipping the coin twice without measuring it, it will return the coin state to its origin. For example, starting from $\ket{0}$:
 
 \begin{align*}
- \mathbf{H}^2 \ket{0} = \mathbf{H}\frac{1}{\sqrt{2}}(\ket{0} + \ket{1}) = \frac{1}{2}(\ket{0} + \ket{1} + \ket{0} - \ket{1}) = \ket{0}
+ \mathbf{H}^2 \ket{0} = \mathbf{H}\frac{1}{\sqrt{2}}(\ket{0} + \ket{1}) = \frac{1}{2}(\ket{0} + \ket{1} + \ket{0} - \ket{1}) = \ket{0}.
 \end{align*}
 
 After the second flip, the probability of measuring $\ket{0}$ is $1$, due to the destructive interference between the two $\ket{1}$ probability amplitudes, demonstrating a significant contrast between classical and quantum walks.
@@ -77,19 +77,19 @@ A $2^n$ dimensional Hadamard-coin operator can be created by taking the tensor p
 
 \subsection{Grover coin}
 
-The Grover coin originates from Grover's search algorithm, where it is applied as the diffusion operator, defined as follows:
+The Grover coin originates from Grover's search algorithm, where it is applied as the diffusion operator.
 
-Let $\ket{D}$ be the diagonal state of the coin space:
+Let $\ket{D}$ be the following state:
 
 \begin{align*}
 \ket{D} = \mathbf{H}^{\otimes{}n}\ket{0} =
-\frac{1}{\sqrt{2^n}} \sum\limits_{i=0}^{2^n-1} \ket{i}
+\frac{1}{\sqrt{2^n}} \sum\limits_{i=0}^{2^n-1} \ket{i}.
 \end{align*}
 
 Using $\ket{D}$, the Grover coin is the following unitary matrix:
 
 \begin{align*}
-    \mathbf{G} = 2\ket{D}\bra{D} - \mathbf{I}
+    \mathbf{G} = 2\ket{D}\bra{D} - \mathbf{I}.
 \end{align*}
 
 If $N = 2^n$, then $\mathbf{G}$ unrolls to the following representation:
@@ -100,7 +100,7 @@ If $N = 2^n$, then $\mathbf{G}$ unrolls to the following representation:
       \frac{2}{N} & \frac{2}{N} - 1 & \dots  & \frac{2}{N} \\
       \vdots & \vdots & \ddots & \vdots \\
       \frac{2}{N} & \frac{2}{N} & \ddots & \frac{2}{N} - 1
-    \end{pmatrix}
+    \end{pmatrix}.
 \end{align*}
 
 \subsection{Fourier coin}
@@ -111,10 +111,10 @@ In contrast to the Hadamard and Grover coins, the Fourier coin can be of any siz
 \mathbf{F}[k,l] = \frac{1}{\sqrt{N}} \omega^{kl}
 \end{align*}
 
-where $\omega$ is the $N$-th root of unity.
+where $\omega$ is the $N$-th root of unity,
 
 \begin{align*}
-\omega = e^{\frac{2\pi{}i}{N}}
+\omega = e^{\frac{2\pi{}i}{N}}.
 \end{align*}
 
 $\mathbf{F}$ unrolls to the following representation:
@@ -141,19 +141,19 @@ Kempe introduces quantum walks from a physicist's perspective in~\cite{KempeIntr
 The spin state is in $H_2$ with the basis states spin up and down:
 
 \begin{align*}
-\ket{\uparrow} = \ket{0} \\
-\ket{\downarrow} = \ket{1}
+\ket{\uparrow} = \ket{0}, \\
+\ket{\downarrow} = \ket{1}.
 \end{align*}
 
 The spin state vector is then given by:
 
 \begin{align*}
-\ket{s} = s_0 \ket{\uparrow} + s_1 \ket{\downarrow}
+\ket{s} = s_0 \ket{\uparrow} + s_1 \ket{\downarrow}.
 \end{align*}
 
 \lineparagraph{Position state}
 
-At the start of the walk, the particle is at the origin, $\ket{0}$ and the walking last for $N$ steps. The position state is in $H_{(2N+1)}$ with the following basis vectors corresponding to the possible positions on the line.
+At the start of the walk the particle is at the origin $\ket{0}$ and the walking lasts for $N$ steps. The position state is in $H_{(2N+1)}$ with the following basis vectors corresponding to the possible positions on the line.
 
 \begin{align*}
 \{
@@ -168,15 +168,15 @@ I index the basis states using negative numbers to match the labels on the axis.
 The position state vector is then given by:
 
 \begin{align*}
-    \ket{x} = \sum\limits_{i=-N}^{N}x_i\ket{i}
+    \ket{x} = \sum\limits_{i=-N}^{N}x_i\ket{i}.
 \end{align*}
 
 \lineparagraph{Composite state}
 
-The composite state of the system, according to \hyperref[PostulateIV]{[PostulateIV]} is then the following:
+The composite state of the system, according to \hyperref[PostulateIV]{[PostulateIV]} is then
 
 \begin{align*}
-    \ket{x}\otimes{}\ket{s}
+    \ket{x}\otimes{}\ket{s}.
 \end{align*}
 
 \subsection{Evolution}
@@ -187,11 +187,11 @@ The particle travels on the line based on its current spin state:
 \item If the current spin state is $\ket{1}$, the particle moves to the right, i.e. from position $\ket{i}$ the particle travels to position $\ket{i+1}$.
 \end{itemize}
 
-This step is realised with the unitary matrix $\mathbf{S}$, which operates on the complete state of the system, $\ket{x}\otimes{}\ket{s}$ and is assembled from a left and a right shift operator acting on $\ket{x}$ and another operator for checking $\ket{s}$ compiled using tensor product.
+This step is realised with the unitary matrix $\mathbf{S}$ which operates on the complete state of the system, $\ket{x}\otimes{}\ket{s}$ and is assembled from a left and a right shift operator acting on $\ket{x}$ and another operator for checking $\ket{s}$ compiled using tensor product.
 
 \begin{definition}[Left shift operator]
 
-To move from position $\ket{i}$ to the left, $\ket{i-1}$, the position vector is multiplied with the following $\mathbf{L}$ matrix, containing $1$'s above the diagonal. To keep $\mathbf{S}$ unitary, an unused transition must be added in the lower left corner.
+To move from position $\ket{i}$ to the left ($\ket{i-1}$) the position vector is multiplied with the following $\mathbf{L}$ matrix, containing $1$'s above the diagonal. To keep $\mathbf{S}$ unitary, an unused transition must be added in the lower left corner.
 
 \change{Előrehivatkozni a permutációmátrixos tételre.}
 
@@ -218,7 +218,7 @@ For a given basis vector $\ket{j}$ only one of the summands in $\mathbf{L}$ is n
 
 \begin{definition}[Right shift operator]
 
-To move from position $\ket{i}$ to the right, $\ket{i+1}$, the position vector is multiplied with the following $\mathbf{R}$ matrix, containing $1$'s under the diagonal. To keep $\mathbf{S}$ unitary, an unused transition must be added in the top right corner.
+To move from position $\ket{i}$ to the right ($\ket{i+1}$) the position vector is multiplied with the following $\mathbf{R}$ matrix, containing $1$'s under the diagonal. To keep $\mathbf{S}$ unitary, an unused transition must be added in the top right corner.
 
 \change{Előrehivatkozni a permutációmátrixos tételre.}
 
@@ -258,12 +258,12 @@ The execution logic is as follows:
     (\mathbf{L}\otimes\ket{0}\bra{0} + \mathbf{R}\otimes\ket{1}\bra{1})(\ket{x}\otimes{}\ket{s}) = \\ (\mathbf{L}\otimes\ket{0}\bra{0})(\ket{x}\otimes{}\ket{s}) + (\mathbf{R}\otimes\ket{1}\bra{1})(\ket{x}\otimes{}\ket{s}) = \dots
 \end{gather*}
 
-Using \hyperref[TensorDistributivity]{[TensorDistributivity]}:
+using \hyperref[TensorDistributivity]{[TensorDistributivity]}:
 
 \begin{gather*}
     \dots = \mathbf{L}\ket{x}\otimes(\ket{0}\bra{0}\ket{s}) + \mathbf{R}\ket{x}\otimes(\ket{1}\bra{1}\ket{s}) = \\
     \ket{x-1}\otimes{}s_0\ket{0} + \ket{x+1}\otimes{}s_1\ket{1} = \\
-    s_0\ket{x-1, 0} + s_1\ket{x+1,1} = \\
+    s_0\ket{x-1, 0} + s_1\ket{x+1,1}.
 \end{gather*}
 
 \begin{itemize}
@@ -271,7 +271,7 @@ Using \hyperref[TensorDistributivity]{[TensorDistributivity]}:
 \item If the spin state was $\ket{s} = \ket{1}$ at the beginning, then $s_0=0$ and $s_1=1$, which means that the resulting system state is $\ket{x+1,1}$, which means that the particle shifted to the right, also as intended.
 \end{itemize}
 
-Furthermore, the spin state can be any mixed state as well. In this case the particle will shift \textit{both} to the left and to the right, at the same time. When measured, the particle can be found in position $\ket{x-1}$ with probability $|s_0|^2$ and in position $\ket{x+1}$ with probability $|s_1|^2$.
+Furthermore, the spin state can be any mixed state $s_0\ket{0} + s_1\ket{1}$ as well. In this case the particle will shift \textit{both} to the left and to the right, at the same time. When measured, the particle can be found in position $\ket{x-1}$ with probability $|s_0|^2$ and in position $\ket{x+1}$ with probability $|s_1|^2$.
 
 In quantum graph walks, the walker can simultaneously explore multiple parallel paths in the graph, at the same time. With good design, this behaviour can be used to search the graph faster than in classical random graph walks.
 
@@ -307,7 +307,7 @@ The probability of finding the particle in position $i$ is:
     P(i | \ket{x}) = \bra{x,s}P_i\otimes{}I\ket{x,s} = \dots
 \end{gather*}
 
-Using \hyperref[TensorDistributivity]{[TensorDistributivity]}:
+using \hyperref[TensorDistributivity]{[TensorDistributivity]}:
 
 \begin{gather*}
     \dots = \bra{x}P_i\ket{x}\bra{s}I\ket{s} =
@@ -324,8 +324,8 @@ Using \hyperref[TensorDistributivity]{[TensorDistributivity]}:
 There are two ways to generalize quantum walking on the line to higher dimensional grids.
 
 \begin{enumerate}
-    \item \textbf{Use multiple independent 2 dimensional coins}: In~\cite{Portugal} Renato Portugal describes the generalization of a quantum walk on a line to a 2 dimensional grid, using this technique with two independent walks on the $x$ and $y$ axes. In my dissertation I will show the generalization technique for arbitrarily large dimensional grids.
-    \item \textbf{Use a single higher dimensional coin}: In~\cite{Portugal} Renato Portugal describes the generalization of a quantum walk on a line to an arbitrary undirected graph and gives the necessary condition for the creation of the unitary transition matrix, without proof. In my dissertation I generalize to directed graphs and give proof of the generalization of the condition using directed graphs.
+    \item \textbf{Use multiple independent 2 dimensional coins}: In~\cite{Portugal}, Renato Portugal describes the generalization of a quantum walk on a line to a 2 dimensional grid, using this technique with two independent walks on the $x$ and $y$ axes. In my dissertation I will show the generalization technique for arbitrarily large dimensional grids.
+    \item \textbf{Use a single higher dimensional coin}: In~\cite{Portugal}, Renato Portugal describes the generalization of a quantum walk on a line to an arbitrary undirected graph and gives the necessary condition for the creation of the unitary transition matrix, without proof. In this work I generalize to directed graphs and give proof of the generalization of the condition using directed graphs.
 \end{enumerate}
 
 \subsection{Generalization using multiple independent 2 dimensional coins}
@@ -594,7 +594,7 @@ Bal oldalt 9*9-es, jobb oldalt 4*4-es mátrixok vannak.
 
 The generalization technique described in the previous chapter only works for grids of any dimension. To generalize to arbitrary graphs, first we need to describe the quantum walk on a regular graph. This is done following Renato Portugal's work~\cite{Portugal}.
 
-In a $d$-regular graph, the number of neighbours is always $d$. This means, that the coin is $d$ dimensional. In non-regular graphs, there is an issue arising from needing different sized coins at different vertexes, which is discussed in the next section.
+In a $d$-regular graph, the number of neighbours is always $d$. This means, that the coin is $d$ dimensional. In non-regular graphs, there is an issue arising from needing different sized coins at different vertices, which is discussed in the next section.
 
 The coin operator can be defined as before, by applying the identity operator on the position register and any coin flip unitary matrix on the coin register.
 

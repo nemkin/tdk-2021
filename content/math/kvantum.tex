@@ -8,14 +8,14 @@ This introduction is based on the following books: Quantum Computing and Communi
 
 \lineparagraph{Postulate I. State space}
 
-An isolated physical system's state can be described using a unit length \textit{state vector} in a Hilbert space (i.e. complex linear vector space), or \textit{state space}, equipped with an inner product.
+The state of an isolated physical system can be described using a unit length \textit{state vector} in a Hilbert space (i.e. complex linear vector space), or \textit{state space}, equipped with an inner product.
 
 \begin{definition}[Qubit]
 A state vector in the 2 dimensional Hilbert space ($H_2$) is a qubit. The base vectors in this space are
 \end{definition}
 
 \begin{align*}
-\ket{0} = \begin{pmatrix} 1 \\ 0 \end{pmatrix} \text{, and } \ket{1} = \begin{pmatrix} 0 \\ 1 \end{pmatrix}
+\ket{0} = \begin{pmatrix} 1 \\ 0 \end{pmatrix} \text{, and } \ket{1} = \begin{pmatrix} 0 \\ 1 \end{pmatrix}.
 \end{align*}
 
 A generic qubit is written in the form
@@ -24,7 +24,7 @@ A generic qubit is written in the form
 a\ket{0} + b\ket{1} = \begin{pmatrix} a \\ b \end{pmatrix}
 \end{align*}
 
-where $a, b \in{} \mathds{C}$ and $|a|^2 + |b|^2 = 1$
+where $a, b \in{} \mathds{C}$ and $|a|^2 + |b|^2 = 1$.
 
 \begin{definition}[Superposition]
 
@@ -59,33 +59,33 @@ The following definitions are equivalent:
 
 \lineparagraph{Postulate III. Measurement}
 
-A quantum measurement is defined by a set of measurement operators $\{\mathbf{M}_m\}$, where $m$ stands for the possible results of the measurement. The probability of measuring $m$ if the system is in state $\ket{v}$ is:
+A quantum measurement is defined by a set of measurement operators $\{\mathbf{M}_m\}$, where $m$ stands for the possible results of the measurement. The probability of measuring $m$ if the system is in state $\ket{v}$ is
 
 \begin{align*}
-    P(m | \ket{v}) = \bra{v} \mathbf{M}_m^{\dagger} \mathbf{M}_m \ket{v}
+    P(m | \ket{v}) = \bra{v} \mathbf{M}_m^{\dagger} \mathbf{M}_m \ket{v}.
 \end{align*}
 
-The state of the system after measuring $m$ is then:
+The state of the system after measuring $m$ is then
 
 \begin{align*}
-    \ket{v'} = \frac{\mathbf{M}_m\ket{v}}{\sqrt{\bra{v} \mathbf{M}_m^{\dagger} \mathbf{M}_m \ket{v}}}
+    \ket{v'} = \frac{\mathbf{M}_m\ket{v}}{\sqrt{\bra{v} \mathbf{M}_m^{\dagger} \mathbf{M}_m \ket{v}}}.
 \end{align*}
 
 The set of measurement operators have to satisfy the following \textit{completeness relation}:
 
 \begin{align*}
-    \sum\limits_{m}  \mathbf{M}_m^{\dagger} \mathbf{M}_m = I
+    \sum\limits_{m}  \mathbf{M}_m^{\dagger} \mathbf{M}_m = I,
 \end{align*}
 
-Due to
+due to
 
 \begin{align*}
-    1 = \sum\limits_{m} P(m | \ket{v}) = \sum\limits_{m} \bra{v} \mathbf{M}_m^{\dagger} \mathbf{M}_m \ket{v}
+    1 = \sum\limits_{m} P(m | \ket{v}) = \sum\limits_{m} \bra{v} \mathbf{M}_m^{\dagger} \mathbf{M}_m \ket{v}.
 \end{align*}
 
 \linesubparagraph{Projective measurement}\label{PostulateIIIProjective}
 
-To distinguish a set of orthonormal states $\{\ket{\varphi_m}\}$, the corresponding measurement operators can be produced by $\mathbf{P}_m = \ket{\varphi_m}\bra{\varphi_m}$, with the following properties.
+To distinguish a set of orthonormal states $\{\ket{\varphi_m}\}$, the corresponding measurement operators can be produced as $\mathbf{P}_m = \ket{\varphi_m}\bra{\varphi_m}$, with the following properties.
 
 \begin{property}[$\mathbf{P}_m$ is self adjoint]
 
@@ -100,7 +100,7 @@ Since
 (\ket{\varphi_m}\bra{\varphi_m})^{\dagger} =
 \bra{\varphi_m}^{\dagger}\ket{\varphi_m}^{\dagger} =
 \ket{\varphi_m}\bra{\varphi_m} =
-\mathbf{P}_m
+\mathbf{P}_m.
 \end{align*}
 
 \end{property}
@@ -118,12 +118,12 @@ Since
 \ket{\varphi_m}(\bra{\varphi_m}\ket{\varphi_m})\bra{\varphi_m} =
 \ket{\varphi_m}1\bra{\varphi_m} =
 \ket{\varphi_m}\bra{\varphi_m} =
-\mathbf{P}_m
+\mathbf{P}_m.
 \end{align*}
 
 \end{property}
 
-\begin{property}[$\mathbf{P}_m$-s are orthogonal]
+\begin{property}[The $\mathbf{P}_m$ are orthogonal]
 
 \begin{align*}
 m \neq n \Rightarrow \mathbf{P}_m\mathbf{P}_n = \mathbf{0}
@@ -135,29 +135,28 @@ Since
 (\ket{\varphi_m}\bra{\varphi_m})(\ket{\varphi_n}\bra{\varphi_n}) =
 \ket{\varphi_m}(\bra{\varphi_m}\ket{\varphi_n})\bra{\varphi_n} =
 \ket{\varphi_m}0\bra{\varphi_n} =
-\mathbf{0}
+\mathbf{0}.
 \end{align*}
 
 \end{property}
 
-From these properties follows, that the probability of measuring $m$ in case of a projective measurement:
+From these properties follows, that the probability of measuring $m$ in case of a projective measurement is
 
 \begin{align*}
 P(m | \ket{v}) =
 \bra{v}\mathbf{P}_m^{\dagger}\mathbf{P}_m \ket{v} =
 \bra{v}\mathbf{P}_m\mathbf{P}_m\ket{v} = 
 \bra{v}\mathbf{P}_m\ket{v} =
-\bra{v}\ket{\varphi_m}\bra{\varphi_m}\ket{v} = |\bra{\varphi_m}\ket{v}|^2
+\bra{v}\ket{\varphi_m}\bra{\varphi_m}\ket{v} = |\bra{\varphi_m}\ket{v}|^2.
 \end{align*}
 
-For example, the value of a qubit can be any unit length vector in $H_2$, however when we measure it, we will receive one
-of the base vectors of $H_2$. For $a\ket{0} + b\ket{1}$ we measure $0$ with probability $|a|^2$ and $1$ with probability $|b|^2$.
+For example, the value of a qubit can be any unit length vector in $H_2$, however when we measure it, we will receive one of the base vectors of $H_2$. For $a\ket{0} + b\ket{1}$ we measure $0$ with probability $|a|^2$ and $1$ with probability $|b|^2$.
 
 \lineparagraph{Postulate IV. Composite systems}\label{PostulateIV}
 
 The state space of an isolated composite physical system is the \textit{tensor product} of the state spaces of the individual components. The current state vector of the composite system is the \textit{tensor product} of the current state vectors of the individual systems.
 
-If $V_1,\dots,V_n$ are the state spaces of the individual systems, then $V_1 \otimes \dots \otimes V_n$ is the composite state space and for $\ket{v_1} \in V_1, \dots, \ket{v_n} \in V_n$ state vectors, $\ket{v_1} \otimes \dots \otimes \ket{v_n} = \ket{v_1,\dots,v_n}$ is the composite system's state vector.
+If $V_1,\dots,V_n$ are the state spaces of the individual systems, then $V_1 \otimes \dots \otimes V_n$ is the composite state space and for $\ket{v_1} \in V_1, \dots, \ket{v_n} \in V_n$ state vectors, $\ket{v_1} \otimes \dots \otimes \ket{v_n} = \ket{v_1,\dots,v_n}$ is the state vector of the composite system.
 
 \begin{definition}[Tensor product]
 
@@ -207,7 +206,7 @@ and has the following properties:
 If the corresponding matrices are compatible, then
 
 \begin{align*}
-  (\mathbf{A} \otimes \mathbf{B})(\mathbf{C} \otimes \mathbf{D}) = (\mathbf{A}\mathbf{C}) \otimes (\mathbf{B}\mathbf{D})
+  (\mathbf{A} \otimes \mathbf{B})(\mathbf{C} \otimes \mathbf{D}) = (\mathbf{A}\mathbf{C}) \otimes (\mathbf{B}\mathbf{D}).
 \end{align*}
 \end{property}
 
@@ -222,7 +221,7 @@ H_2^{\otimes{}n} = H_2 \otimes H_2 \otimes ... \otimes H_2
 and for $\ket{q_{n-1}} \in H_2, \dots, \ket{q_{0}} \in H_2$ individual state vectors, the composite state vector is
 
 \begin{align*}
-\ket{q_{n-1}} \otimes \dots \otimes \ket{q_{0}} = \ket{q_{n-1},\dots,q_0}
+\ket{q_{n-1}} \otimes \dots \otimes \ket{q_{0}} = \ket{q_{n-1},\dots,q_0}.
 \end{align*}
 
 \end{definition}
@@ -231,11 +230,10 @@ and for $\ket{q_{n-1}} \in H_2, \dots, \ket{q_{0}} \in H_2$ individual state vec
 Any state consisting of multiple qubits, that is not decomposable, i.e. that can not be written in the form of a composite system of qubits is \textit{entangled}.
 \end{definition}
 
-For example, the state $\frac{1}{\sqrt{2}}(\ket{00} + \ket{11})$, is entangled, since it can not be written in the form
+For example, the state $\frac{1}{\sqrt{2}}(\ket{00} + \ket{11})$ is entangled, since it can not be written in the form
 
 \begin{align*}
 (a_0\ket{0} + a_1\ket{1})\otimes(b_0\ket{0}+b_1\ket{1}) = a_0b_0\ket{00}+a_0b_1\ket{01}+a_1b_0\ket{10}+a_1b_1\ket{11}
 \end{align*}
 
-since that would require from $a_0b_0 = a_1b_1 = \frac{1}{\sqrt{2}}$, for all coefficients to be non-zero
-and from $a_0b_1 = a_1b_0 = 0$ for either $a_0$ or $b_1$ and either $a_1$ or $b_0$ to be zero, which is a contradiction.
+since that would require from $a_0b_0 = a_1b_1 = \frac{1}{\sqrt{2}}$, for all coefficients to be non-zero and from $a_0b_1 = a_1b_0 = 0$ for either $a_0$ or $b_1$ and either $a_1$ or $b_0$ to be zero, which is a contradiction.

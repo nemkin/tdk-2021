@@ -2,24 +2,24 @@
 
 Before introducing quantum computation and specifically quantum walks, I first overview classical random walks, based on the book Probability and Computing, written by Michael Mitzenmacher and Eli Upfal~\cite{MitzenmacherProbability}.
 
-A \textit{random walk} is a stochastic process modeled by a particular type of Markov chain. While a variety of Markov chains exist, in this dissertation, I use the following definition exclusively.
+A \textit{random walk} is a stochastic process modeled by a particular type of Markov chain. While a variety of Markov chains exist, in this work, I use the following definition exclusively.
 
 \begin{definition}[Markov chain]
 
 A discrete time stochastic process $X_0, X_1, X_2, \dots$ on a finite state space $A$ is a Markov chain if it has the Markov property:
 
 \begin{align*}
-P(X_k = a_k \mid X_{k-1} = a_{k-1}, \dots, X_0 = a_0) = P(X_k = a_k \mid X_{k-1} = a_{k-1}) && \forall a_0,\dots,a_k\in A
+P(X_k = a_k \mid X_{k-1} = a_{k-1}, \dots, X_0 = a_0) = P(X_k = a_k \mid X_{k-1} = a_{k-1}) \addspace \forall a_0,\dots,a_k\in A.
 \end{align*}
 
 \end{definition}
 
 Without loss of generality, we can assume, that $A = \{0,1,\dots,n\}$.
 
-If the Markov chain is homogenous (time-invariant), the probability of moving from state $i \in A$ to state $j \in A$ is independent of $k$, and thus can be shortened the following way.
+If the Markov chain is homogenous (time-invariant), the probability of moving from state $i \in A$ to state $j \in A$ is independent of $k$, and thus can be shortened the following way:
 
 \begin{align*}
-P(X_k = j \mid X_{k-1} = i) = p_{j\leftarrow{}i} = p_{j,i} && \forall k \in \mathds{Z}^+
+P(X_k = j \mid X_{k-1} = i) = p_{j\leftarrow{}i} = p_{j,i} \addspace \forall k \in \mathds{Z}^+.
 \end{align*}
 
 Where $p_{j,i}$ is called the \textit{transition probability} between states $i$ and $j$.
@@ -33,7 +33,7 @@ The \textit{transition matrix} $\mathbf{P}$ is formed by the transition probabil
 It follows, that for each column in $\mathbf{P}$, the sum is $1$.
 
 \begin{align*}
-    \sum\limits_{j=0}^{n}\mathbf{P}[j,i] = 1 && \forall i \in \{0,\dots,n\}
+    \sum\limits_{j=0}^{n}\mathbf{P}[j,i] = 1 \addspace \forall i \in \{0,\dots,n\}
 \end{align*}
 
 Let the \textit{probability distribution} of the process in the $t$-th step be $\pi_t$. Then, $\pi_t$ can be computed from the starting distribution $\pi_0$ using $\mathbf{P}$.
@@ -46,7 +46,7 @@ The \textit{stationary distribution} ($\pi$) of the Markov chain is a distributi
 
 Markov chains can be represented using graphs. A directed, weighted graph $G(V,E)$ with weight function $w:E\rightarrow{}[0,1]$ represents a Markov chain, if $V=A$ and $w(i,j) = \mathbf{P}[j,i]$. If $\mathbf{P}[j,i] = 0$, then $\{i,j\} \not\in E$.
 
-A random walk on graph $G$ starts from $X_0$ and visits the vertexes of the graph according to the states of the Markov-chain: $X_1,X_2,\dots$ .
+A random walk on graph $G$ starts from $X_0 = a_0$ and visits the vertices of the graph according to the states of the Markov-chain: $X_1 = a_1, X_2 = a_2, \dots$ .
 
 Frequently studied characteristics of random walks are \textit{hitting time}~\cite{XiaReview} and \textit{mixing time}~\cite{MitzenmacherProbability}. Informally, hitting time describes how quickly can a vertex be reached from another vertex in the graph, while mixing time expresses how fast the walk reaches the stationary distribution, where the starting vertex can no longer be identified.
 
@@ -62,7 +62,7 @@ Then, $h_{j,i}$ is given by the following recursive formula:
 \end{align*}
 \end{definition}
 
-\begin{definition}[Mixing time] The smallest time index of the Markov chain, where the total variational distance between the current and the stationary distribution is not greater than a given $\varepsilon$. This measure still depends on the starting distrubiton $\pi_0$, so we take the maximum over the possible starting $\pi_0$-s.
+\begin{definition}[Mixing time] The smallest time index of the Markov chain, where the total variational distance between the current and the stationary distribution is not greater than a given $\varepsilon$. This measure still depends on the starting distrubiton $\pi_0$, so we take the maximum over all of the possible $\pi_0$ distributions.
 
 \begin{align*}
 m(\varepsilon) = \max\limits_{\pi_0}\{\min\{t : \sum\limits_{j=0}^{n}|\pi_t[j] - \pi[j]| \leq \varepsilon\}\}
