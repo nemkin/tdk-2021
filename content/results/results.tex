@@ -78,7 +78,7 @@ The quantum walk is mixing much better, as can be seen by the mixing time and th
   \caption{Quantum (Hadamard) hitting and mixing times on the line}
 \end{figure}
 
-\section{Walk on Grid}
+\section{Walks on the grid}
 
 The second graph reviewed is the 2 dimensional grid (with $4\times{}4=16$ vertexes), using the adjacency matrix below.
 
@@ -189,13 +189,19 @@ are periodic, so there is no stationary distribution, while in the classical cas
   \caption{Quantum (Fourier) hitting and mixing times on the grid}
 \end{figure}
 
-\section{Walk on Hypercube}
+\section{Walks on hypercube}
+
+The third graph reviewed is the 4 dimensional boolean hypercube (with $2^4 = 16$ vertexes), using the adjacency matrix below.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.5\linewidth]{./figures/results/hypercube/graph.jpg}
 \caption{Adjacency graph of the hypercube}
 \end{figure}
+
+Similarly to the grid, the walks are recurrent (cyclic) in the Hadamard and Grover case. Interestingly in this case the periodicity can be visibly observed with the Fourier coin, however the walk does not return to its
+original starting point with $100\%$ probability. This is due to the eigenvalues of the evolution operator
+just being slightly off, so there is no small exponent for which the evolution operator is the identity.
 
 \begin{figure}[H]
   \centering
@@ -226,6 +232,10 @@ are periodic, so there is no stationary distribution, while in the classical cas
   \end{subfigure}
   \caption{Probability distribution of quantum walks on the hypercube}
 \end{figure}
+
+Similarly to the grid, the hitting times are identical, since the graph is small and the classical walk's
+disadvantage is not visible. The hypercube is also bipartite, resulting in no stationary distribution for the
+classical walk either.
 
 \begin{figure}[H]
   \centering
