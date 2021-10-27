@@ -45,78 +45,20 @@ The source code of the software can be divided into three parts:
     \item Running, configuration and result collection
 \end{itemize}
 
+\change{TODO: UML diagram}
 
+\subsection{Graph models}
 
+I ran several experiments on various graphs while researching quantum graph walks, including paths, circles, bipartite graphs, hypercubes, and grids. Initially, I directly generated and stored their adjacency matrices, however, I quickly ran into memory scaling issues with this approach. Furthermore, in quantum research, graphs are typically built like 'Legos', glueing together a few common types, which was challenging to do with my original approach.
 
+To combat these issues, I switched from the adjacency matrix representation to the oracle representation. The oracle is a function that returns the neighbours of a given vertex. Since I was using common graphs, I could calculate neighbouring indexes on the fly without storing anything about these graphs and only querying what is needed at the current step, dramatically reducing the memory requirements of the graph models.
 
-\section{Gráfmodellek}
+\subsection{Simulators}
 
-A félév során sokféle gráfon futtattam szimulációs kísérleteket, melyek során több problémába ütköztem. Kezdetben úgy oldottam meg a szimulációkat, hogy a célgráfok szomszédossági mátrixait generáltam le, egyben a memóriában tartva azokat és a lépések során a megfelelő csúcshoz tartozó sorokat lekérdezve.
+I implemented a classical and a quantum simulator class. The quantum simulator can currently simulate directed $k$ regular graphs, however since the permutation matrix decomposition, or in the undirected case, the edge coloring of the matrix is an NP-complete problem, in the current setup, the graph oracle must be implemented in a way that returns the neighbours in the same color order for all inputs. Since the human programmer designs the oracle, this is not a critical limitation at the moment. I have implemented a check as a safety guard to ensure the resulting shift matrices are unitary in case I made an error while coding one of the oracles.
 
-Ezzel a módszerrel több probléma is jelentkezett. Az első gondot az okozta, hogy a szomszédossági mátrix mérete a csúcsszám négyzetével arányos, ezért pár ezer csúcsú gráfot már nem tudtam a memóriában tartva szimulálni. A második probléma pedig az volt, hogy a szomszédossági mátrixos ábrázolás nagyon távol esett az emberi szempontból természetes ábrázolástól. A kvantumbolyongásos szimulációkat tipikusan nem véletlenszerű gráfokon szokták kipróbálni, hanem jól ismert struktúrával rendelkező gráfokon. Ilyen gráfok például a ,,súlyzók''
-vagy a ragasztott bináris fák.
+\subsection{Running, configuration and result collection}
 
-A súlyzó gráf két egyforma méretű kört tartalmaz, mindkét körből kiválasztva $k - k$ darab csúcsot, melyek teljes páros gráfot alkotnak (a súlyzó középső rúdját). A körökben pedig nem csak az egymás melletti csúcsok között fut él, hanem futhat él minden $i.$ csúcs között is. A ragasztott bináris fában két egyforma méretű teljes bináris fa leveleit szembefordítjuk és a két oldali levelek közé egy teljes páros gráfot készítünk.
+Using the above classes, I developed a framework in which experimental runs can be configured very quickly. The results of the run one are collected in an aggregated Latex document. It contains the given graph, the named type of the subgraphs, the adjacency matrices, the distribution results of the simulations and the eigenvalues and eigenvectors of the evolution operators. 
 
-A fenti leírásból látható, hogy az ember számára természetes leírás a gráfokat ismert részgráfok kompozitjaként adja meg. A félév során olyan architektúrát alakítottam ki a szimulációkhoz, mely ezt a szemléletet támogatja. A szomszédossági mátrixos tárolási mód helyett pedig a szomszédossági orákulum megközelítést használva nagyban csökkent az alkalmazás memóriaigénye. Ennek a megközelítésnek a lényege, hogy az ismert struktúrájú gráfokra nem tárolok a memóriában szomszédossági információt, helyette biztosítok egy függvényt, amely a bemeneti paraméterként kapott csúcsindexre kiszámolja a vele szomszédos csúcsok indexeit.
-
-A félév során a következő nevesített részgráfok szomszédossági orákulumját implementáltam:
-
-\begin{itemize}
-  \item BinaryTree
-  \item Bipartite
-  \item Circle
-  \item Path
-  \item Random
-\end{itemize}
-
-\change{Új: Hiperkocka}
-
-\begin{center}
-  \includegraphics[width=\linewidth]{./figures/program/subgraph.png}
-\end{center}
-
-Ezen részgráfokból épülnek fel az alábbi kompozit gráfok:
-\begin{itemize}
-  \item Dumbbell
-  \item GluedBinary
-\end{itemize}
-
-\begin{center}
-  \includegraphics[width=0.4\linewidth]{./figures/program/graph.png}
-\end{center}
-
-\section{Szimulátorok}
-
-A szimulátor osztályok közül a klasszikus tetszőleges kompozit gráfot tud
-fogadni.
-
-\change{Itt fontos átírni, hogy a kvantumszimulátor mostmár d-regulárist is tud!}
-
-A kvantumszimulátor jelenleg a kvantumbolyongás egy speciális esetét, az egyenesen való bolyongást képes kezelni, mely a 2-regularitása miatt egyszerűbben implementálható. Hosszú távú cél a k-reguláris, illetve az általános gráfokra kiterjeszteni ezt a szimulátort.
-
-\begin{center}
-  \includegraphics[width=0.8\linewidth]{./figures/program/simulator.png}
-\end{center}
-
-\section{Futtatás, konfiguráció, eredmények ábragenerátora}
-
-\change{Itt van pár újdonság, pl. sajátértékek kiírása, stb.}
-
-A fenti osztályok segítségével egy olyan keretrendszert alakítottam ki, melyben
-nagyon gyorsan fel lehet 1-1 futtatást konfigurálni. A futtatás eredményeit egy
-összesített Latex dokumentumba gyűjti a program. Ez tartalmazza a beadott gráf
-részgráfjainak nevesített típusát, szomszédossági mátrixait, illetve a teljes
-gráf szomszédossági mátrixát, valamint a szimulációk eloszlási eredményeit. A
-következő fejezetben több ilyen ábrát is bemutatok.
-
-
-
-Az első fázisban a szomszédossági mátrixot generáltam le teljesen. Ez nagyon sok memóriát használt, az unitér mátrix meg mégtöbbet, nagyon rosszul skálázódott. Lecseréltem spare mátrixokra, az már egy fokkal jobb.
-
-\change{Mérés összehasonlítás: Mátrix, Spare mátrix, Orákulum grafikon.}
-
-Ezután kipróbáltam a spare mátrixokat, de azok is picit sokak voltak, ugyan a gráfban sok a 0, de azért
-így is nagyon skálázódott.
-
-A legjobb megoldás az úgynevezett gráf orákulum volt. A gráf orákulum lényege, hogy nem tároljuk a szomszédossági mátrixot, helyette biztosítunk egy függvényt, mely on-the-fly a gráf adott csúcsindexét odaadva neki visszaadja hogy annak mik a szomszédai. A coin kis méretű, azt lehet tárolni (max fokszám * max fokszám), ezért azzal nem bajlódtam, bár éppen lehetne.
+\change{Matlab scriptről is írjak?}
