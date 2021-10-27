@@ -191,9 +191,7 @@ This step is realised with the unitary matrix $\mathbf{S}$ which operates on the
 
 \begin{definition}[Left shift operator]
 
-To move from position $\ket{i}$ to the left ($\ket{i-1}$) the position vector is multiplied with the following $\mathbf{L}$ matrix, containing $1$'s above the diagonal. To keep $\mathbf{S}$ unitary, an unused transition must be added in the lower left corner.
-
-\change{Előrehivatkozni a permutációmátrixos tételre.}
+To move from position $\ket{i}$ to the left ($\ket{i-1}$) the position vector is multiplied with the following $\mathbf{L}$ matrix, containing $1$'s above the diagonal. To keep $\mathbf{S}$ unitary, an unused transition must be added in the lower left corner (see \hyperref[PermutationMatricesTheorem]{Theorem \ref{PermutationMatricesTheorem})}.
 
 \begin{align}
 \label{LeftShift}
@@ -219,9 +217,7 @@ For a given basis vector $\ket{j}$ only one of the summands in $\mathbf{L}$ is n
 
 \begin{definition}[Right shift operator]
 
-To move from position $\ket{i}$ to the right ($\ket{i+1}$) the position vector is multiplied with the following $\mathbf{R}$ matrix, containing $1$'s under the diagonal. To keep $\mathbf{S}$ unitary, an unused transition must be added in the top right corner.
-
-\change{Előrehivatkozni a permutációmátrixos tételre.}
+To move from position $\ket{i}$ to the right ($\ket{i+1}$) the position vector is multiplied with the following $\mathbf{R}$ matrix, containing $1$'s under the diagonal. To keep $\mathbf{S}$ unitary, an unused transition must be added in the top right corner (see \hyperref[PermutationMatricesTheorem]{Theorem \ref{PermutationMatricesTheorem})}.
 
 \begin{align}
 \label{RightShift}
@@ -332,11 +328,7 @@ After presenting quantum walking on the line, I review and extend two approaches
 
 \subsection{Generalization using multiple independent 2 dimensional coins}
 
-\change{TODO}
-
-\subsubsection{Quantum Walk on a 2D grid}
-
-In \cite{Portugal} defines the following method:
+In \cite{Portugal} Renato Portugal defines the following method for Quantum Walking on a 2D grid:
 
 Let the position state of the walker be $\ket{x,y}$ and the two coins $\ket{c_x}$, acting on the $x$ coordinate and $\ket{c_y}$, acting on the $y$ coordinate of the walker.
 
@@ -514,16 +506,7 @@ coin's state.
     \mathbf{S} = \mathbf{S}_x\mathbf{S}_y
 \end{align*}
 
-\change{TODO finish this}
-
-\begin{itemize}
-  \item Rács = két körnek a tenzorszorzata.
-  \item Fel/le = mindig 1 sorral felette/alatta lévő (modulóval) van összekötve = n-el van elcsúsztatva.
-  \item Függőlegesen számozva ugyanígy csak fordított elnevezések.
-  \item Jobbra-balra = 1 távolság, kivéve sor végén, ahol a sor elejére ugrik = kis körök.
-  \item Tenzorszorzás tulajdonságait előre kiszedni, műveletek, használatkor hivatkozni.
-  \item Többsoros képleteknek csak 1 száma legyen.
-\end{itemize}
+This proves, that the walk on the 2D grid decomposes into two independent line walks on the axes, since $\mathbf{S}_x$ only touches the $x$ coordinate and the first coin, while $\mathbf{S}_y$ only touches the $y$ coordinate and the second coin and there is no entanglement between the registers of the $x$ and $y$ axes. Using this fact, we can simply simulate two independent quantum walks on the line in parallel, or sequentially, using the same registers, which wastly decreases the memory needs of the algorithm. Running in parallel, the memory needs is now $d(4(2N+1)^2) = O(dN^2)$, or running sequentially $(4(2N+1))^2 = O(N^2)$, however the latter uses $dN$ steps, instead of $N$, and $d$ measurements, instead of $1$.
 
 \subsection{Generalization using a single higher dimensional coin}
 
@@ -565,6 +548,7 @@ It seems to be a well-known fact in the literature, that for $d$-regular undirec
 In the following section, I present a more generalized theorem for directed $d$-regular graphs formulated and proven by me. Then I discuss how the special case of the theorem for undirected graphs gives the edge coloring as a result.
 
 \begin{theorem}
+\label{PermutationMatricesTheorem}
 Given a coined quantum walk on a directed, $d$-regular graph $G$, in the shift operator of the walk: $\mathbf{S} = \sum\limits_{i=0}^{d-1} \mathbf{S}_i \otimes{} \ket{i}\bra{i}$, the $\mathbf{S}_{i}$ are \textbf{permutation} matrices.
 \end{theorem}
 
