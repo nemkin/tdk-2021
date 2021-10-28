@@ -1,52 +1,17 @@
 \chapter{Introduction}
 
-\info{The following chapter contains the analysis of the TDK dissertation topic, historic background, motivation for the task: why it is important, relevant, useful, etc, the solutions currently available and then compare and contrast with the student's solution. Then, it concludes with the structure of the dissertation, describing the remaining chapters.}
+Classical random walks are well-known tools for describing different stochastic processes. Many real-life scientific approaches rely on these methods, including stock price movement prediction, natural language processing, Brownian motion description; and evolution, population and disease outbreak models. Other algorithms utilize random walks to gain speed or combat the search space's scale, most notably Google's Page Rank algorithm and various recommender systems.~\cite{XiaReview}.
 
-The following sections are based on~\cite{XiaReview}.
+In recent years quantum computing has been gaining traction amongst researchers and computer scientists. While there exists a wide variety of quantum algorithms to be explored, I specifically targeted quantum walks due to their reasonable hardware requirements and promising features. Quantum walks provide a quadratic speedup compared to their classical counterparts and display behaviour, such as the ballistic nature and the cyclic property that their classical equivalent does not, while only requiring logarithmic space, which due to the various limitations of physical qubit realization is particularly valuable.~\cite{Portugal}
 
-\section{Classical random walks on graphs}
+Since currently, the publicly available quantum computers can operate with only around 5-10 qubits, I created a simulator software that runs on a regular computer to experiment with the algorithm. I am hopeful that the time for feasibly switching to quantum hardware is just around the corner.
 
-Classical random walks are used to describe stochastic processes and many real life sciences rely on these methods. For example stock price movement prediction in finance, natural language processing algorithms, describing brownian motion in engineering physics, and various applications in biology and bioinformatics, such as DNA evolution models, population dynamics, modeling disease outbreaks, epidemic modeling ...etc. There are also algorithms, where stochastic processes are not directly present, but introduced as a way to deal with large quantities of data. Most notably, Google's Page Rank algorithm utilizes classical random walks on the large sized graph of the internet, to score documents on how good of an information source they are or how well they link to other information sources. Other algorithms include Markov chain Monte Carlo, for sampling from a probability distribution, difficult to directly model. Instead, they construct a stohastic process which's equilibrium distribution is the desired one and sample this by repeatedly recording states from the chain. The Metropolis Hashtings algorithm is similar to this, and is used to approximate the distribution or compute an integral (e.g expected value).
+During my research, I have observed a significant lack of software engineering perspective on this subject. Most research papers are written by physicists who are well acquainted with the details of quantum mechanics with a heavy focus on physics-related formulas and functional descriptions. It has been a strenuous process to gather the motivation and justification of certain implementation choices that seem to be the standard for someone in the inner circle but strange for me, just getting started with the topic.
 
-\unsure{Itt az lenne a célom hogy eladjam a véletlen sétákat, hogy ezek nagyon fontos algoritmusok. A Google PageRank egy nagyon jó példa.}
+This report aims to provide a comprehensible introduction to quantum walking from the software engineer's perspective, spending extra effort on implementation-specific details and mathematical proofs missing from the available literature. In contrast with the functional descriptions, I describe the algorithms using linear algebra, allowing for a more natural way to implement the simulation.
 
-Random walks are effective in link prediction and recommendation system, computer vision, semi-supervised learning, network embedding, and complex social network analysis. There are also some literature illustrating the applications of random walks on graphs, text analysis, science of science, and knowledge discovery. Random walks can speed up deterministic algorithms by introducing randomization, for example finding specific subgraphs in graphs.
+The rest of this report is structured in the following way: In Chapters 2 and 3, I briefly introduce classical random walks and quantum computing, using only the necessary formulas and focusing on the details employed later in the report. In Chapter 4, I introduce quantum walking in a bottom-up approach, starting from the simplest form and then generalizing it. Contrary to many authors, I use linear algebra exclusively to describe each step since implementation on a universal quantum computer requires the definition to come in the form of unitary transformations.
 
-In conclusion, there are many important applications for classical random walks.
+Section 4.3 discusses two of the generalization techniques found in~\cite{Portugal}. I present my improvement to one of these methods, which I have proven to have the equivalent result but remove an exponential memory requirement from the implementation. The other method in~\cite{Portugal} uses a constraint about the evolution operator, for which I have not found proof in the literature. Here, I present my more generalized version of this constraint and the proof I have given.
 
-\section{From classical to quantum}
-
-The scalable quantum computer is a topical issue so that approaches of quantum computation are popular topics nowadays. Quantum walks are the corresponding part of classical random walks in quantum mechanics. The main difference between them is that quantum walks don’t converge to some limiting distributions. Due to the quantum interference, quantum walks can spread significantly faster or slower than classical random walks. 
-
-There are many properties of quantum walks that make them differ from their classical counterparts. While in classical walks, in N steps the walks reaches a distance of $O(\sqrt{N})$, in quantum, it is a lot faster, $O(N)$. Quantum walks have inherent interferences, where some amplitudes can amplify, while others can be destrutive to each other and diminish. This makes them behave very differently from classical random walks and a good reason to study them.
-
-Quantum walks are often used to accelerate classical algorithms. It can be used to decision trees, search problems, and element distinctness.
-
-There are many algorithms based on Quantum Walks. Two types of models are present: continuous time and discrete time walks. Quantum decision tree algorithm is one of the continuous time quantum walk based algorithm. In this algorithm, you systematically explore the decision tree as a graph. The decision tree nodes are quantum states in a Hilbert space. 
-
-Based on Quantum Walks
-\begin{itemize}
-\item Quantum Decision Tree
-\item Quantum PageRank
-\item Grover Search Algorithm
-\end{itemize}
-
-\section{Applications}
-\begin{itemize}
-\item Collaborative Filtering
-\item Recommender System
-\item Link Prediction
-\item Computer Vision
-\item Semi-supervised
-\item Learning
-\item Network Embedding
-\item Element Distinctness
-\end{itemize}
-
-At the current state it is not viable to run these algorithms on quantum computers (if you don't have acces to google's or IBM's machinery, however even with simulation quite a few properties can be discovered and understood). I'm hoping to gain access to a viable computer to try out the quantum version eventually.
-
-There is no real randomness in classical algorithms (pseudo random only), however quantum computers can create in the physical sense true randomness, which is an exciting opportunity for all randomization based algorithms.
-
-Randomized algorithms are often simpler and easier to program than exact algorithms.
-
-In randomized algorithms there is a probability of error, however if that probability is small enough the improvement in memory and speed may be worth it and the algorithm can be repeated to decrease the possibility of error (if the error probability is less than $\frac{1}{2}$).
+In Chapter 5, I describe the architecture and implementation details of my simulator software, then in Chapter 6, I present the results obtained from my simulation runs.
