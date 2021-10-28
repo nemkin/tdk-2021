@@ -1,12 +1,11 @@
 \chapter{Conclusion}
 
-\begin{itemize}
-    \item Probléma a félév során: Python küzdés: referenciákat furán kezeli, fura szintaxis (C\#-hoz képest), nehéz kezelni, indentáció a zárójelek helyett weird. Emiatt mátrixosan, matlabba átírtam (python fura referenciális hibái nem lesznek, a spare mátrixokkal egész jó a memhasználat).
-    \item Popovics Viktória és Florin Christea érdeklődött, megtalálta.
-    \item Python is segmented, everything is a module, no concise structure and interoperability.
-    \item Youtube videók: nemk.in/quantum, illetve kód: github.com/nemkin/quantum.
-\end{itemize}
+During my research and development, I have read several great sources (\cite{Aharonov}, \cite{KempeIntroduction}, \cite{Portugal}, \cite{Santha}, \cite{XiaReview}) and lecture notes, and found \cite{Portugal} to be a comprehensive general introduction. I reformulated its descriptions to the language of matrices, which matches both classical random walk descriptions and universal quantum computing hardware requirements. I believe these descriptions are easier to understand for someone with a college-level software engineering background who is new to the subject.
 
-Quantum: Joking about not understanding quantum. Studying the electromagnetic equations with physics teacher: You are looking at it right now. Simulation = look at it.
+Besides this, I gave a generalized requirement for constructing quantum random walks on $d$-regular graphs employing the position-coin notation and improved the memory requirement of $n$-dimensional lattice walks. I presented my proofs for both of these advancements.
 
-Designkor figyelni hogy ciklikus ezért végtelenségig futtatni nem érdemes. Gyorsabb mint a klasszikus ami jó.
+Moreover, I implemented a simulator software in Python, employing an architectural pattern that makes it straightforward to understand and extend the codebase. This software is available under the open-source MIT license on my personal Github account, under the following link:
+
+\url{https://github.com/nemkin/quantum}
+
+The software is still under heavy development. In the future, I would like to revise the report generation since the pdf format has proven to be too rigid. Instead of Latex, I believe a static website with an organized link hierarchy and the possibility for user interaction would prove much more helpful. Furthermore, I am interested in applying quantum walking to bioinformatics research, such as medicine development.
