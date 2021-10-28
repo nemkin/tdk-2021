@@ -6,13 +6,13 @@ To formulate a quantum version of graph walking, we define the quantum coin, whi
 
 \section{Formulating the Quantum coin}
 
-I used Renato Portugal's Quantum Walks and Search Algorithms~\cite{Portugal} book as a reference for the different types of coins I present in this section.
+I used Renato Portugal's Quantum Walks and Search Algorithms~\cite{Portugal} book as a reference for the different types of coins presented in this section.
 
 A \textit{quantum coin} is a quantum system, which behaves according to the postulates of quantum mechanics. It has a current state, represented by a state vector in a Hilbert space and a unitary time evolution operator, describing a coin toss.
 
 After tossing the coin, the resulting coin state chooses the next step of the quantum walker. If there are $d$ outgoing edges to choose from, then the coin's state space must have $d$ orthonormal basis states, each corresponding to one of the possible edges. If the current state is one of the basis states, then the walker moves in that direction. However, in the quantum world, the coin can also be in a superposition, consisting of multiple basis states. This means that the walker will simultaneously move in all corresponding directions and occupy more than one vertex at the same time, resulting in the walker spreading over the graph in a superposition.
 
-For the $d$ dimensional coin state, the corresponding coin flip operator is a $(d\times{}d)$ dimensional unitary matrix. Based on what the transition operator is, multiple types of coins can be defined. The following ones are typically used in quantum walks.
+For the $d$ dimensional coin state, the corresponding coin flip operator is a $(d\times{}d)$ dimensional unitary matrix. Based on what the transition operator is, several types of coins can be defined. The following ones are typically used in quantum walks.
 
 \subsection{Hadamard coin}
 
@@ -322,13 +322,13 @@ using \hyperref[TensorMixedProduct]{[TensorMixedProduct]}:
 After presenting quantum walking on the line, I review and extend two approaches to generalize it in this chapter.
 
 \begin{enumerate}
-    \item \textbf{Use multiple two-dimensional coins}: In~\cite{Portugal}, Renato Portugal shows the generalization of quantum walks on a line to a two-dimensional grid, using a method with 2 two-dimensional coins. In this work, I prove how his method reduces to effectively two synchronous independent walks on the $x$ and $y$ axes. Then I improve his technique by generalizing to arbitrarily large dimensional grids in a more memory-efficient way than what would naturally follow from his description.
-    \item \textbf{Use a single higher dimensional coin}: In~\cite{Portugal}, Renato Portugal describes the generalization of a quantum walk on a line to an arbitrary undirected graph and gives the necessary condition for creating the unitary transition matrix without proof. In this work, I generalize to directed graphs and give proof of the generalization of the condition using directed graphs.
+    \item \textbf{Section 4.3.1: Use multiple two-dimensional coins}: In~\cite{Portugal}, Renato Portugal shows the generalization of quantum walks on a line to a two-dimensional grid, using a method with 2 two-dimensional coins. In this work, I prove how his method reduces to effectively two synchronous independent walks on the $x$ and $y$ axes. Then I improve his technique by generalizing to arbitrarily large dimensional grids in a more memory-efficient way than what would naturally follow from his description.
+    \item \textbf{Section 4.3.2: Use a single higher dimensional coin}: In~\cite{Portugal}, Renato Portugal describes the generalization of a quantum walk on a line to an arbitrary undirected graph and gives the necessary condition for creating the unitary transition matrix without proof. In this work, I generalize to directed graphs and give proof of the generalization of the condition using directed graphs.
 \end{enumerate}
 
 \subsection{Generalization using multiple independent 2 dimensional coins}
 
-In \cite{Portugal} Renato Portugal defines the following method for Quantum Walking on a 2D grid:
+In \cite{Portugal}, Renato Portugal defines the following method for Quantum Walking on a 2D grid:
 
 Let the position state of the walker be $\ket{x,y}$ and the two coins $\ket{c_x}$, acting on the $x$ coordinate and $\ket{c_y}$, acting on the $y$ coordinate of the walker.
 
@@ -371,7 +371,7 @@ For a dimension count $d$, the size of $\mathbf{S}$ is exponential in $d$.
 
 Since in \ref{Portugal2DShift} the coordinates of the walker are updated independently by the separate coins, I was able to disassemble $\mathbf{S}$ into smaller matrices, using the properties of the tensor product.
 
-To do this, I first needed to define $\mathbf{S}$ in 2D explicitly (as opposed to the implicit definition in \ref{Portugal2DShift}, stating only how $\mathbf{S}$ updates the state of the system). I will be using the matrices $\mathbf{L}$ defined by \ref{LeftShift} and $\mathbf{R}$ defined by \ref{RightShift}.
+To do this, in what follows, I first define $\mathbf{S}$ in 2D explicitly (as opposed to the implicit definition in \ref{Portugal2DShift}, stating only how $\mathbf{S}$ updates the state of the system). I will be using the matrices $\mathbf{L}$ defined by Equation (\ref{LeftShift}) and $\mathbf{R}$ defined by Equation (\ref{RightShift}).
 
 Notice that $\mathbf{R}$ increases the walker's coordinates on the line, while $\mathbf{L}$ decreases them. This means, that on the $y$ axis $\mathbf{R}$ acts by moving the walker up, and $\mathbf{L}$ acts by moving the walker down.
 
@@ -381,7 +381,7 @@ When the coins are in the state $\ket{c_x,c_y} = \ket{0,0}$, the walker moves up
     \mathbf{S}_{0,0} =  \mathbf{R} \otimes \mathbf{R}
 \end{align*}
 
-The other $3$ $\mathbf{S}_{c_x,c_y}$ matrices are defined similarly: 
+The other three $\mathbf{S}_{c_x,c_y}$ matrices are defined similarly: 
 
 \begin{align*}
     \mathbf{S}_{0,1} =  \mathbf{R} \otimes \mathbf{L}\\
@@ -389,15 +389,15 @@ The other $3$ $\mathbf{S}_{c_x,c_y}$ matrices are defined similarly:
     \mathbf{S}_{1,1} =  \mathbf{L} \otimes \mathbf{L}
 \end{align*}
 
-Then, I assemble $\mathbf{S}$ using $\mathbf{S}_{0,0}$, $\mathbf{S}_{0,1}$, $\mathbf{S}_{1,0}$ and $\mathbf{S}_{1,1}$ the following way: I want
+Then, I assemble $\mathbf{S}$ using $\mathbf{S}_{0,0}$, $\mathbf{S}_{0,1}$, $\mathbf{S}_{1,0}$ and $\mathbf{S}_{1,1}$ the following way:
 \begin{itemize}
-\item $\mathbf{S}_{0,0}$ to act only when $\ket{c_x,c_y} = \ket{0,0}$,
-\item $\mathbf{S}_{0,1}$ to act only when $\ket{c_x,c_y} = \ket{0,1}$,
-\item $\mathbf{S}_{1,0}$ to act only when $\ket{c_x,c_y} = \ket{1,0}$, and finally
-\item $\mathbf{S}_{1,1}$ to act only when $\ket{c_x,c_y} = \ket{1,1}$.
+\item $\mathbf{S}_{0,0}$ acts only when $\ket{c_x,c_y} = \ket{0,0}$,
+\item $\mathbf{S}_{0,1}$ acts only when $\ket{c_x,c_y} = \ket{0,1}$,
+\item $\mathbf{S}_{1,0}$ acts only when $\ket{c_x,c_y} = \ket{1,0}$, and finally
+\item $\mathbf{S}_{1,1}$ acts only when $\ket{c_x,c_y} = \ket{1,1}$.
 \end{itemize}
 
-Using the same method as in \ref{ShiftOperator} I arrive at:
+Using the same method as in Equation (\ref{ShiftOperator}) I arrive at:
 
 \begin{align*}
     \mathbf{S} =
@@ -417,7 +417,7 @@ After substituting the $\mathbf{S}_{c_x,c_y}$ matrices in:
     (\mathbf{L} \otimes \mathbf{L}) \otimes \ket{1,1}\bra{1,1}\phantom{+}
 \end{align*}
 
-Let us name the coin state $\ket{0}$ heads and the coin state $\ket{1}$ tails. Then, using the following equalities amd introducing matrices $\mathbf{H}$ and $\mathbf{T}$, as shorthands:
+Let us name the coin state $\ket{0}$ heads and the coin state $\ket{1}$ tails. Then, using the following equalities and introducing matrices $\mathbf{H}$ and $\mathbf{T}$, as shorthands:
 
 \begin{align*} 
     \ket{0,0}\bra{0,0} = (\ket{0}\bra{0}) \otimes (\ket{0}\bra{0}) = \mathbf{H} \otimes \mathbf{H} \\
