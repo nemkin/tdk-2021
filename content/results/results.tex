@@ -4,7 +4,7 @@ In this chapter, I review classical and quantum walking on three specific graphs
 
 \section{Walks on the line}
 
-The first graph to be reviewed is the line (with $100$ vertexes), using the adjacency matrix below. It is important to note, that an extra edge has to be added to connect the two ends of the line (see Theorem (\ref{PermutationMatricesTheorem}) for details).
+The first graph to be reviewed is the line (with $100$ vertices), using the adjacency matrix below. It is important to note, that an extra edge has to be added to connect the two ends of the line (see Theorem (\ref{PermutationMatricesTheorem}) for details).
 
 \begin{figure}[H]
 \centering
@@ -12,7 +12,7 @@ The first graph to be reviewed is the line (with $100$ vertexes), using the adja
 \caption{Adjacency matrix of the line}
 \end{figure}
 
-In the following pictures, we can see the changes in the probability distribution during the walk. The $x$ axis contains the vertexes, and the $y$ axis contains the steps. The walker starts from the centre, and in the classical case, multiple runs are done to arrive at a probability distribution, while in the quantum case, a single walker is enough, as it spreads in superposition over the graph.
+In the following pictures, we can see the changes in the probability distribution during the walk. The $x$ axis contains the vertices, and the $y$ axis contains the steps. The walker starts from the centre, and in the classical case, multiple runs are done to arrive at a probability distribution, while in the quantum case, a single walker is enough, as it spreads in superposition over the graph.
 
 The ballistic nature of the walk can be seen from steps $0$ to $50$, where the bright yellow diagonals represent a strong probability concentration spreading to the two ends of the line. When the probability bumps reach the sides, they cross over and travel to the opposite ends.
 
@@ -80,7 +80,7 @@ The quantum walk is mixing much better, as can be seen by the mixing time and th
 
 \section{Walks on the grid}
 
-The second graph reviewed is the 2 dimensional grid (with $4\times{}4=16$ vertexes), using the adjacency matrix below.
+The second graph reviewed is the 2 dimensional grid (with $4\times{}4=16$ vertices), using the adjacency matrix below.
 
 \begin{figure}[H]
 \centering
@@ -88,7 +88,7 @@ The second graph reviewed is the 2 dimensional grid (with $4\times{}4=16$ vertex
 \caption{Adjacency matrix of the grid}
 \end{figure}
 
-The following 4 images contain the classical, the quantum hadamard, the quantum grover and the quantum fourier walks on the grid. The classical walk quickly spreads over the graph, since all vertexes are close to each other (as opposed to the line, where the maximum distance is large).
+The following 4 images contain the classical, the quantum hadamard, the quantum grover and the quantum fourier walks on the grid. The classical walk quickly spreads over the graph, since all vertices are close to each other (as opposed to the line, where the maximum distance is large).
 
 In the quantum case, using the Hadamard and Grover coins, an important quality of the quantum walks can be distinctly observed: quantum walks are periodic, since the eigenvalues of the evolution operator are complex roots of unity. Furthermore, by choosing a vertex count that is a power of $2$, I was able to create an evolution operator that has specific eigenvalues that result in the walker returning to its starting position
 with $100\%$ probability (see the repeated red rectangles in the images), showing the cyclic nature of the quantum walk.
@@ -191,7 +191,7 @@ are periodic, so there is no stationary distribution, while in the classical cas
 
 \section{Walks on hypercube}
 
-The third graph reviewed is the 4 dimensional boolean hypercube (with $2^4 = 16$ vertexes), using the adjacency matrix below.
+The third graph reviewed is the 4 dimensional boolean hypercube (with $2^4 = 16$ vertices), using the adjacency matrix below.
 
 \begin{figure}[H]
 \centering
