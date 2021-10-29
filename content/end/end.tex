@@ -1,11 +1,13 @@
 \chapter{Conclusion}
 
-During my research and development, I have read several great sources (\cite{Aharonov}, \cite{KempeIntroduction}, \cite{Portugal}, \cite{Santha}, \cite{XiaReview}) and lecture notes, and found \cite{Portugal} to be a comprehensive general introduction. I reformulated its descriptions to the language of matrices, which matches both classical random walk descriptions and universal quantum computing hardware requirements. I believe these descriptions are easier to understand for someone with a college-level software engineering background who is new to the subject.
+During my research and development, I have read several excellent sources \cite{Aharonov, KempeIntroduction, Portugal, Santha, XiaReview} and lecture notes, and found \cite{Portugal} to be a comprehensive general introduction. I reformulated its descriptions to the language of matrices in an explicit manner, which matches both classical random walk descriptions and universal quantum computing hardware requirements. I believe these are easier to understand for someone with a college-level software engineering background who is new to the subject.
 
 Besides this, I gave a generalized requirement for constructing quantum random walks on $d$-regular graphs employing the position-coin notation and improved the memory requirement of $n$-dimensional lattice walks. I presented my proofs for both of these advancements.
 
-Moreover, I implemented a simulator software in Python, employing an architectural pattern that makes it straightforward to understand and extend the codebase. This software is available under the open-source MIT license on my personal Github account, under the following link:
+Furthermore, I implemented a simulator software in Python, employing an architectural pattern that makes it straightforward to understand and extend the codebase. This software is available under the open-source MIT license on my personal Github account, under the following link:
 
 \url{https://github.com/nemkin/quantum}
 
-The software is still under heavy development. In the future, I would like to revise the report generation since the pdf format has proven to be too rigid. Instead of Latex, I believe a static website with an organized link hierarchy and the possibility for user interaction would prove much more helpful. Furthermore, I am interested in applying quantum walking to bioinformatics research, such as medicine development.
+The software is still under heavy development. In the future, I would like to revise the report generation since the pdf format has proven to be too rigid. Instead of Latex, I believe a static website with an organized link hierarchy and the possibility for user interaction would prove much more helpful. Moreover, I am interested in extending my software's capabilities by implementing other quantum walk models. For example, inspired by the work of Ambainis, Szegedy \cite{Szegedy} designed a different kind of approach to quantum walks by creating a general method to quantize classical Markov chains.
+
+Furthermore, I plan to study applications of quantum walking, such as the MNRS quantum walk based search algorithm \cite{MNRS} which improves various aspects of many previous walk based algorithms. I aim to apply quantum walk based algorithms to bioinformatics research, such as medicine development.

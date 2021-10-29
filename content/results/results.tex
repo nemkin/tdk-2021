@@ -39,10 +39,10 @@ starting position, hence why only the Hadmard coin is shown in the distributions
 I have empirically measured hitting and mixing times for the different types of walks. Hitting time
 is the expected number of steps to reach a specific vertex from the starting point. For this, I have
 plotted the number of steps it took to first reach a particular vertex from the starting point. Mixing
-time is the number of steps it takes before reaching the stationary distribution with $\varepsilon$ error. For this, I have plotted the Euclidean difference between the walk's current and the end distribution.
+time is the number of steps it takes before reaching the stationary distribution with $\varepsilon$ error.
+For this, I have plotted the Euclidean difference between the walk's current and the end distribution.
 
-In the following pictures we can see the classical hitting and mixing times. Since my classical simulator
-approximates the distribution with running multiple walkers, the hitting time is a little bit assymetric. We can see from comparing the classical and the quantum hitting times, that the quanutm walk spreads a lot faster than the classical one.
+In the following pictures, we can see the classical hitting and mixing times. Since my classical simulator approximates the distribution by running multiple walkers, the hitting time is slightly asymmetric. We can see from comparing the classical and the quantum hitting times that the quantum walk spreads faster than the classical one.
 
 On the classical mixing time, we can see that the walker has not reached the stationary distribution. This is because until the walker reaches the ends of the line, the graph is essentially bipartite with two different limiting distributions and only after crossing over to the other side can the walk spread uniformly. This can also be seen in the probability distribution image above. At around step $300$, the colour of the image intensifies at the sides. Before that, the distribution alternates between odd and even indexes having $0$ probability, resulting in a chessboard pattern of white and colorful rectangles.
 
@@ -88,9 +88,9 @@ The second graph reviewed is the 2 dimensional grid (with $4\times{}4=16$ vertic
 \caption{Adjacency matrix of the grid}
 \end{figure}
 
-The following 4 images contain the classical, the quantum hadamard, the quantum grover and the quantum fourier walks on the grid. The classical walk quickly spreads over the graph, since all vertices are close to each other (as opposed to the line, where the maximum distance is large).
+The following 4 images contain the classical, the quantum Hadamard, the quantum Grover and the quantum Fourier walks on the grid. The classical walk quickly spreads over the graph since all vertices are close to each other (as opposed to the line, where the maximum distance is large).
 
-In the quantum case, using the Hadamard and Grover coins, an important quality of the quantum walks can be distinctly observed: quantum walks are periodic, since the eigenvalues of the evolution operator are complex roots of unity. Furthermore, by choosing a vertex count that is a power of $2$, I was able to create an evolution operator that has specific eigenvalues that result in the walker returning to its starting position
+In the quantum case, using the Hadamard and Grover coins, an important quality of the quantum walks can be distinctly observed: quantum walks are periodic since the eigenvalues of the evolution operator are complex roots of unity. Furthermore, by choosing a vertex count that is a power of $2$, I was able to create an evolution operator that has specific eigenvalues that result in the walker returning to its starting position
 with $100\%$ probability (see the repeated red rectangles in the images), showing the cyclic nature of the quantum walk.
 
 The Fourier coin mixes the state much better, resulting in no specific order in that image.
