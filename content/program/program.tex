@@ -62,7 +62,7 @@ On the UML diagram above, the SubGraph class is a Strategy, with the following C
     \item Random
 \end{itemize}
 
-Each of these employs an oracle that calculates neighbouring vertices on-the fly.
+Each of these employs an oracle that calculates neighbouring vertices on-the-fly.
 
 Furthermore, the Simulator is also a Strategy, implemented by the Classical and the Quantum classes, the latter using the Coin Strategy, implemented by the Hadamard, Grover and Fourier (DFT) classes.
 
@@ -72,7 +72,7 @@ Furthermore, the Simulator is also a Strategy, implemented by the Classical and 
 
 I ran several experiments on various graphs while researching quantum graph walks, including paths, circles, bipartite graphs, hypercubes, and grids. Initially, I directly generated and stored their adjacency matrices, however, I quickly ran into memory scaling issues with this approach. Furthermore, in quantum research, graphs are typically built like 'Legos', glueing together a few common types, which was challenging to do with my original approach.
 
-To combat these issues, I switched from the adjacency matrix representation to the oracle representation. The oracle is a function that returns the neighbours of a given vertex. Since I was using common graphs, I could calculate neighbouring indexes on the fly without storing anything about these graphs and only querying what is needed at the current step, dramatically reducing the memory requirements of the graph models.
+To combat these issues, I switched from the adjacency matrix representation to the oracle representation. The oracle is a function that returns the neighbours of a given vertex. Since I was using common graphs, I could calculate neighbouring indexes on-the-fly without storing anything about these graphs and only querying what is needed at the current step, dramatically reducing the memory requirements of the graph models.
 
 \subsection{Simulators}
 
@@ -80,4 +80,10 @@ I implemented a classical and a quantum simulator class. The quantum simulator c
 
 \subsection{Running, configuration and result collection}
 
-Using the above classes, I developed a framework in which experimental runs can be configured very quickly. The results of the run are collected in an aggregated Latex document. It contains the given graph, the named type of the subgraphs, the adjacency matrices, the distribution results of the simulations and the eigenvalues and eigenvectors of the evolution operators.
+Using the above classes, I developed a framework in which experimental runs can be configured very quickly. The results of the run are collected in an aggregated Latex document, using Matplotlib for creating various graphics. It contains the given graph, the named type of the subgraphs, the adjacency matrices, the distribution results of the simulations, including empirical hitting and mixing times and the eigenvalues and eigenvectors of the evolution operators. In the following chapter, I present several examples collected from these Latex reports of my experiments.
+
+\subsection{Availability}
+
+My simulator software is available under the open-source MIT license on my personal Github account, under the following link:
+
+\url{https://github.com/nemkin/quantum}
